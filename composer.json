@@ -1,0 +1,21 @@
+{
+    "name": "swith/mvc",
+    "description": "Mon MVC",
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "SwithFr",
+            "email": "contact@swith.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4" : {
+            "App\\" : "App",
+            "Core\\" : "Core"
+        }
+    },
+    "require": {
+        "michelf/php-markdown": "1.4.1"
+    }
+}
