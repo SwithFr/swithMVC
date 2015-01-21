@@ -1,35 +1,57 @@
 <?php
 
 namespace Core\Components;
+use Core\Models\Model;
+use App\Config\AppConfig;
 
 class Auth{
-	
-	/**
-	 * L'id de l'utilisateur connecté
-	 * @var string
-	 */
-	public $id = false;
 
 	/**
-	 * Le role de l'utilisateur connecté
-	 * @var string
+	 * Permet de connecter un utilisateur
+	 * @param  Object User $user On passe le model User pour pouvoir faire les requete en bdd
+	 * @param  stdClass    $data Les données postées
+	 * @return bollean      
 	 */
-	public $role = false;
-
-	public function __construct(){
-		if(isset($_SESSION['id']) && !empty($_SESSION['id'])){
-			if(!$this->id){
-				$this->id = $_SESSION['id'];
-				unset($_SESSION['id']);
+	public function login($user,$data){
+		$user = $user->getLogged(addslashes($data->login));
+		$crypt = AppConfig::$cryptMethode;
+		if($user){
+			if($crypt($data->password) != $user->password){
+				return false;
+			}else{
+				$this->id = $_SESSION['id'] = $user->id;
+				$this->role = $_SESSION['role'] = $user->role;
+				return true;
 			}
+		}else{
+			return false;
 		}
-		if(isset($_SESSION['role']) && !empty($_SESSION['role'])){
-			if(!$this->role){
-				$this->role = $_SESSION['role'];
-				unset($_SESSION['role']);
-			}
-		}
+		
 	}
-	
+
+	public function isLogged(){
+		return isset($_SESSION['id']);
+	}
+
+	/**
+	 * Check si il y a un id dans la session
+	 * @return int|boolean Return l'id ou false si pas d'id
+	 */
+	public function id(){
+		return isset($_SESSION['id'])?$_SESSION['id']:false;
+	}
+
+	/**
+	 * Check si il y a un role dans la session
+	 * @return int|boolean Return le role ou false si pas de role
+	 */
+	public function role(){
+		return isset($_SESSION['role'])?$_SESSION['role']:false;
+	}
+
+	public function logout(){
+		unset($_SESSION['id']);		
+		unset($_SESSION['role']);
+	}
 
 }

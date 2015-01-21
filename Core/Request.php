@@ -9,9 +9,9 @@ class Request{
 			$action,          // Action demandée
 			$controller,      // Controller demandé
 			$params,          // Les paramettres requis
-			$prefixes = false,// Le prefixe requis si besoin
+			$prefixe = false,// Le prefixe requis si besoin
 			$isPost = false,  // La methode est de type post ?
-			$data = [],       // Les données postées
+			$data = false,    // Les données postées
 			$page =1;         // Pour la pagination       
 
 	public function __construct(){
@@ -24,7 +24,11 @@ class Request{
 
 		if(!empty($_POST)){
 			$this->isPost = true;
-			$this->data = $_POST;
+			$this->data = new \stdClass();
+			foreach ($_POST as $k => $v) {
+				$this->data->$k = $v;
+			}
+			unset($_POST);
 		}
 
 		if(isset($_GET['paginate']) && is_numeric($_GET['paginate']) && $_GET['paginate'] > 0)

@@ -35,9 +35,13 @@ class Dispatcher{
 			$controller->error($e->getMessage());
 		}
 
+		if(method_exists($controller, "beforeRender")){
+			$controller->beforeRender();
+		}
+
 		// On appelle la fonction
-		if($this->request->prefixes)
-			$action = $this->request->prefixes."_".$this->request->action;
+		if($this->request->prefixe)
+			$action = $this->request->prefixe."_".$this->request->action;
 		else
 			$action = $this->request->action;
 		

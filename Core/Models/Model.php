@@ -60,7 +60,10 @@ class Model{
 		METHODES
 	 */
 
-	public function __construct(){
+	public function __construct($data){
+
+		$this->data = $data;
+
 		$conf = AppConfig::$databases[$this->database];
 
 		// Initialisation des variables
@@ -119,6 +122,9 @@ class Model{
 	 * @return [type]                 un object contenant les données demandées
 	 */
 	public function get(array $conditions = null, $table = null){
+
+		if(method_exists($this, "beforeFilter"))
+			$this->beforeFilter($this->data);
 		
 		$query  = "SELECT ";
 
@@ -130,43 +136,22 @@ class Model{
 
 
 		if(is_null($table)){
-			$query .= " FROM ".$this->table." as ".$this->name;
+			$query .= " FROM ".$this->table;
 		}else{
 			$query .= " FROM ".$table;
 		}
 		
 		// Si on doit faire un join
 		if(isset($conditions['joins'])) {
-			// for($i = 0; $i < count($joins) ; $i++) {
-
-			// 	switch ($joins[$i]) {
-			// 		case 'categories':
-			// 			if($model == 'subjects')
-			// 				$query .= " JOIN categories ON categories.id = subcategories.category_id";
-			// 			elseif($model == 'subcategories')
-			// 				$query .= " JOIN subcategories ON categories.id = subcategories.category_id";
-			// 			break;
-
-			// 		case 'subcategories':
-			// 			if($model == 'subjects')
-			// 				$query .= " JOIN subcategories ON subcategories.id = subjects.subcategory_id";
-			// 			elseif($model == 'categories')
-			// 				$query .= " JOIN subcategories ON categories.id = subcategories.category_id";
-			// 			break;
-
-			// 		case 'subjects':
-			// 				$query .= " JOIN subjects ON subjects.id = comments.subject_id";
-			// 			break;
-
-			// 		case 'comments':
-			// 			$query .= " JOIN comments ON subjects.id = comments.subject_id";
-			// 			break;
-
-			// 		case 'users':
-			// 			$query .= " JOIN users ON users.id = ".$model.".author_id";
-			// 			break;
-			// 	}
-			// }
+			$joins = [];
+			foreach ($conditions['joins'] as $j) {
+				if(!isset($this->joins) || !isset($this->joins[$j])){
+					debug("Le model ".$this->name." n'a pas d'association avec la table $j ! Veuillez créer un tableau public \$joins dans votre model ".$this->name,false);
+				}else{
+					$joins[] = " JOIN $j ON $j.{$this->primaryKey} = {$this->table}.".$this->joins[$j];
+				}
+			}
+			$query .= implode(" AND ", $joins);
 		}
 
 		// Si on a un Where
@@ -240,22 +225,25 @@ class Model{
      * @return bool
      */
 	public function create($data,$table = null){
-		$fields = $values = "(";
-		$i = 0;
-		$length = count($data);
+
+
+		if(method_exists($this, "beforeSave"))
+			$this->beforeSave($this->data);
+
+		$fields = $values = [];
 
 		foreach($data as $k => $v){
-			if($i < $length - 1){
-				$fields .= $k.",";
-				$values .= "'".$v."',";
+			$fields[] = $k;
+			if(!is_numeric($v)){
+				$values[] = "'$v'";
 			}else{
-				$fields .= $k;
-				$values .= "'".$v."'";
+				$values[] = "$v";
 			}
-			$i++;
 		}
-		$fields .= ")";
-		$values .= ")";
+
+
+		$fields = "(".implode(',',$fields).")";
+		$values = "(".implode(',',$values).")";
 		
 		if($table == null)
 			$table = $this->table;
@@ -270,19 +258,18 @@ class Model{
 	 * @param  array  $data  les données
 	 * @param  string $table le nom de la table si besoin
 	 */
-    public function updateData($id,array $data,$table = null){
-        $values = "";
-        $i = 0;
-		$length = count($data);
+    public function updateData($id,$data,$table = null){
+        $values = [];
 
 		foreach($data as $d => $v){
-			if($i < $length - 1){
-				$values .= "$d ='$v',";
-			}else{
-				$values .= "$d ='$v' ";
-			}
-			$i++;
+			if(!is_numeric($v)){
+				$values[] = "$d ='$v'";
+			}else
+				$values[] = "$d =$v";
 		}
+
+		$values = implode(',', $values);
+
 		if($table == null)
 			$table = $this->table;
 
@@ -311,6 +298,16 @@ class Model{
 	public function count(array $joins = null, $table = null){
 		$count = $this->getFirst(['fields'=>"COUNT({$this->primaryKey}) as count"],$joins,$table);
 		return $count->count;
+	}
+
+	/**
+	 * Permet de récuperer les infos en bdd pour vérifier si l'utilisateur à bien entré un bon login/mdp
+	 * @param  string $login Le login entré par l'utilisateur
+	 * @return stdClass      un objet content les indos trouvées.
+	 */
+	public function getLogged($login){
+		$req = $this->bdd->query("SELECT id,password,role FROM users WHERE login='$login';");
+		return $req->fetch();
 	}
 	
 }

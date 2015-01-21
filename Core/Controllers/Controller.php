@@ -127,9 +127,9 @@ class Controller{
 		header("HTTP/1.0 404 Not Found");
 		$this->set('message',$message);
 		ob_start();
-		require BASE.DS.'Core'.DS.'Views'.DS.'Layouts'.DS.'Errors'.DS.'404.php';
+		include BASE.DS.'Core'.DS.'Views'.DS.'Layouts'.DS.'Errors'.DS.'404.php';
 		$content_for_layout = ob_get_clean();
-		require BASE.DS.'App'.DS.'Views'.DS.'Layouts'.DS.$this->layout.'.php';
+		include BASE.DS.'App'.DS.'Views'.DS.'Layouts'.DS.$this->layout.'.php';
 		$this->rendered = true;
 		die();
 	}
@@ -146,7 +146,7 @@ class Controller{
 		if(!class_exists($modelName))
 			return false;
 		if(!isset($this->$name)){
-			$this->$name = new $modelName();
+			$this->$name = new $modelName($this->request->data);
 		}
 	}
 
@@ -162,5 +162,9 @@ class Controller{
 	public function index(){
 		$this->needRender = false;
 		echo "Configurez votre fichier <code>App/Config/AppConfig.php</code> avant tout !";
+	}
+
+	function element($name){
+		include_once BASE.DS."App".DS."Views".DS."Elements".DS.$name.".php";
 	}
 }

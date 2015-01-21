@@ -8,13 +8,13 @@ class AppConfig{
 	 * Le nom de votre site
 	 * @var string
 	 */
-	static $appName = "Mon MVC";
+	static $appName = "Mon site";
 
 	/**
 	 * Controller à charger par defaut
 	 * @var string
 	 */
-	static $defaultController = "pages";
+	// static $defaultController = "pages";
 
 	/**
 	 * Action à appeller par défaut
@@ -31,7 +31,7 @@ class AppConfig{
 			"host"     => "localhost",
 			"login"    => "root",
 			"password" => "root",
-			"dbname"   => "swithmvc",
+			"dbname"   => "NomBdd",
 			"encode"   => "UTF8"
 		]
 	];
@@ -47,5 +47,11 @@ class AppConfig{
 	 * @var array [admin,user]
 	 */
 	static $prefixes = ['admin','user'];
+
+	/**
+	 * La méthode de cryptage
+	 * @var string Le nom de la fonction de cryptage
+	 */	
+	static $cryptMethode = "sha1";
 
 }
