@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\Components;
-use Core\Models\Model;
 use App\Config\AppConfig;
 
 class Auth{
@@ -29,6 +28,10 @@ class Auth{
 		
 	}
 
+    /**
+     * Permet de savoir si un utilisateur est connecté ou non
+     * @return bool
+     */
 	public function isLogged(){
 		return isset($_SESSION['id']);
 	}
@@ -49,6 +52,9 @@ class Auth{
 		return isset($_SESSION['role'])?$_SESSION['role']:false;
 	}
 
+    /**
+     * Permet de déconnecter un utilisateur
+     */
 	public function logout(){
 		unset($_SESSION['id']);		
 		unset($_SESSION['role']);
