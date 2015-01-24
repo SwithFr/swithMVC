@@ -2,6 +2,12 @@
 
 namespace App\Config;
 
+/**
+ * Class AppConfig
+ * Class de configuration de l'application
+ * Contient l'ensemble des variables utiles
+ * @package App\Config
+ */
 class AppConfig{
 
 	/**
