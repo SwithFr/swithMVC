@@ -5,7 +5,7 @@ namespace App\Config;
 class AppConfig{
 
 	/**
-	 * Le nom de votre site
+	 * Le nom de votre application
 	 * @var string
 	 */
 	static $appName = "Mon site";
