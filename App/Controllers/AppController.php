@@ -6,7 +6,7 @@ use Core\Controllers as CC;
 class AppController extends CC\Controller{
 	
 	/**
-	 * Fonction optionnelle qui est exécuté (seulement si définie) avant de rendre la vue
+	 * Fonction optionnelle qui est exécutée (seulement si définie) avant de rendre la vue
 	 * CF : Dispatcher
 	 */
 	public function beforeRender(){

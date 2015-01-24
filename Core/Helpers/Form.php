@@ -8,9 +8,9 @@ class Form {
 
     /**
      * "Démarre" un formulaire
-     * @param $action
-     * @param string $method
-     * @param array $options
+     * @param string  $action   L'url de l'action du formulaire
+     * @param string  $method   La méthode par défaut POST
+     * @param array   $options  Les options (class, id,...)
      * @return string
      */
 	public static function start($action=null,$method = "POST", array $options = null) {
