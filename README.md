@@ -16,4 +16,5 @@ La documentation est en cours de rédaction [ici](https://swith-mvc.shost.ca). E
 Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans d'expériences, ce n'est pas le cas ! Tout mes remerciements vont à [Grafikart](http://www.grafikart.fr), ses nombreux tutoriels m'ont beaucoup aidé à en arriver là où j'en suis aujourd'hui. Donc voilà un immense merci à lui !
 
 ##TODO
-Encore pleins des choses...
+Les emails
+Les fonctions de recherche
