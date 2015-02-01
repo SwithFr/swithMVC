@@ -5,7 +5,7 @@ namespace Core\Components;
 class Session{
 
 	/*
-		METHODES
+		MÉTHODES
 	 */
 
 	public function __construct(){
@@ -14,9 +14,9 @@ class Session{
 	}
 
 	/**
-	 * Oerlet de définir un message flash
+	 * Permet de définir un message flash
 	 * @param string|array $message le message (ou le tableau de messages) à afficher
-	 * @param string $type    le type de message [success]
+	 * @param string $type          le type de message [success]
 	 */
 	public function setFlash($message,$type = "success"){
 		if(is_array($message)){
