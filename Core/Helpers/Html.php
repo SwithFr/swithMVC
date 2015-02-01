@@ -6,13 +6,13 @@ class Html {
 
     /**
      * Créer un lien
-     * @param $url
+     * @param $lien
      * @param $name
      * @param array $params
      * @param array $options
      * @return string
      */
-	public static function link($url,$name,array $params = null,array $options = null) {
+	public static function link($lien,$name,array $params = null,array $options = null) {
 		$return = "<a href='".ROOT.$lien;
 		$param = $option = "";
 
@@ -54,7 +54,7 @@ class Html {
 				$option .= "$k='$v' ";
 			}
 		}
-		$return = "<img src='".WEBROOT.DS.'img'.DS."$src' alt='$alt' $option >";
+		$return = "<img src='$src' alt='$alt' $option >";
 		return $return;
 	}
 

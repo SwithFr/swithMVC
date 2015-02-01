@@ -118,7 +118,6 @@ class Model{
 	 * Fonction qui permet de selectionner des données en base de donnée.
 	 * @param  string     $table      le nom de la table
 	 * @param  array      $conditions les conditions que l'on veut
-	 * @param  array|null $joins      Si l'on veut des joins
 	 * @return [type]                 un object contenant les données demandées
 	 */
 	public function get(array $conditions = null, $table = null){
@@ -274,7 +273,7 @@ class Model{
 			$table = $this->table;
 
 		// debug("UPDATE ".$table." SET $values WHERE id = $id");
-        $this->bdd->query("UPDATE ".$table." SET $values WHERE id = $id");
+        $this->bdd->query("UPDATE ".$table." SET $values WHERE {$this->primaryKey} = $id");
     }
 
     /**

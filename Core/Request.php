@@ -9,7 +9,7 @@ class Request{
 			$action,          // Action demandée
 			$controller,      // Controller demandé
 			$params,          // Les paramettres requis
-			$prefixe = false,// Le prefixe requis si besoin
+			$prefixe = false, // Le prefixe requis si besoin
 			$isPost = false,  // La methode est de type post ?
 			$data = false,    // Les données postées
 			$page =1;         // Pour la pagination       
@@ -30,7 +30,7 @@ class Request{
 			}
 			unset($_POST);
 		}
-
+		
 		if(isset($_GET['paginate']) && is_numeric($_GET['paginate']) && $_GET['paginate'] > 0)
 			$this->page = round($_GET['paginate']);
 	}

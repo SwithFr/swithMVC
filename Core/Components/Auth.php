@@ -1,6 +1,7 @@
 <?php
 
 namespace Core\Components;
+use Core\Models\Model;
 use App\Config\AppConfig;
 
 class Auth{
@@ -9,7 +10,7 @@ class Auth{
 	 * Permet de connecter un utilisateur
 	 * @param  Object User $user On passe le model User pour pouvoir faire les requete en bdd
 	 * @param  stdClass    $data Les données postées
-	 * @return bollean      
+	 * @return bool              True si loggé, false sinon
 	 */
 	public function login($user,$data){
 		$user = $user->getLogged(addslashes($data->login));
@@ -29,7 +30,7 @@ class Auth{
 	}
 
     /**
-     * Permet de savoir si un utilisateur est connecté ou non
+     * Permet de verifier si un utilisateur est connecté ou pas
      * @return bool
      */
 	public function isLogged(){
@@ -52,10 +53,11 @@ class Auth{
 		return isset($_SESSION['role'])?$_SESSION['role']:false;
 	}
 
+
     /**
-     * Permet de déconnecter un utilisateur
+     * Permet de déconnecter l'utilisateur
      */
-	public function logout(){
+    public function logout(){
 		unset($_SESSION['id']);		
 		unset($_SESSION['role']);
 	}

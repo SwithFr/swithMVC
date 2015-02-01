@@ -1,0 +1,187 @@
+/**
+ * IMPORTS
+ */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(http://fonts.googleapis.com/css?family=Playfair+Display);
+
+/**
+ * RESET
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+a, a:visited{
+	color: inherit;
+	text-decoration: none;
+}
+strong{
+	font-weight: bold;
+}
+
+
+/**
+ * MON STYLE
+ */
+body{
+	background: url(../img/home_bkg.jpg) no-repeat center fixed;
+	-webkit-background-size: cover; /* pour anciens Chrome et Safari */
+ 	background-size: cover; /* version standardisée */
+ 	font: 16px/1.5 'Open Sans', sans-serif;
+ 	color: #fff;
+}
+
+/**
+ * Navigation
+ */
+nav{
+	min-width: 306px;
+	width: 18.21428571%; /* 306/1680 */
+	margin: 1.25em auto; /* 20/16 */
+	text-align: center;
+}
+nav ul li{
+	display: inline;
+	margin-left: 20px;
+}
+nav ul li:first-child{margin: 0;}
+nav ul li a{font-size: .875em; /* 14/16 */}
+nav ul li a:hover{text-decoration: underline;}
+
+/**
+ * Main
+ */
+#main{
+	min-width: 148px;
+	width: 8.80952381%; /* 148/1680 */
+	margin: 10em auto 0; /* 350/16 */
+}
+#main h1{
+	font: 3em/1 'Playfair Display', serif; /* 48/16 */
+}
+#main h2{font-size: 1.5em;}
+#main p{
+	min-width: 148px;
+	text-align: center;
+	font-size: .875em; /* 14/16 */
+	margin-top: 1.1428571429em; /* 16/14 */
+}
+
+/**
+ * Buttons
+ */
+#buttons{
+	min-width: 510px;
+	width: 30.35714286%; /* 510/1680 */
+	margin: 4.6875em auto 0; /* 75/16 */
+}
+a.button{
+	/*width: 7.738095238%; /* 130/1680 */
+	padding: .375em; /* 6/16 */
+	border: 1px solid #fff;
+	text-align: center;
+	border-radius: .25em; /* 10/16 */
+	width: 130px;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+}
+a.button:first-child{
+	float: left;
+}
+a.button:last-child{
+	float: right;
+}
+a.button:hover{
+	background-color: #fff;
+	color: #000;
+}
+
+/**
+ * Footer
+ */
+footer{
+	position: fixed;
+	width: 100%;
+	bottom: 1em; /* 16/16 */
+	text-align: center;
+}
+
+/**
+ * RESPONSIVE
+ */
+
+@media screen and (max-width: 650px){
+
+	#buttons{
+		min-width: 144px;
+		width: 22.15384615%; /* 144/650 */
+	}
+
+	#buttons a.button{
+		margin-top: 1em;
+		display: block;
+		float: none;
+	}
+}
+
+@media screen and (max-width: 450px){
+	nav{
+		min-width: 106px;
+		width: 23.55555556%;
+	}
+	nav ul li{
+		display: block;
+		text-align: center;
+		margin: 0;
+	}
+
+	#main{
+		margin: 10em auto 0; /* 260/16 */
+	}
+}

@@ -2,33 +2,22 @@
 
 namespace App\Config;
 
-/**
- * Class AppConfig
- * Class de configuration de l'application
- * Contient l'ensemble des variables utiles
- * @documentation https://swith-mvc.shost.ca/pages/documentation/commencer
- * @package App\Config
- */
 class AppConfig{
 
 	/**
-	 * Le nom de votre application
+	 * Le nom de votre site
 	 * @var string
 	 */
-	static $appName = "Mon site";
+	static $appName = "Nom du site";
 
 	/**
-	 * Controller à charger par défaut
-     * Il n'est pas obligatoire de le préciser
-     * Par défaut, ce sera le controller Core\Controllers\Controller
-     * qui sera chargé.
-     * Cependant si vous voulez définir une page d'accueil par défaut vous pouvez le faire ici.
+	 * Controller à charger par defaut
 	 * @var string
 	 */
-	// static $defaultController = "pages";
+	#static $defaultController = "pages";
 
 	/**
-	 * Action à appeler par défaut
+	 * Action à appeller par défaut
 	 * @var string
 	 */
 	static $defaultAction = "index";
@@ -42,14 +31,13 @@ class AppConfig{
 			"host"     => "localhost",
 			"login"    => "root",
 			"password" => "root",
-			"dbname"   => "NomBdd",
+			"dbname"   => "dbName",
 			"encode"   => "UTF8"
 		]
 	];
 
 	/**
-	 * Afficher les message d'erreurs ou pas
-     * A définir à false en production
+	 * Afficher les message d'erreurs ou pas 
 	 * @var boolean
 	 */
 	static $debug = true;
