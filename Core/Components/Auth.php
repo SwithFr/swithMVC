@@ -8,12 +8,12 @@ class Auth{
 
 	/**
 	 * Permet de connecter un utilisateur
-	 * @param  Object User $user On passe le model User pour pouvoir faire les requete en bdd
 	 * @param  stdClass    $data Les données postées
 	 * @return bool              True si loggé, false sinon
 	 */
-	public function login($user,$data){
-		$user = $user->getLogged(addslashes($data->login));
+	public function login($data){
+        $model = new Model();
+		$user = $model->getLogged(addslashes($data->login));
 		$crypt = AppConfig::$cryptMethode;
 		if($user){
 			if($crypt($data->password) != $user->password){

@@ -60,9 +60,11 @@ class Model{
 		METHODES
 	 */
 
-	public function __construct($data){
+	public function __construct($data = null){
 
-		$this->data = $data;
+        if(!is_null($data)){
+            $this->data = $data;
+        }
 
 		$conf = AppConfig::$databases[$this->database];
 
