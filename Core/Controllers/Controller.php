@@ -161,11 +161,18 @@ class Controller{
 		exit();
 	}
 
+    /**
+     * Action par défaut si aucune autre n'est définie
+     */
 	public function index(){
 		$this->needRender = false;
 		echo "Configurez votre fichier <code>App/Config/AppConfig.php</code> avant tout !";
 	}
 
+    /**
+     * Permet d'afficher un élément (~= widget)
+     * @param $name le nom de l'élément que l'on souhaite afficher
+     */
 	function element($name){
 		include_once BASE.DS."App".DS."Views".DS."Elements".DS.$name.".php";
 	}
