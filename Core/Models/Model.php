@@ -118,7 +118,6 @@ class Model{
 	 * Fonction qui permet de selectionner des données en base de donnée.
 	 * @param  string     $table      le nom de la table
 	 * @param  array      $conditions les conditions que l'on veut
-	 * @param  array|null $joins      Si l'on veut des joins
 	 * @return [type]                 un object contenant les données demandées
 	 */
 	public function get(array $conditions = null, $table = null){
@@ -190,7 +189,7 @@ class Model{
 			$query .= " ORDER BY ".$conditions['order'];
 		}
 
-		// debug($query);
+		// debug($query,false);
 		$req = $this->bdd->query($query);
 
 		return $req->fetchAll();
@@ -273,7 +272,8 @@ class Model{
 		if($table == null)
 			$table = $this->table;
 
-        $this->bdd->query("UPDATE ".$table." SET $values WHERE id = $id");
+		// debug("UPDATE ".$table." SET $values WHERE id = $id");
+        $this->bdd->query("UPDATE ".$table." SET $values WHERE {$this->primaryKey} = $id");
     }
 
     /**
@@ -293,7 +293,7 @@ class Model{
 	 * @param  array|null $joins      [description]
 	 * @param  [type]     $perPage    [description]
 	 * @param  [type]     $table      [description]
-	 * @return [type]                 [description]
+	 * @return
 	 */
 	public function count(array $joins = null, $table = null){
 		$count = $this->getFirst(['fields'=>"COUNT({$this->primaryKey}) as count"],$joins,$table);
@@ -308,6 +308,39 @@ class Model{
 	public function getLogged($login){
 		$req = $this->bdd->query("SELECT id,password,role FROM users WHERE login='$login';");
 		return $req->fetch();
+	}
+
+	/**
+	 * Permet d'effectuer une chercher
+	 * @param  string $what  ce que l'on doit chercher
+	 * @param  arrayt $where sur quel champs
+	 * @param  string $how   Comment doit on chercher [around|exactly]
+	 * @return
+	 */
+	public function search($what,Array $where,$how="around"){
+
+		$query = "SELECT * FROM {$this->table} WHERE ";
+		$params = [];
+		if($how === "around"){
+			$what = explode(" ", $what);
+		}else{
+			$what = [$what];
+		}
+
+		foreach($where as $c){
+			foreach ($what as $w) {
+				if($how==="around"){
+					$params[] = $c." LIKE "."'%$w%'" ;
+				}elseif($how==="exactly"){
+					$params[] = $c." LIKE "."'% $w %'" ;
+				}
+			}
+		}
+		
+		$params = implode(" OR ", $params);
+
+		$req =  $this->bdd->query($query.$params);
+		return $req->fetchAll();
 	}
 	
 }
