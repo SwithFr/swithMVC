@@ -1,7 +1,7 @@
 #Swith MVC qu'est-ce que c'est ?
 
 Dans le but d'approfondir mes connaissances en PHP et en programmation orientée objet, j'ai décidé de développer mon propre framework MVC.
-En effet, j'ai d'abord commencé par utiliser CakePhp, puis Laravel, et je me suis dis que lire une documentation c'est plutot facile, mais comprendre comment sa fonctionne sous le capot c'est autre chose. L'idée est donc partie de là. Alors évidement dans ce ridicule framework, on retrouve une large inspiration des MVC existants, surtout de CakePhp. 
+En effet, j'ai d'abord commencé par utiliser CakePhp, puis Laravel, et je me suis dis que lire une documentation c'est plutot facile, mais comprendre comment ça fonctionne sous le capot c'est autre chose. L'idée est donc partie de là. Alors évidement dans ce ridicule framework, on retrouve une large inspiration des MVC existants, surtout de CakePhp. 
 
 Donc voilà, c'est mon framework, sans prétention, simple, mais il fonctionne ! 
 
@@ -13,7 +13,7 @@ Mon but premier est de réaliser non pas un framework complet, mais un framework
 La documentation est en cours de rédaction [ici](https://swith-mvc.shost.ca). Et quand je dis en cours c'est vraiment en cours, le site de la documentation a été réalisé en un temps absolument record (copier/coller le codes des exemples du Bootstrap de Twitter, changer 2 ou 3 trucs et paf !). C'est également bourré de fautes d'orthographes et de grammaire, évidemment je ne me suis pas encore relu. Le but étant pour l'instant d'écrire tout ce qu'il faut, je mettrai en forme plus tard.
 
 ##Remerciement
-Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans d'expériences, ce n'est pas le cas ! Tout mes remerciements vont à [Grafikart](http://www.grafikart.fr), ses nombreux tutoriels m'ont beaucoup aidé à en arriver là où j'en suis aujourd'hui. Donc voilà un immense merci à lui !
+Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans d'expériences, ce n'est pas le cas ! Tout mes remerciements vont à [Grafikart](http://www.grafikart.fr), ses nombreux tutoriels m'ont beaucoup aidés à en arriver là où j'en suis aujourd'hui. Donc voilà un immense merci à lui !
 
 ##TODO
 - Les emails
