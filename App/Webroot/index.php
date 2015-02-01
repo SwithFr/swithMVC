@@ -16,9 +16,6 @@
     require_once BASE.DS."vendor".DS."autoload.php";
     require_once BASE.DS."Core".DS.'Lib'.DS.'functions.php';
 
-    /**
-     * On initialise le dispatcher
-     */
     use Core\Dispatcher;
 
     $dispatcher = new Dispatcher();

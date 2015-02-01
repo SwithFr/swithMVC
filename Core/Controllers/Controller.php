@@ -44,7 +44,7 @@ class Controller{
 	 * Le layout à charger [defaut]
 	 * @var string
 	 */
-	public $layout    = 'default';
+	public $layout = 'default';
 
 	/**
 	 * Si jamais on a pas besoins de vue
@@ -53,23 +53,24 @@ class Controller{
 	public $needRender = true;
 
 	/**
+	 * Les variables à envoyer à la vue
+	 * @var Array
+	 */
+	private $vars     = [];
+
+	/**
 	 * Pour savoir si une vue à déjà été rendu ou non
 	 * @var boolean
 	 */
 	private $rendered = false;
 
 	/**
-	 * Les variables à envoyer à la vue
-	 * @var Array
-	 */
-	private $vars = [];
-
-
-	/**
 	 * Le model Lié au controller
 	 * @var Object Model
 	 */
 	public $model;
+
+    public $helpers = [];
 
 	/*
 		METHODES
@@ -96,7 +97,7 @@ class Controller{
 		extract($this->vars);
 		$view = BASE.DS.'App'.DS.'Views'.DS.ucfirst($this->request->controller).DS.$view.'.php';
 		if(!file_exists($view)){
-			$this->error("Le fichier de vue pour l'action {$this->request->action} est introuvable");
+			$this->error("Le fichier pour l'action {$this->request->action} est introuvable");
 		}
 		ob_start();
 		require($view);
@@ -107,7 +108,7 @@ class Controller{
 
 	/**
 	 * Permet de définir les variables à envoyer à la vue
-	 * @param $key   le nom de la vairable
+	 * @param $key   le nom de la variable
 	 * @param $value sa valeur
 	 * @return array le tableau des variables
 	 */
@@ -160,19 +161,13 @@ class Controller{
 		exit();
 	}
 
-    /**
-     * Action par défaut du controller si aucune autre n'est définie
-     */
 	public function index(){
 		$this->needRender = false;
 		echo "Configurez votre fichier <code>App/Config/AppConfig.php</code> avant tout !";
 	}
 
-    /**
-     * Permet d'insérer un élément dans une vue
-     * @param $name Le nom de l'élément à charger
-     */
 	function element($name){
 		include_once BASE.DS."App".DS."Views".DS."Elements".DS.$name.".php";
 	}
+
 }

@@ -6,7 +6,7 @@ use App\Config\AppConfig;
 class Router{
 
 	/**
-	 * Le prefixes à utiliser
+	 * Les prefixes à utiliser
 	 * @var array
 	 */
 	static $prefixes = [];

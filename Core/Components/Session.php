@@ -5,7 +5,7 @@ namespace Core\Components;
 class Session{
 
 	/*
-		METHODES
+		MÉTHODES
 	 */
 
 	public function __construct(){

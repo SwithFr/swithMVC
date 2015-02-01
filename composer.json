@@ -1,6 +1,6 @@
 {
-    "name": "swith/framework",
-    "description": "Mon framework MVC en php Homemade",
+    "name": "swith/mvc",
+    "description": "Mon MVC",
     "minimum-stability": "dev",
     "license": "proprietary",
     "authors": [
@@ -16,6 +16,6 @@
         }
     },
     "require": {
-        "michelf/php-markdown": "1.4.1"
+
     }
 }
