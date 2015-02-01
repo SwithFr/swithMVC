@@ -9,7 +9,6 @@
 	define('CORE'   , ROOT.'Core'.DS); 
 	define('APP'    , ROOT.'App'.DS);
 	define('WEBROOT', APP."Webroot".DS);
-	// var_dump(WEBROOT);die();
 
 	/**
 	 * On charge l'autoloader de composer
