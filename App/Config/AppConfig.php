@@ -8,7 +8,7 @@ class AppConfig{
 	 * Le nom de votre site
 	 * @var string
 	 */
-	static $appName = "Nom du site";
+	public static $appName = "Nom du site";
 
 	/**
 	 * Controller à charger par defaut
@@ -20,13 +20,13 @@ class AppConfig{
 	 * Action à appeller par défaut
 	 * @var string
 	 */
-	static $defaultAction = "index";
+	public static $defaultAction = "index";
 
 	/**
 	 * Tableau contenant les différentes configuarations des bases de données
 	 * @var [type]
 	 */
-	static $databases = [
+	public static $databases = [
 		"default" => [
 			"host"     => "localhost",
 			"login"    => "root",
@@ -40,18 +40,18 @@ class AppConfig{
 	 * Afficher les message d'erreurs ou pas 
 	 * @var boolean
 	 */
-	static $debug = true;
+	public static $debug = true;
 
 	/**
 	 * Permet de définir des prefixes
 	 * @var array [admin,user]
 	 */
-	static $prefixes = ['admin','user'];
+	public static $prefixes = ['admin','user'];
 
 	/**
 	 * La méthode de cryptage
 	 * @var string Le nom de la fonction de cryptage
 	 */	
-	static $cryptMethode = "sha1";
+	public static $cryptMethode = "sha1";
 
 }
