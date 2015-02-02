@@ -24,7 +24,7 @@ class Form {
 		if(!is_null($action))
 			$action = "action=".ROOT.$action;
 
-		echo "<form $action method=$method $option>";
+		echo "<form $action method='$method' $option>";
 	}
 
     /**
@@ -118,11 +118,7 @@ class Form {
 			}else{
 				$slctd = "";
 			}
-			if($v != "Sans"){
-				$return .= "<option $slctd value='$k'>$v</option>";
-			}else{
-				$return .= "<option $slctd value='0'>$v</option>";
-			}
+            $return .= "<option $slctd value='$k'>$v</option>";
 		}
 
 		echo $return."</select>";
