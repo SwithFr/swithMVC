@@ -24,9 +24,7 @@ class Form {
 		if(!is_null($action))
 			$action = "action=".ROOT.$action;
 
-		$form = "<form $action method=$method $option>";
-		// var_dump($form);die();
-		return $form;
+		echo "<form $action method=$method $option>";
 	}
 
     /**
@@ -42,7 +40,7 @@ class Form {
 				$option .= "$k='$v' ";
 			}
 		}
-		return "<input type='submit' value='$value' $option></form>";
+		echo "<input type='submit' value='$value' $option></form>";
 	}
 
     /**
@@ -83,7 +81,7 @@ class Form {
 			$label = "<label for='$field'>$label : </label>";
 		}
 
-		return "$label<input type='$type' name='$field' id='$field' $value $placeholder $option>";
+		echo "$label<input type='$type' name='$field' id='$field' $value $placeholder $option>";
 	}
 
     /**
@@ -101,7 +99,7 @@ class Form {
 				}
 			}
 		}
-		return "<textarea id='$field' name='$field' $option>$content</textarea>";
+		echo "<textarea id='$field' name='$field' $option>$content</textarea>";
 	}
 
     /**
@@ -127,8 +125,7 @@ class Form {
 			}
 		}
 
-		$return .= "</select>";
-		return $return;
+		echo $return."</select>";
 	}
 
 } 
