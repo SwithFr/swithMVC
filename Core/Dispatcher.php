@@ -65,9 +65,8 @@ class Dispatcher{
 				throw new SwithException("Controller introuvable", 404);
 				return false;
 			}
-		}else{
-			return new $controllerName($this->request,$this->request->controller);
 		}
+		return new $controllerName($this->request,$this->request->controller);
 	}
 
 }
