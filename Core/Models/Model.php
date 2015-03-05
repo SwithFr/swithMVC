@@ -1,8 +1,7 @@
 <?php 
 
 namespace Core\Models;
-use App\Config\App;
-use \PDO;
+use Core\Components\DbProvider;
 
 /**
  * Model principal (dont tous les autres héritent)
@@ -64,39 +63,12 @@ class Model{
 
 		$this->data = $data;
 
-		$conf = App::getInstance()->getDbSettings($this->database);
-
 		// Initialisation des variables
         $this->setNameTableAndModel();
+
+        if (is_null($this->bdd))
+            $this->bdd = DbProvider::getDb();
         
-		// Si on est déjà connecté à la base de donnée on return true
-		if(isset($this->connexions[$this->database])){
-			return true;
-		}
-
-		// On tente de se connecter
-	 	try {
-	        $pdo = new PDO(
-	        	"mysql:host={$conf['host']};
-	        	dbname={$conf['dbname']}",
-	        	$conf['login'], 
-	        	$conf['password']
-	        );
-	      	$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-	      	if(App::getInstance()->getAppSettings("debug"))
-	      	 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); 
-	        $pdo->query('SET CHARACTER SET '.$conf['encode']);
-	        $pdo->query('SET NAMES '.$conf['encode']);
-
-	        $this->connexions[$this->database] = $this->bdd = $pdo;
-        }catch (PDOException $e) {
-            if(App::getInstance()->getAppSettings("debug")){
-           		die($e->getMessage());
-            }
-           	else{
-           		die("Une erreure est survenue !");
-           	}
-        }
 	}
 
 	/**
@@ -114,13 +86,13 @@ class Model{
 	    }
 	}
 
-	/**
-	 * Fonction qui permet de selectionner des données en base de donnée.
-	 * @param  string     $table      le nom de la table
-	 * @param  array      $conditions les conditions que l'on veut
-	 * @param  array|null $joins      Si l'on veut des joins
-	 * @return [type]                 un object contenant les données demandées
-	 */
+    /**
+     * Fonction qui permet de selectionner des données en base de donnée.
+     * @param  array $conditions les conditions que l'on veut
+     * @param  string $table le nom de la table
+     * @internal param array|null $joins Si l'on veut des joins
+     * @return array [type]                 un object contenant les données demandées
+     */
 	public function get(array $conditions = null, $table = null){
 
 		if(method_exists($this, "beforeFilter"))
@@ -196,24 +168,24 @@ class Model{
 		return $req->fetchAll();
 	}
 
-	/**
-	 * Permet de récupérer le premier enregistrement d'une table.
-	 * @param  string     $table      le nom de la table
-	 * @param  array      $conditions les conditions que l'on veut
-	 * @param  array|null $joins      Si l'on veut des joins
-	 * @return [type]                 un object contenant les données demandées
-	 */
+    /**
+     * Permet de récupérer le premier enregistrement d'une table.
+     * @param  array $conditions les conditions que l'on veut
+     * @param  array|null $joins Si l'on veut des joins
+     * @param  string $table le nom de la table
+     * @return mixed [type]                 un object contenant les données demandées
+     */
 	public function getFirst(array $conditions, array $joins = null, $table = null){
 		return current($this->get($conditions, $joins,$table));
 	}
 
-	/**
-	 * Permet de récupérer le dernier enregistrement d'une table.
-	 * @param  string     $table      le nom de la table
-	 * @param  array      $conditions les conditions que l'on veut
-	 * @param  array|null $joins      Si l'on veut des joins
-	 * @return [type]                 un object contenant les données demandées
-	 */
+    /**
+     * Permet de récupérer le dernier enregistrement d'une table.
+     * @param  array $conditions les conditions que l'on veut
+     * @param  array|null $joins Si l'on veut des joins
+     * @param  string $table le nom de la table
+     * @return mixed [type]                 un object contenant les données demandées
+     */
 	public function getLast(array $conditions, array $joins = null, $table = null){
 		return end($this->get($conditions, $joins,$table));
 	}
@@ -284,17 +256,15 @@ class Model{
 	public function delete($id,$table=null){
 		if($table ==null)
 			$table = $this->table;
-		$req = $this->bdd->query("DELETE FROM ".$table." WHERE id=$id");
+		$this->bdd->query("DELETE FROM ".$table." WHERE id=$id");
 	}
 
-	/**
-	 * Permet de faire une pagination
-	 * @param  array      $conditions [description]
-	 * @param  array|null $joins      [description]
-	 * @param  [type]     $perPage    [description]
-	 * @param  [type]     $table      [description]
-	 * @return [type]                 [description]
-	 */
+    /**
+     * Permet de faire une pagination
+     * @param  array|null $joins [description]
+     * @param null $table
+     * @return mixed [type]                 [description]
+     */
 	public function count(array $joins = null, $table = null){
 		$count = $this->getFirst(['fields'=>"COUNT({$this->primaryKey}) as count"],$joins,$table);
 		return $count->count;
