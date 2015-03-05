@@ -28,3 +28,5 @@
 
 .gitignore
 App/Config/dev.env
+
+composer.lock
