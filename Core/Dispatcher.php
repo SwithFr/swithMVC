@@ -36,7 +36,7 @@ class Dispatcher
         try {
             $controller = $this->loadController();
         } catch (SwithException $e) {
-            $controller = new Controllers\Controller("Controller");
+            $controller = new Controllers\Controller($this->request,"Controller");
             $controller->error($e->getMessage());
         }
 
