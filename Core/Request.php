@@ -1,7 +1,7 @@
 <?php
 
 namespace Core;
-use App\Config\AppConfig;
+use App\Config\App;
 
 class Request{
 	
@@ -15,11 +15,13 @@ class Request{
 			$page =1;         // Pour la pagination       
 
 	public function __construct(){
+        $app = App::getInstance();
+        $default_controller = $app->getAppSettings("default_controller");
 
 		if(isset($_SERVER['PATH_INFO'])){
 			$this->url = $_SERVER['PATH_INFO'];
 		}else{
-			$this->url = isset(AppConfig::$defaultController) ? AppConfig::$defaultController : "Controller"."/".AppConfig::$defaultAction;
+			$this->url = !is_null($default_controller) ? $default_controller : "Controller"."/".$app->getAppSettings("default_action");
 		}
 
 		if(!empty($_POST)){
@@ -30,7 +32,7 @@ class Request{
 			}
 			unset($_POST);
 		}
-		
+
 		if(isset($_GET['paginate']) && is_numeric($_GET['paginate']) && $_GET['paginate'] > 0)
 			$this->page = round($_GET['paginate']);
 	}

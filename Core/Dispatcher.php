@@ -2,9 +2,8 @@
 
 namespace Core;
 
-use Core\Request;
+use App\Config\App;
 use Core\Lib\SwithException;
-use App\Config\AppConfig;
 
 /**
  * Se charge de charger le bon controller et la bonne action
@@ -25,16 +24,16 @@ class Dispatcher{
 		Router::parse($this->request);
 
 		// On affiche les erreurs ? 
-		ini_set('display_errors', AppConfig::$debug);
+		ini_set('display_errors', App::getInstance()->getAppSettings("debug"));
 
 		// On charge le bon controller
 		try{
 			$controller = $this->loadController();
 		}catch (SwithException $e){
-			$controller = new Controllers\Controller();
+			$controller = new Controllers\Controller("Controller");
 			$controller->error($e->getMessage());
 		}
-
+        
 		if(method_exists($controller, "beforeRender")){
 			$controller->beforeRender();
 		}
@@ -44,19 +43,20 @@ class Dispatcher{
 			$action = $this->request->prefixe."_".$this->request->action;
 		else
 			$action = $this->request->action;
-		
+        
 		if(in_array($action, get_class_methods($controller))){
 			call_user_func_array([$controller,$action], $this->request->params);
 		}else{
 			$controller->error("Le controller ".$this->request->controller." n'a pas de methode ".$action);				
 		}
 		$controller->render($action);
-	}	
+	}
 
-	/**
-	 * Permet d'initialiser le controller demander par l'url
-	 * @return instance retourne une instance du controller.
-	 */
+    /**
+     * Permet d'initialiser le controller demandé par l'url
+     * @throws SwithException
+     * @return instance retourne une instance du controller.
+     */
 	private function loadController(){
 		$controllerName = 'App\Controllers\\'.ucfirst($this->request->controller).'Controller';
 		if(!class_exists($controllerName)){
@@ -66,7 +66,7 @@ class Dispatcher{
 				return false;
 			}
 		}
-		return new $controllerName($this->request,$this->request->controller);
+        return new $controllerName($this->request,$this->request->controller);
 	}
 
 }

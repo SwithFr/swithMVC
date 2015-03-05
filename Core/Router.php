@@ -1,12 +1,13 @@
 <?php
 
 namespace Core;
+use App\Config\App;
 use App\Config\AppConfig;
 
 class Router{
 
 	/**
-	 * Les prefixes à utiliser
+	 * Le prefixes à utiliser
 	 * @var array
 	 */
 	static $prefixes = [];
@@ -15,15 +16,15 @@ class Router{
 	 * Permet de définir les préfixes
 	 */
 	public static function setPrefixes(){
-		if(isset(AppConfig::$prefixes))
-			Self::$prefixes = AppConfig::$prefixes;
+		if(App::getInstance()->getAppSettings("prefixes"))
+			Self::$prefixes = App::getInstance()->getAppSettings("prefixes");
 	}
-	
-	/**
-	 * Permet de parser l'url (définir quel est le controller, quelle est l'action)
-	 * @param  $url L'url apellée par l'utilisateur
-	 * @param  $request objet Request
-	 */
+
+    /**
+     * Permet de parser l'url (définir quel est le controller, quelle est l'action)
+     * @param objet|Request $request objet Request
+     * @internal param L $url 'url apellée par l'utilisateur
+     */
 	public static function parse(Request $request){
 		// On enlève les / en début et fin d'url
 		$url = trim($request->url,'/');
@@ -57,7 +58,7 @@ class Router{
 			}
 			$request->action = $action;
 		}else{
-			$request->action = AppConfig::$defaultAction;
+			$request->action = App::getInstance()->getAppSettings("default_action");
 		}
 		$request->params = array_slice($params, 2);
 	}
