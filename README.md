@@ -20,3 +20,4 @@ Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans 
 - Les fonctions de recherche **(minoritaire)**
 - Optimiser le système d'envrionnement **(prioritaire)**
 - Checker la sécurité
+- Optimiser les requêtes **(secondaire)**
