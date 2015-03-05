@@ -21,8 +21,16 @@ class App
 
     private function __construct()
     {
+        // Récupération des des paramettres
         $this->db_settings = require(BASE . DS . 'App' . DS . 'Config' . DS . 'database.php');
         $this->app_settings = require(BASE . DS . 'App' . DS . 'Config' . DS . 'app_config.php');
+
+        // Chargement de l'envrionnement
+        $env = $this->app_settings['environments_ip'][$_SERVER['REMOTE_ADDR']];
+        if (!file_exists('../Config/' . $env . '.env'))
+            die('Le fichier de configuration de l‘environnement <code>' . $env . '.env</code> est introuvable !');
+
+        (new \josegonzalez\Dotenv\Loader('../Config/' . $env . '.env'))->parse()->toEnv();
     }
 
     public function getDbSettings($key)
