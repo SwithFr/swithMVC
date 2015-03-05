@@ -6,9 +6,9 @@
 </head>
 <body>
 
-	<?= $this->Session->flash(); ?>
+<?= $this->Session->flash(); ?>
 
-	<?= $content_for_layout; ?>
+<?= $content_for_layout; ?>
 
 </body>
 </html>

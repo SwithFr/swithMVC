@@ -3,10 +3,12 @@
 namespace Core\Helpers;
 
 
-class Text {
+class Text
+{
 
-	public static function resize($text,$limit){
-		return substr($text, 0, $limit)."...";
-	}
+    public static function resize($text, $limit)
+    {
+        return substr($text, 0, $limit) . "...";
+    }
 
 } 

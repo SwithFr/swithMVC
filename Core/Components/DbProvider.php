@@ -3,7 +3,7 @@
 
 namespace Core\Components;
 
-use \PDO;
+use PDO;
 
 class DbProvider
 {
@@ -28,14 +28,14 @@ class DbProvider
                 $_ENV['DB_LOGIN'],
                 $_ENV['DB_PASSWORD'],
                 [
-                    PDO::ATTR_DEFAULT_FETCH_MODE=> constant($_ENV['DB_OPTION_FETCH_MODE']),
-                    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION
+                    PDO::ATTR_DEFAULT_FETCH_MODE => constant($_ENV['DB_OPTION_FETCH_MODE']),
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ]
             );
             $this->db->query('SET CHARACTER SET ' . $_ENV['DB_ENCODE']);
             $this->db->query('SET NAMES ' . $_ENV['DB_ENCODE']);
         } catch (PDOException $e) {
-            if($_ENV['DEBUG'])
+            if ($_ENV['DEBUG'])
                 die($e->getMessage());
         }
     }

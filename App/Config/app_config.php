@@ -4,7 +4,7 @@ return [
     'name' => 'Titre de mon site',
     'default_action' => 'index',
     'default_controller' => 'tests',
-    'prefixes' => ['admin','user'],
+    'prefixes' => ['admin', 'user'],
     'cryptMethod' => 'sha1',
     'environments_ip' => [
         '127.0.0.1' => 'dev',

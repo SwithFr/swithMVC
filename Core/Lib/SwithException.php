@@ -1,8 +1,10 @@
-<?php 
+<?php
 
 namespace Core\Lib;
-use \Exception;
 
-class SwithException extends Exception{
+use Exception;
+
+class SwithException extends Exception
+{
 
 }
