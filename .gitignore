@@ -32,3 +32,4 @@
 .idea/misc.xml
 
 .gitignore
+App/Config/dev.env
