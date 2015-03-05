@@ -12,6 +12,7 @@
  */
 function debug($var,$die = true){
 
+    if ($_ENV['DEBUG'])
 	echo "<pre>".var_dump($var)."</pre>";
 
 	if($die)
