@@ -1,55 +1,51 @@
 [
     {
-        "name": "michelf/php-markdown",
-        "version": "1.4.1",
-        "version_normalized": "1.4.1.0",
+        "name": "josegonzalez/dotenv",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/michelf/php-markdown.git",
-            "reference": "de9a19c7bf352d41cc99ed86c3c0ef17e87394b6"
+            "url": "https://github.com/josegonzalez/php-dotenv.git",
+            "reference": "0c730f35e50d96b8c08cc6cd23626e80f4f9102c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/michelf/php-markdown/zipball/de9a19c7bf352d41cc99ed86c3c0ef17e87394b6",
-            "reference": "de9a19c7bf352d41cc99ed86c3c0ef17e87394b6",
+            "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/0c730f35e50d96b8c08cc6cd23626e80f4f9102c",
+            "reference": "0c730f35e50d96b8c08cc6cd23626e80f4f9102c",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2014-05-05 02:43:50",
+        "time": "2015-03-02 16:04:03",
         "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-lib": "1.4.x-dev"
-            }
-        },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-0": {
-                "Michelf": ""
+                "josegonzalez\\Dotenv": [
+                    "src",
+                    "tests"
+                ]
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "BSD-3-Clause"
+            "MIT"
         ],
         "authors": [
             {
-                "name": "Michel Fortin",
-                "email": "michel.fortin@michelf.ca",
-                "homepage": "http://michelf.ca/",
-                "role": "Developer"
-            },
-            {
-                "name": "John Gruber",
-                "homepage": "http://daringfireball.net/"
+                "name": "Jose Diaz-Gonzalez",
+                "email": "dotenv@josegonzalez.com",
+                "homepage": "http://josediazgonzalez.com",
+                "role": "Maintainer"
             }
         ],
-        "description": "PHP Markdown",
-        "homepage": "http://michelf.ca/projects/php-markdown/",
+        "description": "dotenv file parsing for PHP",
+        "homepage": "https://github.com/josegonzalez/php-dotenv",
         "keywords": [
-            "markdown"
+            "configuration",
+            "dotenv",
+            "php"
         ]
     }
 ]
