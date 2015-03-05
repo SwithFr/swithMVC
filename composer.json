@@ -1,6 +1,6 @@
 {
-    "name": "swith/mvc",
-    "description": "Mon MVC",
+    "name": "swith/framework",
+    "description": "Mon framework MVC en php Homemade",
     "minimum-stability": "dev",
     "license": "proprietary",
     "authors": [
@@ -16,6 +16,6 @@
         }
     },
     "require": {
-
+        "josegonzalez/dotenv": "dev-master"
     }
 }
