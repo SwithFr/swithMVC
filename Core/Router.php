@@ -37,7 +37,7 @@ class Router
         $params = explode('/', $url);
 
         // On vérifie si on a un prefixe ou pas
-        if (in_array($params[0], Self::$prefixes)) {
+        if (in_array($params[0], self::$prefixes)) {
             // Si oui on le stock dans la request
             $request->prefixe = $params[0];
 
