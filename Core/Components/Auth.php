@@ -2,8 +2,6 @@
 
 namespace Core\Components;
 
-use App\Config\AppConfig;
-use Core\Models\Model;
 
 class Auth
 {
@@ -11,22 +9,19 @@ class Auth
     /**
      * Permet de connecter un utilisateur
      * @param  stdClass $data Les données postées
-     * @return bool              True si loggé, false sinon
+     * @return bool true si loggé, false sinon
      */
-    public function login($data)
-    {
-        $model = new Model();
-        $user = $model->getLogged(addslashes($data->login));
-        $crypt = AppConfig::$cryptMethode;
-        if ($user) {
-            if ($crypt($data->password) != $user->password) {
+    public function login($user,$data){
+        $user = $user->getLogged(addslashes($data->login));
+        if($user){
+            if(sha1($data->password) != $user->password){
                 return false;
-            } else {
+            }else{
                 $this->id = $_SESSION['id'] = $user->id;
                 $this->role = $_SESSION['role'] = $user->role;
                 return true;
             }
-        } else {
+        }else{
             return false;
         }
 
