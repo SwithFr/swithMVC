@@ -174,7 +174,7 @@ class Controller
     public function index()
     {
         $this->needRender = false;
-        echo "Configurez votre fichier <code>App/Config/AppConfig.php</code> avant tout !";
+        echo "Configurez votre fichier <code>App/Config/app_config.php</code> avant tout !";
     }
 
     /**
