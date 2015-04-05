@@ -202,33 +202,36 @@ class Model
      * @param $table
      * @return bool
      */
-    public function create($data, $table = null)
+    public function create(Array $data, $table = null)
     {
 
 
         if (method_exists($this, "beforeSave"))
             $this->beforeSave($this->data);
 
-        $fields = $values = [];
+        $fields = $values = $tmp = [];
 
         foreach ($data as $k => $v) {
             $fields[] = $k;
-            if (!is_numeric($v)) {
-                $values[] = "'$v'";
-            } else {
-                $values[] = "$v";
-            }
+            $tmp[] = ':' . $k;
+            $values[':'.$k] = $v;
         }
 
-
         $fields = "(" . implode(',', $fields) . ")";
-        $values = "(" . implode(',', $values) . ")";
+        $tmp = "(" . implode(',', $tmp) . ")";
 
         if ($table == null)
             $table = $this->table;
 
-        $this->bdd->query("INSERT INTO " . $table . " $fields VALUES $values");
-        return true;
+        $sql = 'INSERT INTO ' . $table . ' ' . $fields . ' VALUES ' . $tmp;
+
+        $pdost = $this->bdd->prepare($sql);
+        try {
+            $pdost->execute($values);
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 
     /**
@@ -236,24 +239,30 @@ class Model
      * @param  int $id l'id de l'entrée que l'on veut update
      * @param  array $data les données
      * @param  string $table le nom de la table si besoin
+     * @return bool
      */
     public function updateData($id, $data, $table = null)
     {
-        $values = [];
+        $values = $tmp = [];
 
         foreach ($data as $d => $v) {
-            if (!is_numeric($v)) {
-                $values[] = "$d ='$v'";
-            } else
-                $values[] = "$d =$v";
+            $values[':'.$d] = $v;
+            $tmp[] = $d . "=:" .$d;
         }
 
-        $values = implode(',', $values);
+        $tmp = implode(',', $tmp);
 
         if ($table == null)
             $table = $this->table;
 
-        $this->bdd->query("UPDATE " . $table . " SET $values WHERE id = $id");
+        $sql = 'UPDATE ' . $table . ' SET ' . $tmp . ' WHERE id = ' . $id;
+        $pdost = $this->bdd->prepare($sql);
+        try {
+            $pdost->execute($values);
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 
     /**
