@@ -1,0 +1,70 @@
+#!/usr/bin/php
+<?php
+
+// Définition des variables
+if (!isset($argv[1]))
+    die('Veuillez précisez un nom');
+else {
+    $name = $argv[1];
+    $controllerName = ucfirst($name) . 'sController';
+    $modelName = ucfirst($name);
+}
+
+if (isset($argv[2])) {
+    $params = explode('-', $argv[2]);
+    foreach ($params as $p) {
+        if($p == 'm')
+            m($modelName);
+        if($p == 'v')
+            v($name);
+        if($p == 'c')
+            c($controllerName);
+    }
+} else {
+    c($controllerName);
+    m($modelName);
+    v($name);
+}
+
+function c($controllerName)
+{
+    // Création du controller
+    $controllerFile = fopen('./App/Controllers/' . $controllerName . '.php', 'w+');
+    fputs($controllerFile, '<?php
+
+namespace App\Controllers;
+
+
+class ' . $controllerName . ' extends AppController
+{
+
+
+}');
+    fclose($controllerFile);
+}
+
+function m($modelName)
+{
+    // Création du model
+    $modelFile = fopen('./App/Models/' . $modelName . '.php', 'w+');
+    fputs($modelFile, '<?php
+
+namespace App\Models;
+
+
+class ' . $modelName . ' extends AppModel
+{
+
+
+}');
+    fclose($modelFile);
+}
+
+
+function v($name)
+{
+    // Création du dossier des vues
+    mkdir('./App/Views/' . ucfirst($name) . 's');
+}
+
+?>
