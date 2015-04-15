@@ -13,6 +13,8 @@ class Dispatcher
     // Objet Request qui contient toutes les variables utiles (controller, action, parmas, url...)
     public $request;
 
+    private $isVerified = false;
+
     public function __construct()
     {
         // On initialise l'objet Request
@@ -31,6 +33,9 @@ class Dispatcher
         } else {
             ini_set('display_errors', 0);
         }
+
+        if(!$this->isVerified)
+            $this->verify();
 
         // On charge le bon controller
         try {
@@ -74,6 +79,16 @@ class Dispatcher
             }
         }
         return new $controllerName($this->request, $this->request->controller);
+    }
+
+    private function verify()
+    {
+        if($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
+            echo "Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel <br><br>";
+        if($_ENV['DB_HOST'] == 'host_name' || $_ENV['DB_LOGIN'] == 'database_login' )
+            echo "Configurez votre fichier <code>App/Config/app_config.php</code> avant tout ! <br><br><br><br>";
+        
+        $this->isVerified = true;
     }
 
 }
