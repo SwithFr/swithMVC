@@ -182,7 +182,7 @@ class Model
      * @param  string $table le nom de la table
      * @return mixed [type]                 un object contenant les données demandées
      */
-    public function getFirst(array $conditions, array $joins = null, $table = null)
+    public function getFirst(array $conditions = null, array $joins = null, $table = null)
     {
         return current($this->get($conditions, $joins, $table));
     }
@@ -194,7 +194,7 @@ class Model
      * @param  string $table le nom de la table
      * @return mixed [type]                 un object contenant les données demandées
      */
-    public function getLast(array $conditions, array $joins = null, $table = null)
+    public function getLast(array $conditions = null, array $joins = null, $table = null)
     {
         return end($this->get($conditions, $joins, $table));
     }
