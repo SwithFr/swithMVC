@@ -177,9 +177,7 @@ class Controller
     public function index()
     {
         $this->needRender = false;
-        if($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
-            echo "Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel <br>";
-        echo "Configurez votre fichier <code>App/Config/app_config.php</code> avant tout ! <br>";
+        echo("Bienvenue ! Bonne utilisation de Swith Framework !");
     }
 
     /**
