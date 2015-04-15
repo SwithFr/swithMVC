@@ -39,12 +39,6 @@ class Model
     public $foreignKey;
 
     /**
-     * La base de donnée à utiliser
-     * @var string
-     */
-    public $database = 'default';
-
-    /**
      * L'instance PDO de la bdd
      * @var Object PDO
      */
@@ -68,7 +62,7 @@ class Model
         // Initialisation des variables
         $this->setNameTableAndModel();
 
-        if (is_null($this->bdd))
+        if (!$this->isConnected)
             $this->bdd = DbProvider::getDb();
 
     }
