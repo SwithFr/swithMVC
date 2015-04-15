@@ -151,8 +151,11 @@ class Controller
             $name = ucfirst(substr($this->name, 0, -1));
         }
         $modelName = "App\\Models\\" . $name;
-        if (!class_exists($modelName))
-            return false;
+        if (!class_exists($modelName)) {
+            $modelName = "Core\\Models\\" . $name;
+            if (!class_exists($modelName))
+                return false;
+        }
         if (!isset($this->$name)) {
             $this->$name = new $modelName($this->request->data);
         }
@@ -174,7 +177,9 @@ class Controller
     public function index()
     {
         $this->needRender = false;
-        echo "Configurez votre fichier <code>App/Config/app_config.php</code> avant tout !";
+        if($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
+            echo "Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel <br>";
+        echo "Configurez votre fichier <code>App/Config/app_config.php</code> avant tout ! <br>";
     }
 
     /**
