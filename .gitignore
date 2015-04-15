@@ -27,7 +27,6 @@
 .idea/swithMVC.iml
 
 .gitignore
-App/Config/dev.env
 
 composer.lock
 App/Views/Tests
