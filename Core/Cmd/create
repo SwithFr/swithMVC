@@ -71,7 +71,7 @@ function e($entityName)
 namespace App\Models\Entities;
 
 
-class ' . $entityName
+class ' . $entityName .
 {
 
 
