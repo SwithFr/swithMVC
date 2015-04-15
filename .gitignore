@@ -32,3 +32,4 @@ App/Config/dev.env
 composer.lock
 App/Views/Tests
 config.codekit
+vendor/josegonzalez/dotenv/
