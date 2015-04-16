@@ -1,7 +1,6 @@
 {
     "name": "swith/framework",
-    "description": "Mon framework MVC en php Homemade",
-    "minimum-stability": "stable",
+    "description": "Swith MVC est un framework PHP fait maison et en cours de developpement",
     "license": "proprietary",
     "authors": [
         {
