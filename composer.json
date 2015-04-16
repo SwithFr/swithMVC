@@ -1,7 +1,7 @@
 {
     "name": "swith/framework",
     "description": "Mon framework MVC en php Homemade",
-    "minimum-stability": "1.0.0",
+    "minimum-stability": "stable",
     "license": "proprietary",
     "authors": [
         {
