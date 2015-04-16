@@ -1,23 +1,23 @@
 [
     {
         "name": "josegonzalez/dotenv",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "0.6.0",
+        "version_normalized": "0.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/josegonzalez/php-dotenv.git",
-            "reference": "0c730f35e50d96b8c08cc6cd23626e80f4f9102c"
+            "reference": "c115996bbe105fd1066c4b550bfd84d1ed08e8f2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/0c730f35e50d96b8c08cc6cd23626e80f4f9102c",
-            "reference": "0c730f35e50d96b8c08cc6cd23626e80f4f9102c",
+            "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/c115996bbe105fd1066c4b550bfd84d1ed08e8f2",
+            "reference": "c115996bbe105fd1066c4b550bfd84d1ed08e8f2",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2015-03-02 16:04:03",
+        "time": "2015-03-02 01:55:01",
         "type": "library",
         "installation-source": "source",
         "autoload": {

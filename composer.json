@@ -16,6 +16,6 @@
         }
     },
     "require": {
-        "josegonzalez/dotenv": "dev-master"
+        "josegonzalez/dotenv": "0.6.0"
     }
 }
