@@ -1,0 +1,33 @@
+#!/usr/bin/php
+<?php
+    /**
+    * Fichier "point d'entrée" pour les commandes
+    * A ne pas toucher !!
+    * Pour utiliser une commande c'est simple :
+    * php Swith nom-de-commande [options]
+    */
+    $cmdName = '';
+    $options = '';
+    $fileName= '';
+
+    // On vérifie que la commande est valide
+    if(!isset($argv[1]) || !in_array($argv[1],['create']))
+        die("Erreur ! Commande inconnue ou mal utilisée \n");
+    else
+        $cmdName = $argv[1];
+
+    // Si on fait un create
+    if($cmdName == 'create' && !isset($argv[2]))
+        die("Veuillez précisez un nom pour vos fichiers. \n");
+    else {
+        $fileName = $argv[2];
+        if(isset($argv[3])) {
+            if(in_array($argv[3],['m','v','c','e'])) {
+                $options = $argv[3];
+            } else {
+                die("Erreur ! les options ne sont pas valides. \n");
+            }
+        }
+        system('Core/Cmd/create ' . $fileName . ' ' . $options);
+
+    }
