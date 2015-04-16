@@ -164,7 +164,7 @@ class Model
         $req = $this->bdd->query($query);
 
         if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS')
-            return $req->fetchAll(\PDO::FETCH_CLASS,'App\\Models\\Entities\\' . $this->name . 'Entity');
+            return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         else
             return $req->fetchAll();
     }
@@ -211,7 +211,7 @@ class Model
         foreach ($data as $k => $v) {
             $fields[] = $k;
             $tmp[] = ':' . $k;
-            $values[':'.$k] = $v;
+            $values[':' . $k] = $v;
         }
 
         $fields = "(" . implode(',', $fields) . ")";
@@ -243,8 +243,8 @@ class Model
         $values = $tmp = [];
 
         foreach ($data as $d => $v) {
-            $values[':'.$d] = $v;
-            $tmp[] = $d . "=:" .$d;
+            $values[':' . $d] = $v;
+            $tmp[] = $d . "=:" . $d;
         }
 
         $tmp = implode(',', $tmp);

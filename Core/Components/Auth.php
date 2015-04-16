@@ -11,17 +11,18 @@ class Auth
      * @param  stdClass $data Les données postées
      * @return bool true si loggé, false sinon
      */
-    public function login($user,$data){
+    public function login($user, $data)
+    {
         $user = $user->getLogged(addslashes($data->login));
-        if($user){
-            if(sha1($data->password) != $user->password){
+        if ($user) {
+            if (sha1($data->password) != $user->password) {
                 return false;
-            }else{
+            } else {
                 $this->id = $_SESSION['id'] = $user->id;
                 $this->role = $_SESSION['role'] = $user->role;
                 return true;
             }
-        }else{
+        } else {
             return false;
         }
 
