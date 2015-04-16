@@ -62,7 +62,7 @@ class Model
         // Initialisation des variables
         $this->setNameTableAndModel();
 
-        if (!$this->isConnected)
+        if (is_null($this->bdd))
             $this->bdd = DbProvider::getDb();
 
     }
@@ -174,7 +174,7 @@ class Model
      * @param  array $conditions les conditions que l'on veut
      * @param  array|null $joins Si l'on veut des joins
      * @param  string $table le nom de la table
-     * @return mixed [type]                 un object contenant les données demandées
+     * @return mixed [type] un object contenant les données demandées
      */
     public function getFirst(array $conditions = null, array $joins = null, $table = null)
     {
@@ -186,7 +186,7 @@ class Model
      * @param  array $conditions les conditions que l'on veut
      * @param  array|null $joins Si l'on veut des joins
      * @param  string $table le nom de la table
-     * @return mixed [type]                 un object contenant les données demandées
+     * @return mixed [type] un object contenant les données demandées
      */
     public function getLast(array $conditions = null, array $joins = null, $table = null)
     {
