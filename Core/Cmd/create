@@ -2,14 +2,10 @@
 <?php
 
 // Définition des variables
-if (!isset($argv[1]))
-    die('Veuillez précisez un nom');
-else {
-    $name = $argv[1];
-    $controllerName = ucfirst($name) . 'sController';
-    $modelName = ucfirst($name);
-    $entityName = ucfirst($name) . 'Entity';
-}
+$name = $argv[1];
+$controllerName = ucfirst($name) . 'sController';
+$modelName = ucfirst($name);
+$entityName = ucfirst($name) . 'Entity';
 
 if (isset($argv[2])) {
     $params = explode('-', $argv[2]);
