@@ -2,6 +2,7 @@
     "name": "swith/framework",
     "description": "Swith MVC est un framework PHP fait maison et en cours de developpement",
     "license": "proprietary",
+    "homepage": "http://mvc.swith.fr",
     "authors": [
         {
             "name": "SwithFr",
