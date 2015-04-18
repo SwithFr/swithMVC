@@ -22,3 +22,4 @@ Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans 
 - Checker la sécurité
 - Optimiser les requêtes **(secondaire)**
 - Ajout de commandes shell **(minoritaire)** **WIP**
+- Refaire le composant Auth
