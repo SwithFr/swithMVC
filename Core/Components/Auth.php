@@ -5,9 +5,12 @@ namespace Core\Components;
 
 class Auth
 {
+    private $id = false;
+    private $role = false;
 
     /**
      * Permet de connecter un utilisateur
+     * @param $user
      * @param  stdClass $data Les données postées
      * @return bool true si loggé, false sinon
      */
@@ -43,7 +46,7 @@ class Auth
      */
     public function id()
     {
-        return isset($_SESSION['id']) ? $_SESSION['id'] : false;
+        return $this->id;
     }
 
     /**
@@ -52,7 +55,7 @@ class Auth
      */
     public function role()
     {
-        return isset($_SESSION['role']) ? $_SESSION['role'] : false;
+        return $this->role;
     }
 
 
@@ -61,6 +64,7 @@ class Auth
      */
     public function logout()
     {
+        $this->id = $this->role = false;
         unset($_SESSION['id']);
         unset($_SESSION['role']);
     }
