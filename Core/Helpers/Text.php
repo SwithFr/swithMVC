@@ -6,9 +6,21 @@ namespace Core\Helpers;
 class Text
 {
 
-    public static function resize($text, $limit)
+    /**
+     * Permet de tronquer un texte
+     * @param $text
+     * @param $limit
+     * @return string
+     */
+    public static function cut($text, $limit)
     {
-        return substr($text, 0, $limit) . "...";
+        if (strlen($text) > $limit) {
+            $text = wordwrap($text, $limit, '\br');
+            $text = explode('\br', $text);
+            $text = $text[0] . '&nbsp;&hellip;';
+        }
+
+        return $text;
     }
 
 } 
