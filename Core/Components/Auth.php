@@ -10,13 +10,12 @@ class Auth
 
     /**
      * Permet de connecter un utilisateur
-     * @param $user
      * @param  stdClass $data Les données postées
      * @return bool true si loggé, false sinon
      */
-    public function login($user, $data)
+    public function login($data)
     {
-        $user = $user->getLogged(addslashes($data->login));
+        $user = DbProvider::getDb()->getLogged(addslashes($data->login));
         if ($user) {
             if (sha1($data->password) != $user->password) {
                 return false;
