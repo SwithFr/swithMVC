@@ -2,7 +2,6 @@
 
 namespace Core\Controllers;
 
-use Core\Components\Auth;
 use Core\Components\Session;
 use Core\Request;
 
@@ -12,10 +11,6 @@ use Core\Request;
  */
 class Controller
 {
-
-    /*
-        VARIABLES
-     */
 
     /**
      * Le nom du controller (pour connaitre le model plus facilement)
@@ -28,12 +23,6 @@ class Controller
      * @var Object Request
      */
     public $request;
-
-    /**
-     * Infos sur l'utilisateur connecté
-     * @var Object Auth
-     */
-    public $Auth = false;
 
     /**
      * La Session
@@ -71,11 +60,18 @@ class Controller
      */
     public $model;
 
-    public $helpers = [];
-
-    /*
-        METHODES
+    /**
+     * Tableau des composants à charger
+     * @var array
      */
+    protected $components = [];
+
+    /**
+     * Tableau des composants déjà chargés
+     * @var array
+     */
+    private $loadedComponents = [];
+
 
     public function __construct(Request $request = null, $name)
     {
@@ -84,8 +80,14 @@ class Controller
         $this->loadModel();
         if (!$this->Session)
             $this->Session = new Session();
-        if (!$this->Auth)
-            $this->Auth = new Auth();
+        
+        foreach ($this->components as $c) {
+            if (!array_key_exists($c,$this->loadedComponents)) {
+                $className = 'Core\\Components\\' . $c;
+                $this->$c = new $className();
+                $this->loadedComponents[] = $c;
+            }
+        }
     }
 
     /**
