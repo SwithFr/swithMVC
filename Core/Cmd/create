@@ -66,7 +66,7 @@ function e($entityName)
 {
     // Création de l'entité
     echo('Création de l\'entité ' . $entityName . '.php' . "\n");
-    if(!file_exists('./App/Models/Entities'))
+    if(!file_exists('./App/Models/Entities') && !is_dir('./App/Models/Entities'))
         mkdir('./App/Models/Entities');
     $entityFile = fopen('./App/Models/Entities/' . $entityName . '.php', 'w+');
     fputs($entityFile, '<?php
