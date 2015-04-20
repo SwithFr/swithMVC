@@ -206,7 +206,7 @@ class Model
      * @param $table
      * @return bool
      */
-    public function create(Array $data, $table = null)
+    public function create(\stdClass $data, $table = null)
     {
 
         if (method_exists($this, "beforeSave"))
@@ -227,7 +227,7 @@ class Model
             $table = $this->table;
 
         $sql = 'INSERT INTO ' . $table . ' ' . $fields . ' VALUES ' . $tmp;
-
+        
         $pdost = $this->bdd->prepare($sql);
         try {
             $pdost->execute($values);
@@ -240,11 +240,11 @@ class Model
     /**
      * Met à jour les données
      * @param  int $id l'id de l'entrée que l'on veut update
-     * @param  array $data les données
+     * @param array|\stdClass $data les données
      * @param  string $table le nom de la table si besoin
      * @return bool
      */
-    public function updateData($id, $data, $table = null)
+    public function update($id, \stdClass $data, $table = null)
     {
         if (method_exists($this, "beforeSave"))
             $this->beforeSave($this->data);
