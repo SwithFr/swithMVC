@@ -13,11 +13,12 @@ class Auth
      * @param  stdClass $data Les données postées
      * @return bool true si loggé, false sinon
      */
-    public function login($data)
+    public function login($userModel, $data)
     {
-        $user = DbProvider::getDb()->getLogged(addslashes($data->login));
+        $user = $userModel->getLogged(addslashes($data->login));
         if ($user) {
-            if (sha1($data->password) != $user->password) {
+            // on évite les collisions avec une surcouche de cryptage
+            if (sha1(crypt($data->password,$_ENV['SALT_KEY'])) != $user->password) {
                 return false;
             } else {
                 $this->id = $_SESSION['id'] = $user->id;
@@ -28,6 +29,17 @@ class Auth
             return false;
         }
 
+    }
+
+    /**
+     * Créer un nouvel utilisateur
+     * @param $userModel
+     * @param $data
+     */
+    public function register($userModel, $data){
+        $data->login = addslashes($data->login);
+        $data->password = sha1(crypt($data->password,$_ENV['SALT_KEY']));
+        $userModel->create($data,'users');
     }
 
     /**
