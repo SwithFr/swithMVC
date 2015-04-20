@@ -209,7 +209,6 @@ class Model
     public function create(Array $data, $table = null)
     {
 
-
         if (method_exists($this, "beforeSave"))
             $this->beforeSave($this->data);
 
@@ -247,6 +246,9 @@ class Model
      */
     public function updateData($id, $data, $table = null)
     {
+        if (method_exists($this, "beforeSave"))
+            $this->beforeSave($this->data);
+
         $values = $tmp = [];
 
         foreach ($data as $d => $v) {
@@ -276,9 +278,15 @@ class Model
      */
     public function delete($id, $table = null)
     {
+        if (method_exists($this, "beforeDelete"))
+            $this->beforeDelete($this->data);
+
         if ($table == null)
             $table = $this->table;
         $this->bdd->query("DELETE FROM " . $table . " WHERE id=$id");
+
+        if (method_exists($this, "afterDelete"))
+            $this->afterDelete($this->data);
     }
 
     /**
