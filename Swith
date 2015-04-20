@@ -22,12 +22,11 @@
     else {
         $fileName = $argv[2];
         if(isset($argv[3])) {
-            if(in_array($argv[3],['m','v','c','e'])) {
-                $options = $argv[3];
+            if(preg_match("/([mvce])([mvce])?([mvce])?([mvce])?/i",$argv[3], $options)) {
+                $options = implode('-',$options);
             } else {
                 die("Erreur ! les options ne sont pas valides. \n");
             }
         }
         system('Core/Cmd/create ' . $fileName . ' ' . $options);
-
     }
