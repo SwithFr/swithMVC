@@ -1,22 +1,30 @@
 <?php
 
-namespace Core\Components;
+namespace Core\Models\Behaviors;
 
-class Validator
+Trait Validator
 {
 
-    // Tableau des erreurs à retourner avec le message ['champ'=>'message']
+    /**
+     * Tableau des erreurs à retourner avec le message ['champ'=>'message']
+     * @var array
+     */
     public $errors = [];
+
+    /**
+     * Tableau des champs obligatoires
+     * @var array
+     */
+    private $areRequired = [];
 
     /**
      * Fonction principale du validateur. Renvoie vers les fonctions correpondantes aux règles de validation demandées
      * @param  array $data Les donnée à valider
-     * @param  array $rules Le tableaux des règles de validation
      * @return bool   true ou false selon si tous les champs sont valides ou non
      */
-    public function validate($data, array $rules)
+    public function validate($data)
     {
-
+        $rules = $this->validationRules;
         foreach ($data as $field => $value) {
 
             // Pour chaque données on vérifie si il existe une règle
@@ -24,7 +32,8 @@ class Validator
 
                 // Si on a une règle on va appeller la/les fonctions pour tester si les données sont valides
                 foreach ($rules[$field] as $k => $v) {
-
+                    if($v['ruleName'] == 'required')
+                        $this->areRequired[] = $field;
                     //$v['ruleName'] correspond au nom d'une fonction de validation
                     $this->$v['ruleName']($field, $value, isset($v['message']) ? $v['message'] : null);
 
@@ -44,8 +53,12 @@ class Validator
 
     /**
      * Vérifie si les données ne sont pas vides
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
      */
-    public function notEmpty($field, $value, $message = null)
+    public function required($field, $value, $message = null)
     {
 
         // Si la valeur (sans espace) n'est pas vide
@@ -71,11 +84,22 @@ class Validator
 
     /**
      * Vérifie si les données sont une chaine de caractères
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
      */
     public function isString($field, $value, $message = null)
     {
 
-        if (is_string(trim($value))) {
+        $value = trim($value);
+        $isRequired = array_key_exists($field,$this->areRequired);
+
+        if (
+            ( $isRequired && is_string($value) ) ||
+            ( !$isRequired && is_string($value) && !empty($value) ) ||
+            ( !$isRequired && empty($value) )
+        ) {
 
             return true;
 
@@ -92,11 +116,19 @@ class Validator
 
     /**
      * Vérifie si c'est un email au bon format
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
      */
     public function isMail($field, $value, $message = null)
     {
-
-        if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        $isRequired = array_key_exists($field,$this->areRequired);
+        if (
+            ( $isRequired && filter_var($value, FILTER_VALIDATE_EMAIL) ) ||
+            ( !$isRequired && filter_var($value, FILTER_VALIDATE_EMAIL) && !empty($value) ) ||
+            ( !$isRequired && empty($value) )
+        ) {
 
             return true;
 
@@ -115,11 +147,20 @@ class Validator
 
     /**
      * Vérifie si c'est un nombre
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
      */
     public function isInt($field, $value, $message = null)
     {
+        $isRequired = array_key_exists($field,$this->areRequired);
 
-        if (is_numeric($value)) {
+        if (
+            ( $isRequired && is_numeric($value) ) ||
+            ( !$isRequired && is_numeric($value) && !empty($value) ) ||
+            ( !$isRequired && empty($value) )
+        ) {
 
             return true;
 
@@ -135,7 +176,11 @@ class Validator
 
     }
 
-    // Retourne le message d'erreur du champ passé en paramettre
+    /**
+     * Retourne le message d'erreur du champ passé en paramettre
+     * @param $field
+     * @return bool
+     */
     public function message($field)
     {
         if (isset($this->errors[$field]))
