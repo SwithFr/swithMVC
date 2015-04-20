@@ -57,7 +57,7 @@ class Html
                 $option .= "$k='$v' ";
             }
         }
-        $return = "<img src='$src' alt='$alt' $option >";
+        $return = '<img src='. WEBROOT . DS . "img" . DS . $src .' alt="'.$alt.'"'.  $option .'>';
         return $return;
     }
 
