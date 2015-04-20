@@ -45,12 +45,6 @@ class Model
     protected $bdd;
 
     /**
-     * Tableau contenant les connexions
-     * @var Array
-     */
-    public $connexions = [];
-
-    /**
      * L'entité correspondant au model
      * @var null
      */
