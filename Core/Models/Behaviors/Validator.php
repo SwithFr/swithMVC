@@ -2,7 +2,7 @@
 
 namespace Core\Models\Behaviors;
 
-Trait Validator
+trait Validator
 {
 
     /**
