@@ -36,7 +36,11 @@ if ($cmdName == 'create') {
             }
         }
         system('clear');
-        system('Core/Cmd/create ' . $fileName . ' ' . $options);
+        $command = 'Core/Cmd/create ' . $fileName . ' ' . $options;
+        if (substr(php_uname(), 0, 7) == "Windows") {
+            $command = 'php ' . $command;
+        }
+        system($command);
     }
 }
 
