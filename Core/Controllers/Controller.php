@@ -72,17 +72,24 @@ class Controller
      */
     private $loadedComponents = [];
 
+    /**
+     * Nom de la vue
+     * @var null
+     */
+    public $view = null;
+
 
     public function __construct(Request $request = null, $name)
     {
         $this->request = $request;
+        $this->view = $this->request->action;
         $this->name = $name;
         $this->loadModel();
         if (!$this->Session)
             $this->Session = new Session();
-        
+
         foreach ($this->components as $c) {
-            if (!array_key_exists($c,$this->loadedComponents)) {
+            if (!array_key_exists($c, $this->loadedComponents)) {
                 $className = 'Core\\Components\\' . $c;
                 $this->$c = new $className();
                 $this->loadedComponents[] = $c;
@@ -100,6 +107,7 @@ class Controller
             return false;
         }
         extract($this->vars);
+
         $view = BASE . DS . 'App' . DS . 'Views' . DS . ucfirst($this->request->controller) . DS . $view . '.php';
         if (!file_exists($view)) {
             $this->error("Le fichier pour l'action {$this->request->action} est introuvable");
@@ -133,14 +141,15 @@ class Controller
      */
     public function error($message)
     {
-        header("HTTP/1.0 404 Not Found");
         $this->set('message', $message);
+        if ($this->rendered || !$this->needRender) {
+            return false;
+        }
         ob_start();
-        include BASE . DS . 'Core' . DS . 'Views' . DS . 'Layouts' . DS . 'Errors' . DS . '404.php';
+        include BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . 'Errors' . DS . '404.php';
         $content_for_layout = ob_get_clean();
-        include BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
+        include BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . 'Errors' . DS . 'default-errors-layout.php';
         $this->rendered = true;
-        die();
     }
 
     /**
