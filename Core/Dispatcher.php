@@ -32,7 +32,7 @@ class Dispatcher
 
         // On parse l'url (définition du controller, action,...)
         Router::parse($this->request);
-
+        
         // On affiche les erreurs ?
         if ($_ENV['DEBUG']) {
             error_reporting(E_ALL);
@@ -48,8 +48,8 @@ class Dispatcher
         try {
             $controller = $this->loadController();
         } catch (SwithException $e) {
-            $controller = new Controllers\Controller($this->request, "Controller");
-            $controller->error($e->getMessage());
+            $controller = new Controllers\Errors($this->request, "ErrorsController");
+            $controller->error('controllerNotFound',$this->request->controller);
         }
 
         if (method_exists($controller, "beforeRender")) {
@@ -65,7 +65,7 @@ class Dispatcher
         if (in_array($action, get_class_methods($controller))) {
             call_user_func_array([$controller, $action], $this->request->params);
         } else {
-            $controller->error("Le controller " . $this->request->controller . " n'a pas de methode " . $action);
+            $controller->error('methodeNotFound',$this->request->controller,$action);
         }
         $controller->render($controller->view);
     }
@@ -77,9 +77,9 @@ class Dispatcher
      */
     private function loadController()
     {
-        $controllerName = 'App\Controllers\\' . ucfirst($this->request->controller) . 'Controller';
+        $controllerName = 'App\\Controllers\\' . ucfirst($this->request->controller) . 'Controller';
         if (!class_exists($controllerName)) {
-            $controllerName = 'Core\Controllers\\' . ucfirst($this->request->controller);
+            $controllerName = 'Core\\Controllers\\' . ucfirst($this->request->controller);
             if (!class_exists($controllerName)) {
                 throw new SwithException("Controller introuvable", 404);
                 return false;
