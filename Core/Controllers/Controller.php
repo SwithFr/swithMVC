@@ -107,15 +107,24 @@ class Controller
             return false;
         }
         extract($this->vars);
-
         $view = BASE . DS . 'App' . DS . 'Views' . DS . ucfirst($this->request->controller) . DS . $view . '.php';
         if (!file_exists($view)) {
-            $this->error("Le fichier pour l'action {$this->request->action} est introuvable");
+            $view = BASE . DS . 'Core' . DS . 'Views' . DS . ucfirst($this->request->controller) . DS . $this->request->action . '.php';
+            if (!file_exists($view)) {
+                $this->error("viewNotFound",$this->request->controller,$this->view);
+            }
         }
         ob_start();
         require($view);
         $content_for_layout = ob_get_clean();
-        require BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
+        $layout = BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
+        if (!file_exists($layout)) {
+            $layout = BASE . DS . 'Core' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
+            if (!file_exists($layout)) {
+                $this->error("layoutNotFound", $this->layout);
+            }
+        }
+        require($layout);
         $this->rendered = true;
     }
 
@@ -136,20 +145,18 @@ class Controller
     }
 
     /**
-     * Permet de renvoyer une vue 404
-     * @param  string $message Le message d'erreur
+     * Permet de renvoyer vers une page d'erreur
+     * @param $type
      */
-    public function error($message)
+    public function error($type,$ctrlName = null, $methodeName = null, $layout = null)
     {
-        $this->set('message', $message);
-        if ($this->rendered || !$this->needRender) {
-            return false;
+        if($type == 'controllerNotFound') {
+            $this->redirect('errors/' . $type . '/' . $ctrlName);
+        } elseif($type == 'methodeNotFound' || $type == 'viewNotFound') {
+            $this->redirect('errors/' . $type . '/' . $ctrlName . '/' . $methodeName);
+        }elseif($type == 'layoutNotFound') {
+            $this->redirect('errors/' . $type . '/' . $layout);
         }
-        ob_start();
-        include BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . 'Errors' . DS . '404.php';
-        $content_for_layout = ob_get_clean();
-        include BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . 'Errors' . DS . 'default-errors-layout.php';
-        $this->rendered = true;
     }
 
     /**
