@@ -67,7 +67,7 @@ class Dispatcher
         } else {
             $controller->error("Le controller " . $this->request->controller . " n'a pas de methode " . $action);
         }
-        $controller->render($action);
+        $controller->render($controller->view);
     }
 
     /**
