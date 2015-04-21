@@ -1,41 +1,47 @@
 #!/usr/bin/php
 <?php
-    /**
-    * Fichier "point d'entrée" pour les commandes
-    * A ne pas toucher !!
-    * Pour utiliser une commande c'est simple :
-    * php Swith nom-de-commande [options]
-    */
-    $cmdName = '';
-    $options = '';
-    $fileName= '';
-    $knowedCmd= ['create','h', '-h', 'help', '-help'];
+/**
+ * Fichier "point d'entrée" pour les commandes
+ * A ne pas toucher !!
+ * Pour utiliser une commande c'est simple :
+ * php Swith nom-de-commande [options]
+ */
 
-    // On vérifie que la commande est valide
-    if( !isset($argv[1]) || !in_array($argv[1],$knowedCmd) ) {
-        die("\n\n∆ Erreur ! Commande inconnue ou mal utilisée \nutilisez php Swith -h pour afficher l'aide\n");
+$cmdName = '';
+$options = '';
+$fileName = '';
+$knowedCmd = ['create', 'h', '-h', 'help', '-help'];
+
+require('./Core/Cmd/lib.php');
+
+// On vérifie que la commande est valide
+if (!isset($argv[1]) || !in_array($argv[1], $knowedCmd)) {
+    die("\n\n∆ Erreur ! Commande inconnue ou mal utilisée \nutilisez php Swith -h pour afficher l'aide\n");
+} else {
+    $cmdName = $argv[1];
+}
+
+// Si on fait un create
+if ($cmdName == 'create') {
+    if (!isset($argv[2])) {
+        die("∆ Veuillez précisez un nom pour vos fichiers. \n");
     } else {
-        $cmdName = $argv[1];
-    }
-
-    // Si on fait un create
-    if( $cmdName == 'create' ) {
-        if (!isset($argv[2])) {
-            die("∆ Veuillez précisez un nom pour vos fichiers. \n");
-        } else {
-            $fileName = $argv[2];
-            if (isset($argv[3])) {
-                if (preg_match("/([mvce])([mvce])?([mvce])?([mvce])?/i", $argv[3], $options)) {
-                    $options = implode('-', $options);
-                } else {
-                    die("∆ Erreur ! les options ne sont pas valides. \n");
-                }
+        $fileName = $argv[2];
+        if (isset($argv[3])) {
+            if (preg_match("/([mvce])([mvce])?([mvce])?([mvce])?/i", $argv[3], $options)) {
+                unset($options[0]);
+                $options = implode('-', $options);
+            } else {
+                die("∆ Erreur ! les options ne sont pas valides. \n");
             }
-            system('Core/Cmd/create ' . $fileName . ' ' . $options);
         }
+        system('clear');
+        system('Core/Cmd/create ' . $fileName . ' ' . $options);
     }
+}
 
-    // Si on fait un help ou -h ou -help ou h
-    if( $cmdName == 'h' || $cmdName == '-h' || $cmdName == 'help' || $cmdName == '-help' ) {
-        system('Core/Cmd/help');
-    }
+// Si on fait un help ou -h ou -help ou h
+if ($cmdName == 'h' || $cmdName == '-h' || $cmdName == 'help' || $cmdName == '-help') {
+    system('clear');
+    system('Core/Cmd/help');
+}
