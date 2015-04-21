@@ -9,7 +9,7 @@
     $cmdName = '';
     $options = '';
     $fileName= '';
-    $knowedCmd= ['create','h', '-h', 'help', '-help','view'];
+    $knowedCmd= ['create','h', '-h', 'help', '-help'];
 
     // On vérifie que la commande est valide
     if( !isset($argv[1]) || !in_array($argv[1],$knowedCmd) ) {
@@ -38,12 +38,4 @@
     // Si on fait un help ou -h ou -help ou h
     if( $cmdName == 'h' || $cmdName == '-h' || $cmdName == 'help' || $cmdName == '-help' ) {
         system('Core/Cmd/help');
-    }
-
-    if( $cmdName == 'view' ) {
-        if (!isset($argv[2]) || !file_exists('./App/Controllers/' . ucfirst($argv[2])) . 'Controller.php' ) {
-            die("\n∆ Controlleur introuvable ! Veuillez précisez le controller. \n");
-        } else {
-            var_dump('yes');die();
-        }
     }
