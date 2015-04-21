@@ -10,9 +10,16 @@ use Core\Lib\SwithException;
 class Dispatcher
 {
 
-    // Objet Request qui contient toutes les variables utiles (controller, action, parmas, url...)
+    /**
+     * Objet Request qui contient toutes les variables utiles (controller, action, parmas, url...)
+     * @var Request
+     */
     public $request;
 
+    /**
+     * Vérifie que les information de base on bien été configurées
+     * @var bool
+     */
     private $isVerified = false;
 
     public function __construct()
@@ -54,7 +61,7 @@ class Dispatcher
             $action = $this->request->prefixe . "_" . $this->request->action;
         else
             $action = $this->request->action;
-
+        
         if (in_array($action, get_class_methods($controller))) {
             call_user_func_array([$controller, $action], $this->request->params);
         } else {
@@ -83,10 +90,12 @@ class Dispatcher
 
     private function verify()
     {
-        if ($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
-            echo "Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel <br><br>";
-        if ($_ENV['DB_HOST'] == 'host_name' || $_ENV['DB_LOGIN'] == 'database_login')
-            echo "Configurez votre fichier <code>App/Config/app_config.php</code> avant tout ! <br><br><br><br>";
+        echo "<div class='container'>";
+            if ($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
+                echo "<div class='alert alert-warning'>Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel</div>";
+            if ($_ENV['DB_HOST'] == 'host_name' || $_ENV['DB_LOGIN'] == 'database_login')
+                echo "<div class='alert alert-warning'>Configurez votre fichier <code>App/Config/app_config.php</code> avant tout !</div>";
+        echo "</div>";
 
         $this->isVerified = true;
     }
