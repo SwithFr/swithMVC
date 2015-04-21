@@ -3,7 +3,7 @@
 return [
     'name' => 'Titre de mon site',
     'default_action' => 'index',
-    'default_controller' => 'controller',
+    'default_controller' => 'home',
     'prefixes' => ['admin', 'user'],
     'environments_ip' => [
         '127.0.0.1' => 'dev',
