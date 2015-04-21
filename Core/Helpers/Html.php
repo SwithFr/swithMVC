@@ -64,19 +64,21 @@ class Html
     /**
      * Génère un lien css
      * @param $name
+     * @return string
      */
     public static function css($name)
     {
-        echo "<link rel='stylesheet' type='text/css' href='" . WEBROOT . DS . "css" . DS . "$name.css' media='screen' title='Normal' />";
+        return "<link rel='stylesheet' type='text/css' href='" . WEBROOT . "css" . DS . "$name.css' media='screen' title='Normal' />";
     }
 
     /**
      * Génère un lien js
      * @param $name
+     * @return string
      */
     public static function js($name)
     {
-        echo "<script type='text/javascript' src='" . WEBROOT . DS . "js" . DS . "$name.js'></script>";
+        return "<script type='text/javascript' src='" . WEBROOT . "js" . DS . "$name.js'></script>";
     }
 
     /**
