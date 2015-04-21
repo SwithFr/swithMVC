@@ -1,4 +1,5 @@
 #!/usr/bin/php
+<?php exec('clear'); ?>
 --------------------------------------------------------
 | Manuel d'utilisation des lignes de commandes de Swith |
 | Les commandes sont simple d'utilisation :             |
