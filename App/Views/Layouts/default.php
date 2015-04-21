@@ -1,14 +1,18 @@
+<?php use Core\Helpers\Html; ?>
 <!doctype html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Nom du site</title>
+    <title><?= $title_for_layout; ?></title>
+    <?= Html::css('default'); ?>
 </head>
 <body>
 
 <?= $this->Session->flash(); ?>
 
-<?= $content_for_layout; ?>
+<div class="container">
+    <?= $content_for_layout; ?>
+</div>
 
 </body>
 </html>
