@@ -18,8 +18,9 @@ Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans 
 ##TODO
 - Les emails **(minoritaire)**
 - ~~Les fonctions de recherche~~ **(DONE)**
-- Optimiser le système d'envrionnement **(prioritaire)**
-- Checker la sécurité
+- Optimiser le système d'envrionnement **(minoritaire)**
+- Checker la sécurité 
 - Optimiser les requêtes **(secondaire)**
 - Ajout de commandes shell **(minoritaire)** **WIP**
-- Refaire le composant Auth
+- ~~Refaire le composant Auth~~ **(DONE)**
+- S'occuper des exceptions et erreurs **WIP**
