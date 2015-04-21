@@ -1,9 +1,10 @@
 #!/usr/bin/php
--------------------------------------------------------
+--------------------------------------------------------
 | Manuel d'utilisation des lignes de commandes de Swith |
 | Les commandes sont simple d'utilisation :             |
 | php Swith nom-de-la-commande [options]                |
 | Les options sont souvent optionnelles !               |
+--------------------------------------------------------
 
 Liste des commandes :
 
