@@ -174,15 +174,6 @@ class Controller
     }
 
     /**
-     * Action par défaut si aucune autre n'est définie
-     */
-    public function index()
-    {
-        $this->needRender = false;
-        echo("Bienvenue ! Bonne utilisation de Swith Framework !");
-    }
-
-    /**
      * Permet d'afficher un élément (~= widget)
      * @param $name le nom de l'élément que l'on souhaite afficher
      */
