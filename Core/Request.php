@@ -19,7 +19,7 @@ class Request
     public function __construct()
     {
         $app = App::getInstance();
-        $default_controller = $app->getAppSettings("default_controller");
+        $default_controller = ucfirst($app->getAppSettings("default_controller"));
 
         if (isset($_SERVER['PATH_INFO'])) {
             $this->url = $_SERVER['PATH_INFO'];
@@ -36,8 +36,9 @@ class Request
             unset($_POST);
         }
 
-        if (isset($_GET['paginate']) && is_numeric($_GET['paginate']) && $_GET['paginate'] > 0)
+        if (isset($_GET['paginate']) && is_numeric($_GET['paginate']) && $_GET['paginate'] > 0) {
             $this->page = round($_GET['paginate']);
+        }
     }
 
 
