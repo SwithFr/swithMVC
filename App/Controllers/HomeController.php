@@ -10,7 +10,7 @@ class HomeController extends AppController
      */
     public function index()
     {
-
+        // Votre code ici.
     }
 
 }
