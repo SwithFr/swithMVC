@@ -10,6 +10,7 @@ class Request
     public $url,             // url appellée par l'utilisateur
         $action,          // Action demandée
         $controller,      // Controller demandé
+        $referer = null,  // Page précédante
         $params,          // Les paramettres requis
         $prefixe = false, // Le prefixe requis si besoin
         $isPost = false,  // La methode est de type post ?
@@ -25,6 +26,11 @@ class Request
             $this->url = $_SERVER['PATH_INFO'];
         } else {
             $this->url = !is_null($default_controller) ? $default_controller : "Controller" . "/" . $app->getAppSettings("default_action");
+        }
+
+        if(isset($_SERVER['HTTP_REFERER'])) {
+            $root = addcslashes(ROOT,'/');
+            $this->referer = preg_split('/'.$root.'/',$_SERVER['HTTP_REFERER'])[1];
         }
 
         if (!empty($_POST)) {
