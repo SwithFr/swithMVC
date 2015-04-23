@@ -312,4 +312,22 @@ class Model
         return $req->fetch();
     }
 
+    /**
+     * Permet de faire un select avec une pagination
+     * @param array $conditions
+     * @param $nbPerPage
+     * @return mixed
+     */
+    public function paginate(array $conditions = null, $nbPerPage){
+        if(!isset($_GET['paginate'])) {
+            $_GET['paginate'] = 1;
+        }
+        $conditions['offset'] = $nbPerPage * ($_GET['paginate'] - 1);
+        $conditions['limit'] = $nbPerPage;
+        $total = $this->count();
+        $d['nbPages'] = ceil($total / $nbPerPage);
+        $d['results'] = $this->get($conditions);
+        return $d;
+    }
+
 }
