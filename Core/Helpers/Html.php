@@ -43,6 +43,43 @@ class Html
     }
 
     /**
+     * Créer un lien externe
+     * @param $lien
+     * @param $name
+     * @param array $params
+     * @param array $options
+     * @return string
+     */
+    public static function url($lien, $name, array $params = null, array $options = null)
+    {
+        $return = "<a href='" . $lien;
+        $param = $option = "";
+
+        if ($params != null) {
+            $count = count($params);
+            foreach ($params as $k => $v) {
+                $param .= "/$v";
+            }
+        }
+        $return .= $param . "' ";
+
+        if ($options != null) {
+            foreach ($options as $k => $v) {
+                $option .= "$k='$v' ";
+            }
+            $return .= $option;
+        }
+
+        if (isset($count) && $count != 1) {
+            $return .= "' >$name</a>";
+        } else {
+            $return .= " >$name</a>";
+        }
+
+        return $return;
+    }
+
+    /**
      * Génère une balise img
      * @param $src
      * @param null $alt
