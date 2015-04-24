@@ -30,7 +30,8 @@ class Request
 
         if(isset($_SERVER['HTTP_REFERER'])) {
             $root = addcslashes(ROOT,'/');
-            $this->referer = preg_split('/'.$root.'/',$_SERVER['HTTP_REFERER'])[1];
+            $parts = preg_split('/'.$root.'/',$_SERVER['HTTP_REFERER']);
+            $this->referer = isset($parts[1]) ? $parts[1] : $parts[0];
         }
 
         if (!empty($_POST)) {
