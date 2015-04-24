@@ -82,7 +82,7 @@ class Controller
     public function __construct(Request $request = null, $name)
     {
         $this->request = $request;
-        $this->request->prefixe ? $this->request->prefixe . '_' . $this->request->action : $this->request->action;
+        $this->view = $this->request->prefixe ? $this->request->prefixe . '_' . $this->request->action : $this->request->action;
         $this->name = $name;
         $this->loadModel();
         if (!$this->Session)
