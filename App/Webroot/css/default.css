@@ -99,7 +99,7 @@ h1 {
 }
 
 /* ===============
-   alert
+   ALERT
    =============== */
 .alert {
     width: 100%;
@@ -114,4 +114,15 @@ h1 {
     
     border: 1px solid #e67e22;
     background-color: #f39c12;
+}
+
+/* ===============
+   TYPOGRAPHY
+   =============== */
+.doc-help {
+    text-align: center;
+}
+
+.doc-link, .doc-link:visited {
+    color: #afa376;
 }
