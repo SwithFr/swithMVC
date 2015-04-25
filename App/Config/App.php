@@ -5,11 +5,23 @@ namespace App\Config;
 
 class App
 {
-
+    /**
+     * Regroupe les configrations définies dans app_config.php
+     * @var array|mixed
+     */
     private $app_settings = [];
+
+    /**
+     * Singleton de l'instance App
+     * @var
+     */
     private static $_instance;
 
 
+    /**
+     * Retourne le singleton instancié
+     * @return App
+     */
     public static function getInstance()
     {
         if (is_null(self::$_instance)) {
@@ -31,6 +43,11 @@ class App
         (new \josegonzalez\Dotenv\Loader('../Config/' . $env . '.env'))->parse()->toEnv();
     }
 
+    /**
+     * Récupéré une configuration de l'App
+     * @param $key
+     * @return null
+     */
     public function getAppSettings($key)
     {
         if (!isset($this->app_settings[$key])) {
