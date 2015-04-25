@@ -22,6 +22,9 @@ class Dispatcher
      */
     private $isVerified = false;
 
+    /**
+     *
+     */
     public function __construct()
     {
         // On initialise l'objet Request
@@ -38,8 +41,9 @@ class Dispatcher
             ini_set('display_errors', 0);
         }
 
-        if (!$this->isVerified)
+        if (!$this->isVerified) {
             $this->verify();
+        }
 
         // On charge le bon controller
         try {
@@ -64,6 +68,7 @@ class Dispatcher
         } else {
             $controller->error('methodeNotFound',$this->request->controller,$action);
         }
+
         $controller->render($controller->view);
     }
 
