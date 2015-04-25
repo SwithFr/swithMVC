@@ -7,7 +7,7 @@ use App\Config\App;
 class Request
 {
 
-    public $url,             // url appellée par l'utilisateur
+    public $url,          // url appellée par l'utilisateur
         $action,          // Action demandée
         $controller,      // Controller demandé
         $referer = null,  // Page précédante
@@ -15,7 +15,7 @@ class Request
         $prefixe = false, // Le prefixe requis si besoin
         $isPost = false,  // La methode est de type post ?
         $data = false,    // Les données postées
-        $page = 1;         // Pour la pagination
+        $page = 1;        // Pour la pagination
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class Request
         if (isset($_SERVER['PATH_INFO'])) {
             $this->url = $_SERVER['PATH_INFO'];
         } else {
-            $this->url = !is_null($default_controller) ? $default_controller : "Controller" . "/" . $app->getAppSettings("default_action");
+            $this->url = ( !is_null($default_controller) ? $default_controller : "Controller" ) . "/"  . $app->getAppSettings("default_action");
         }
 
         if(isset($_SERVER['HTTP_REFERER'])) {
