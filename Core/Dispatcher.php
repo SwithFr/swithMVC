@@ -27,9 +27,6 @@ class Dispatcher
         // On initialise l'objet Request
         $this->request = new Request();
 
-        // On définit les prefixes s'il y en a
-        Router::setPrefixes();
-
         // On parse l'url (définition du controller, action,...)
         Router::parse($this->request);
         

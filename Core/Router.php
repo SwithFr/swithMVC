@@ -3,7 +3,6 @@
 namespace Core;
 
 use App\Config\App;
-use App\Config\AppConfig;
 
 class Router
 {
@@ -19,8 +18,9 @@ class Router
      */
     public static function setPrefixes()
     {
-        if (App::getInstance()->getAppSettings("prefixes"))
+        if (App::getInstance()->getAppSettings("prefixes")) {
             Self::$prefixes = App::getInstance()->getAppSettings("prefixes");
+        }
     }
 
     /**
@@ -30,6 +30,10 @@ class Router
      */
     public static function parse(Request $request)
     {
+
+        // On définit les prefixes s'il y en a
+        Router::setPrefixes();
+
         // On enlève les / en début et fin d'url
         $url = trim($request->url, '/');
 
