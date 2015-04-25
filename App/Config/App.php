@@ -37,8 +37,9 @@ class App
 
         // Chargement de l'envrionnement
         $env = $this->app_settings['environments_ip'][$_SERVER['SERVER_ADDR']];
-        if (!file_exists('../Config/' . $env . '.env'))
+        if (!file_exists('../Config/' . $env . '.env')) {
             die('Le fichier de configuration de l‘environnement <code>' . $env . '.env</code> est introuvable !');
+        }
 
         (new \josegonzalez\Dotenv\Loader('../Config/' . $env . '.env'))->parse()->toEnv();
     }
