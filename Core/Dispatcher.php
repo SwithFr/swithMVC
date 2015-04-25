@@ -32,7 +32,7 @@ class Dispatcher
 
         // On parse l'url (définition du controller, action,...)
         Router::parse($this->request);
-        
+
         // On affiche les erreurs ?
         if ($_ENV['DEBUG']) {
             error_reporting(E_ALL);
@@ -50,7 +50,7 @@ class Dispatcher
             $controller = $this->loadController();
         } catch (SwithException $e) {
             $controller = new Controllers\Errors($this->request, "ErrorsController");
-            $controller->error('controllerNotFound',$this->request->controller);
+            $controller->error('controllerNotFound', $this->request->controller);
         }
 
         if (method_exists($controller, "beforeRender")) {
@@ -62,11 +62,11 @@ class Dispatcher
             $action = $this->request->prefixe . "_" . $this->request->action;
         else
             $action = $this->request->action;
-        
+
         if (in_array($action, get_class_methods($controller))) {
             call_user_func_array([$controller, $action], $this->request->params);
         } else {
-            $controller->error('methodeNotFound',$this->request->controller,$action);
+            $controller->error('methodeNotFound', $this->request->controller, $action);
         }
 
         $controller->render($controller->view);
@@ -93,10 +93,10 @@ class Dispatcher
     private function verify()
     {
         echo "<div class='container'>";
-            if ($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
-                echo "<div class='alert alert-warning'>Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel</div>";
-            if ($_ENV['DB_HOST'] == 'host_name' || $_ENV['DB_LOGIN'] == 'database_login')
-                echo "<div class='alert alert-warning'>Configurez votre fichier <code>App/Config/app_config.php</code> avant tout !</div>";
+        if ($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be')
+            echo "<div class='alert alert-warning'>Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel</div>";
+        if ($_ENV['DB_HOST'] == 'host_name' || $_ENV['DB_LOGIN'] == 'database_login')
+            echo "<div class='alert alert-warning'>Configurez votre fichier <code>App/Config/app_config.php</code> avant tout !</div>";
         echo "</div>";
 
         $this->isVerified = true;
