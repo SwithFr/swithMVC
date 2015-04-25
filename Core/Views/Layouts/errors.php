@@ -10,9 +10,8 @@
 
 <div class="container">
     <?= $content_for_layout; ?>
+    <?= \Core\Helpers\Html::link($this->request->referer,'Retour'); ?>
 </div>
 
 </body>
 </html>
-
-
