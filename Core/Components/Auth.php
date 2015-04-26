@@ -21,8 +21,8 @@ class Auth
             if (sha1(crypt($data->password,$_ENV['SALT_KEY'])) != $user->password) {
                 return false;
             } else {
-                $this->id = $_SESSION['id'] = $user->id;
-                $this->role = $_SESSION['role'] = $user->role;
+                $_SESSION['id'] = $user->id;
+                $_SESSION['role'] = $user->role;
                 return true;
             }
         } else {
