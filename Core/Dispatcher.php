@@ -63,7 +63,8 @@ class Dispatcher
         else
             $action = $this->request->action;
 
-        if (in_array($action, get_class_methods($controller))) {
+        $availablesActions = array_diff(get_class_methods($controller),get_class_methods(get_parent_class($controller)));
+        if (in_array($action, $availablesActions)) {
             call_user_func_array([$controller, $action], $this->request->params);
         } else {
             $controller->error('methodeNotFound', $this->request->controller, $action);
