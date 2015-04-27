@@ -96,6 +96,9 @@ class Router
 
         // On parcoure les routes enregistrées via la fonction join
         foreach (self::$routes as $routedUrl) {
+            // On initialise les erreurs à 0;
+            $errors = 0;
+
             // On regarde si on a des paramettres définis par {param}
             preg_match_all('/(\/?{[0-9a-zA-Z\-]+}\/?)/', $routedUrl['url'], $params);
             // Si c'est le cas
@@ -118,12 +121,8 @@ class Router
 
             // On regarde si la route courrante ($routedUrl['url']) est présente dans l'url de l'utilisateur
             preg_match('/(' . addcslashes($routedUrl['url'], '/') . ')/', $r_url, $matches);
-
             // Si oui
             if ($matches) {
-
-                $errors = 0;
-
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
                 if($params) {
                     $combinedParams = [];
