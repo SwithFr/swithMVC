@@ -118,14 +118,18 @@ class Router
                     $params[$k] = preg_replace('/}\/?/', '', $params[$k]);
                 }
             }
-
+            
             // On regarde si la route courrante ($routedUrl['url']) est présente dans l'url de l'utilisateur
             preg_match('/(' . addcslashes($routedUrl['url'], '/') . ')/', $r_url, $matches);
+
             // Si oui
             if ($matches) {
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
                 if($params) {
                     $combinedParams = [];
+                    if(count($params) != count($params_url)) {
+                        die('Url invalide !');
+                    }
                     for ($i = 0; $i < count($params); $i++) {
                         $combinedParams[$params[$i]] = $params_url[$i];
                     }
@@ -138,13 +142,15 @@ class Router
                         }
                     }
                 }
+                if ($errors == 0) {
+                    $request->controller = $routedUrl['params']['controller'];
+                    $request->action = $routedUrl['params']['action'];
+                    $request->params = $params_url;
+                }
             }
         }
         // Si on a pas d'erreur on modifie la requete
         if ($errors == 0) {
-            $request->controller = $routedUrl['params']['controller'];
-            $request->action = $routedUrl['params']['action'];
-            $request->params = $params_url;
             return $request;
         } else {
             die('Url invalide');
