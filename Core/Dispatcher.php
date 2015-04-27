@@ -33,6 +33,11 @@ class Dispatcher
         // On parse l'url (définition du controller, action,...)
         Router::parse($this->request);
 
+        if($_ENV['USE_ROUTES']) {
+            require('../Config/routes.php');
+            $this->request = Router::run($this->request);
+        }
+
         // On affiche les erreurs ?
         if ($_ENV['DEBUG']) {
             error_reporting(E_ALL);
