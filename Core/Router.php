@@ -13,6 +13,8 @@ class Router
      */
     static $prefixes = [];
 
+    static $routes = [];
+
     /**
      * Permet de définir les préfixes
      */
@@ -69,6 +71,85 @@ class Router
             $request->action = App::getInstance()->getAppSettings("default_action");
         }
         $request->params = array_slice($params, 2);
+
+    }
+
+    /**
+     * créer une connexion d'url
+     * @param $url
+     * @param array $params
+     */
+    public static function join($url, array $params = null)
+    {
+        self::$routes[] = ['url' => $url, 'params' => $params];
+    }
+
+    /**
+     * Check la requete et redirige si besoin
+     * @param Request $request
+     * @return Request
+     */
+    public static function run(Request $request)
+    {
+        // url de l'utilisateur
+        $r_url = $request->url;
+
+        // On parcoure les routes enregistrées via la fonction join
+        foreach (self::$routes as $routedUrl) {
+            // On regarde si on a des paramettres définis par {param}
+            preg_match_all('/(\/?{[0-9a-zA-Z\-]+}\/?)/', $routedUrl['url'], $params);
+            // Si c'est le cas
+            if ($params) {
+                // On prend le premier resultat (truc chelou du preg_match qui retourne 2 resultats...)
+                $params = $params[0];
+
+                // On prend le bout de route qui nous interesse (donc sans les paramettres)
+                $routedUrl['url'] = str_replace($params, '', $routedUrl['url']);
+
+                // On récupère les paramettres de l'url de l'utilisateur
+                $params_url = trim(str_replace($routedUrl['url'], '', $r_url), '/');
+                $params_url = explode('/', $params_url);
+                // Et on leur enlève les /, { et }
+                foreach ($params as $k => $v) {
+                    $params[$k] = preg_replace('/(\/?\{)/', '', $v);
+                    $params[$k] = preg_replace('/}\/?/', '', $params[$k]);
+                }
+            }
+
+            // On regarde si la route courrante ($routedUrl['url']) est présente dans l'url de l'utilisateur
+            preg_match('/(' . addcslashes($routedUrl['url'], '/') . ')/', $r_url, $matches);
+
+            // Si oui
+            if ($matches) {
+
+                $errors = 0;
+
+                // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
+                if($params) {
+                    $combinedParams = [];
+                    for ($i = 0; $i < count($params); $i++) {
+                        $combinedParams[$params[$i]] = $params_url[$i];
+                    }
+                    // On vérifie qu'ils correspondent bien au forma souhaité
+                    foreach ($routedUrl['params']['params'] as $pp => $r) {
+                        foreach ($combinedParams as $k => $v) {
+                            if(($k == $pp) && !preg_match($r,$v)){
+                                $errors++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Si on a pas d'erreur on modifie la requete
+        if ($errors == 0) {
+            $request->controller = $routedUrl['params']['controller'];
+            $request->action = $routedUrl['params']['action'];
+            $request->params = $params_url;
+            return $request;
+        } else {
+            die('Url invalide');
+        }
     }
 
 }
