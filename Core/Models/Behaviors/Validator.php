@@ -32,10 +32,11 @@ trait Validator
 
                 // Si on a une règle on va appeller la/les fonctions pour tester si les données sont valides
                 foreach ($rules[$field] as $k => $v) {
-                    if($v['ruleName'] == 'required')
+                    if ($v['ruleName'] == 'required') {
                         $this->areRequired[] = $field;
+                    }
                     //$v['ruleName'] correspond au nom d'une fonction de validation
-                    $this->$v['ruleName']($field, $value, isset($v['message']) ? $v['message'] : null);
+                    $this->$v['ruleName']($field, trim($value), isset($v['message']) ? $v['message'] : null);
 
                 }
 
@@ -62,7 +63,7 @@ trait Validator
     {
 
         // Si la valeur (sans espace) n'est pas vide
-        if (trim($value) != "") {
+        if ($value != "") {
 
             // On incrémente le nombre de champs valide
             return true;
@@ -92,13 +93,13 @@ trait Validator
     public function isString($field, $value, $message = null)
     {
 
-        $value = trim($value);
-        $isRequired = array_key_exists($field,$this->areRequired);
+        $isRequired = array_key_exists($field, $this->areRequired);
 
-        if (
-            ( $isRequired && is_string($value) ) ||
-            ( !$isRequired && is_string($value) && !empty($value) ) ||
-            ( !$isRequired && empty($value) )
+        if (!$isRequired && empty($value)) {
+            return true;
+        } elseif (
+            ($isRequired && is_string($value)) ||
+            (!$isRequired && is_string($value) && !empty($value))
         ) {
 
             return true;
@@ -123,11 +124,12 @@ trait Validator
      */
     public function isMail($field, $value, $message = null)
     {
-        $isRequired = array_key_exists($field,$this->areRequired);
-        if (
-            ( $isRequired && filter_var($value, FILTER_VALIDATE_EMAIL) ) ||
-            ( !$isRequired && filter_var($value, FILTER_VALIDATE_EMAIL) && !empty($value) ) ||
-            ( !$isRequired && empty($value) )
+        $isRequired = array_key_exists($field, $this->areRequired);
+        if (!$isRequired && empty($value)) {
+            return true;
+        } elseif (
+            ($isRequired && filter_var($value, FILTER_VALIDATE_EMAIL)) ||
+            (!$isRequired && filter_var($value, FILTER_VALIDATE_EMAIL) && !empty($value))
         ) {
 
             return true;
@@ -154,20 +156,22 @@ trait Validator
      */
     public function isInt($field, $value, $message = null)
     {
-        $isRequired = array_key_exists($field,$this->areRequired);
+        $isRequired = array_key_exists($field, $this->areRequired);
 
-        if (
-            ( $isRequired && is_numeric($value) ) ||
-            ( !$isRequired && is_numeric($value) && !empty($value) ) ||
-            ( !$isRequired && empty($value) )
+        if (!$isRequired && empty($value)) {
+            return true;
+        } elseif (
+            ($isRequired && is_numeric($value)) ||
+            (!$isRequired && is_numeric($value) && !empty($value))
         ) {
 
             return true;
 
         } else {
 
-            if ($message == null)
+            if ($message == null) {
                 $message = "le champ $field n'est pas un nombre";
+            }
 
             $this->errors[$field] = $message;
             return false;
@@ -183,19 +187,17 @@ trait Validator
      */
     public function message($field)
     {
-        if (isset($this->errors[$field]))
+        if (isset($this->errors[$field])) {
             return $this->errors[$field];
-        else
+        } else {
             return false;
+        }
     }
 
     // Retourne le tableau contenant toutes les erreurs
-    public function errors()
+    public function getErrors()
     {
-        if (!empty($this->errors))
-            return $this->errors;
-        else
-            return false;
+        return $this->errors;
     }
 
 }
