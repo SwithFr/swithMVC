@@ -6,7 +6,8 @@
     define('DS', DIRECTORY_SEPARATOR);
     define('BASE', dirname(dirname(__DIR__)));
     $root = dirname(dirname(str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
-    define('ROOT', $root . ($root == '/') ? '' : DS);
+    $root = ($root == '/') ? $root : $root . DS;
+    define('ROOT', $root);
     define('CORE', ROOT . 'Core' . DS);
     define('APP', ROOT . 'App' . DS);
     define('WEBROOT', APP . "Webroot" . DS);
