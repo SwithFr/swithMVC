@@ -24,3 +24,4 @@ Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans 
 - Ajout de commandes shell **(minoritaire)** **WIP**
 - ~~Refaire le composant Auth~~ **(DONE)**
 - S'occuper des exceptions et erreurs **WIP**
+- Gérer le cache !
