@@ -246,8 +246,9 @@ class Model
      */
     public function update($id, \stdClass $data, $table = null)
     {
-        if (method_exists($this, "beforeSave"))
+        if (method_exists($this, "beforeSave")) {
             $this->beforeSave($this->data);
+        }
 
         $values = $tmp = [];
 
@@ -258,8 +259,9 @@ class Model
 
         $tmp = implode(',', $tmp);
 
-        if ($table == null)
+        if ($table == null) {
             $table = $this->table;
+        }
 
         $sql = 'UPDATE ' . $table . ' SET ' . $tmp . ' WHERE id = ' . $id;
         $pdost = $this->bdd->prepare($sql);
@@ -278,15 +280,18 @@ class Model
      */
     public function delete($id, $table = null)
     {
-        if (method_exists($this, "beforeDelete"))
+        if (method_exists($this, "beforeDelete")) {
             $this->beforeDelete($this->data);
+        }
 
-        if ($table == null)
+        if ($table == null) {
             $table = $this->table;
+        }
         $this->bdd->query("DELETE FROM " . $table . " WHERE id=$id");
 
-        if (method_exists($this, "afterDelete"))
+        if (method_exists($this, "afterDelete")) {
             $this->afterDelete($this->data);
+        }
     }
 
     /**
