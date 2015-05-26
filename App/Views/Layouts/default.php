@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title><?= $title_for_layout; ?></title>
+    <title><?= isset($title_for_layout) ? $title_for_layout : ''; ?></title>
     <?= Html::css('default'); ?>
 </head>
 <body>
