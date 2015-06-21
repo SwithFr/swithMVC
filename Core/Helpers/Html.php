@@ -4,18 +4,23 @@ namespace Core\Helpers;
 
 class Html
 {
-
     /**
      * Créer un lien
-     * @param $lien
-     * @param $name
+     * @param array $url
+     * @param string $name
      * @param array $params
      * @param array $options
      * @return string
      */
-    public static function link($lien, $name, array $params = null, array $options = null)
-    {
-        $return = "<a href='" . ROOT . $lien;
+    public static function link($url = [], $name, $params = [], $options = []){
+
+        $controller = $url[0];
+        $action = $url[1];
+        $prefix = isset($url[2]) ? $url[2] : false;
+
+        $url = $prefix ? $prefix . "/" . $controller . "/" . $action : $controller . "/" . $action;
+
+        $return = "<a href='" . ROOT . $url;
         $param = $option = "";
 
         if ($params != null) {
@@ -43,40 +48,14 @@ class Html
     }
 
     /**
-     * Créer un lien externe
-     * @param $lien
-     * @param $name
-     * @param array $params
-     * @param array $options
+     * Génère une url
+     * @param $controller
+     * @param $action
      * @return string
      */
-    public static function url($lien, $name, array $params = null, array $options = null)
+    public static function url($controller, $action)
     {
-        $return = "<a href='" . $lien;
-        $param = $option = "";
-
-        if ($params != null) {
-            $count = count($params);
-            foreach ($params as $k => $v) {
-                $param .= "/$v";
-            }
-        }
-        $return .= $param . "' ";
-
-        if ($options != null) {
-            foreach ($options as $k => $v) {
-                $option .= "$k='$v' ";
-            }
-            $return .= $option;
-        }
-
-        if (isset($count) && $count != 1) {
-            $return .= "' >$name</a>";
-        } else {
-            $return .= " >$name</a>";
-        }
-
-        return $return;
+        return ROOT . $controller . "/" . $action;
     }
 
     /**
