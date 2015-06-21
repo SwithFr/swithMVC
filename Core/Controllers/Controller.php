@@ -22,7 +22,7 @@ class Controller
      * La requete tapée par l'utilisateur
      * @var Object Request
      */
-    public $request;
+    public $Request;
 
     /**
      * La Session
@@ -81,7 +81,7 @@ class Controller
 
     public function __construct(Request $request = null, $name)
     {
-        $this->request = $request;
+        $this->Request = $request;
         $this->view = $this->request->prefixe ? $this->request->prefixe . '_' . $this->request->action : $this->request->action;
         $this->name = $name;
         $this->loadModel();
