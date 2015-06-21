@@ -85,8 +85,9 @@ class Controller
         $this->view = $this->Request->prefixe ? $this->Request->prefixe . '_' . $this->Request->action : $this->Request->action;
         $this->name = $name;
         $this->loadModel();
-        if (!$this->Session)
+        if (!$this->Session) {
             $this->Session = new Session();
+        }
 
         foreach ($this->components as $c) {
             if (!array_key_exists($c, $this->loadedComponents)) {
