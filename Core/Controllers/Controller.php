@@ -79,10 +79,10 @@ class Controller
     public $view = null;
 
 
-    public function __construct(Request $request = null, $name)
+    public function __construct(Request $Request = null, $name)
     {
-        $this->Request = $request;
-        $this->view = $this->request->prefixe ? $this->request->prefixe . '_' . $this->request->action : $this->request->action;
+        $this->Request = $Request;
+        $this->view = $this->Request->prefixe ? $this->Request->prefixe . '_' . $this->Request->action : $this->Request->action;
         $this->name = $name;
         $this->loadModel();
         if (!$this->Session)
@@ -107,11 +107,11 @@ class Controller
             return false;
         }
         extract($this->vars);
-        $view = BASE . DS . 'App' . DS . 'Views' . DS . ucfirst($this->request->controller) . DS . $view . '.php';
+        $view = BASE . DS . 'App' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $view . '.php';
         if (!file_exists($view)) {
-            $view = BASE . DS . 'Core' . DS . 'Views' . DS . ucfirst($this->request->controller) . DS . $this->request->action . '.php';
+            $view = BASE . DS . 'Core' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $this->Request->action . '.php';
             if (!file_exists($view)) {
-                $this->error("viewNotFound",$this->request->controller,$this->view);
+                $this->error("viewNotFound",$this->Request->controller,$this->view);
             }
         }
         ob_start();
@@ -175,7 +175,7 @@ class Controller
                 return false;
         }
         if (!isset($this->$name)) {
-            $this->$name = new $modelName($this->request->data);
+            $this->$name = new $modelName($this->Request->data);
         }
     }
 
