@@ -23,7 +23,7 @@ class Html
         $return = "<a href='" . ROOT . $url;
         $param = $option = "";
 
-        if ($params != null) {
+        if ($params) {
             $count = count($params);
             foreach ($params as $k => $v) {
                 $param .= "/$v";
@@ -31,7 +31,7 @@ class Html
         }
         $return .= $param . "' ";
 
-        if ($options != null) {
+        if ($options) {
             foreach ($options as $k => $v) {
                 $option .= "$k='$v' ";
             }
@@ -65,7 +65,7 @@ class Html
      * @param array $options
      * @return string
      */
-    public static function img($src, $alt = null, array $options = null)
+    public static function img($src, $alt = null, Array $options = null)
     {
         $option = "";
         if ($options != null) {
