@@ -15,7 +15,7 @@ class Paginator
     {
         $html = '<ul class="pagination">';
         for ($i = 1; $i <= $paginateResults['nbPages']; $i++) {
-            $html .= "<li><a href='?paginate=$i'>$i</a></li>";
+            $html .= "<li><a href='?page=$i'>$i</a></li>";
         }
         $html .= '</ul>';
         return $html;
