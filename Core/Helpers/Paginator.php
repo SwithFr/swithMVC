@@ -8,13 +8,13 @@ class Paginator
 {
     /**
      * Créer une petite pagination
-     * @param $paginateResults
+     * @param int $nbPages
      * @return string
      */
-    public static function paginate($paginateResults)
+    public static function paginate($nbPages)
     {
-        $html = '<ul class="pagination">';
-        for ($i = 1; $i <= $paginateResults['nbPages']; $i++) {
+        $html = '<ul>';
+        for ($i = 1; $i <= $nbPages; $i++) {
             $html .= "<li><a href='?page=$i'>$i</a></li>";
         }
         $html .= '</ul>';
