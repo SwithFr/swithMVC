@@ -89,6 +89,7 @@ class Controller
             $this->Session = new Session();
         }
 
+        # On charge les composants qu l'on veut
         foreach ($this->components as $c) {
             if (!array_key_exists($c, $this->loadedComponents)) {
                 $className = 'Core\\Components\\' . $c;
@@ -112,7 +113,7 @@ class Controller
         if (!file_exists($view)) {
             $view = BASE . DS . 'Core' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $this->Request->action . '.php';
             if (!file_exists($view)) {
-                $this->error("viewNotFound",$this->Request->controller,$this->view);
+                $this->error("viewNotFound", $this->Request->controller, $this->view);
             }
         }
         ob_start();
@@ -149,13 +150,13 @@ class Controller
      * Permet de renvoyer vers une page d'erreur
      * @param $type
      */
-    public function error($type,$ctrlName = null, $methodeName = null, $layout = null)
+    public function error($type, $ctrlName = null, $methodeName = null, $layout = null)
     {
-        if($type == 'controllerNotFound') {
+        if ($type == 'controllerNotFound') {
             $this->redirect('errors/' . $type . '/' . $ctrlName);
-        } elseif($type == 'methodeNotFound' || $type == 'viewNotFound') {
+        } elseif ($type == 'methodeNotFound' || $type == 'viewNotFound') {
             $this->redirect('errors/' . $type . '/' . $ctrlName . '/' . $methodeName);
-        }elseif($type == 'layoutNotFound') {
+        } elseif ($type == 'layoutNotFound') {
             $this->redirect('errors/' . $type . '/' . $layout);
         }
     }
