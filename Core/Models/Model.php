@@ -327,13 +327,20 @@ class Model
      * @return mixed
      */
     public function paginate(array $conditions = null, $nbPerPage){
-        if(!isset($_GET['page'])) {
+        if (!isset($_GET['page']) || $_GET['page'] < 1 || !is_numeric($_GET['page'])) {
             $_GET['page'] = 1;
         }
-        $conditions['offset'] = $nbPerPage * ($_GET['page'] - 1);
-        $conditions['limit'] = $nbPerPage;
+
         $total = $this->count();
         $d['nbPages'] = ceil($total / $nbPerPage);
+
+        if ($_GET['page'] > $d['nbPages'] && $d['nbPages'] != 0) {
+            $_GET['page'] = $d['nbPages'];
+        }
+
+        $conditions['offset'] = $nbPerPage * ($_GET['page'] - 1);
+        $conditions['limit'] = $nbPerPage;
+
         $d['results'] = $this->get($conditions);
         return $d;
     }
