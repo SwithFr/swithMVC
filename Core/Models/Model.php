@@ -304,7 +304,7 @@ class Model
 
     /**
      * Permet de faire une pagination
-     * @param  array|null $joins [description]
+     * @param array|null $joins [description]
      * @param null $table
      * @return mixed [type]                 [description]
      */
