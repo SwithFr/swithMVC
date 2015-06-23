@@ -65,12 +65,14 @@ class Model
         // On instancie l'entity si besoin
         if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
             $entityName = '\App\Models\Entities\\' . $this->name . 'Entity';
-            if(class_exists($entityName) && !is_null($this->Entity))
+            if (class_exists($entityName) && !is_null($this->Entity)) {
                 $this->Entity = new $entityName();
+            }
         }
 
-        if (is_null($this->bdd))
+        if (is_null($this->bdd)) {
             $this->bdd = DbProvider::getDb();
+        }
 
     }
 
@@ -83,10 +85,12 @@ class Model
         $classname = get_class($this);
 
         if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
-            if (!$this->name)
+            if (!$this->name) {
                 $this->name = $matches[1];
-            if (!$this->table)
+            }
+            if (!$this->table) {
                 $this->table = strtolower($matches[1]) . 's';
+            }
         }
     }
 
@@ -95,25 +99,26 @@ class Model
      * @param  array $conditions les conditions que l'on veut
      * @param  string $table le nom de la table
      * @internal param array|null $joins Si l'on veut des joins
-     * @return array [type]                 un object contenant les données demandées
+     * @return array [type] un object contenant les données demandées
      */
     public function get(array $conditions = null, $table = null)
     {
 
-        if (method_exists($this, "beforeFilter"))
+        if (method_exists($this, "beforeFilter")) {
             $this->beforeFilter($this->data);
+        }
 
         $query = "SELECT ";
 
         // Si on a des champs définis
-        if (!isset($conditions['fields']))
+        if (!isset($conditions['fields'])) {
             $query .= "*";
-        else
+        } else {
             $query .= $conditions['fields'];
-
+        }
 
         if (is_null($table)) {
-            $query .= " FROM " . $this->table;
+            $query .= " FROM " . $this->prefixe . $this->table;
         } else {
             $query .= " FROM " . $table;
         }
@@ -125,7 +130,7 @@ class Model
                 if (!isset($this->joins) || !isset($this->joins[$j])) {
                     debug("Le model " . $this->name . " n'a pas d'association avec la table $j ! Veuillez créer un tableau public \$joins dans votre model " . $this->name, false);
                 } else {
-                    $joins[] = " JOIN $j ON $j.{$this->primaryKey} = {$this->table}." . $this->joins[$j];
+                    $joins[] = " JOIN $j ON $j.{$this->primaryKey} = " . $this->prefixe . $this->table . $this->joins[$j];
                 }
             }
             $query .= implode(" AND ", $joins);
@@ -139,8 +144,9 @@ class Model
                 $query .= " WHERE ";
                 $cond = [];
                 foreach ($conditions['where'] as $k => $v) {
-                    if (!is_numeric($v))
+                    if (!is_numeric($v)) {
                         $v = "'" . addslashes($v) . "'";
+                    }
                     $cond[] = "$k=$v";
                 }
                 $query .= implode(' AND ', $cond);
@@ -154,7 +160,6 @@ class Model
             } else {
                 $query .= " LIMIT " . $conditions['limit'];
             }
-
         }
 
         // Si on a un group by
@@ -170,10 +175,11 @@ class Model
         // debug($query);
         $req = $this->bdd->query($query);
 
-        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS')
+        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
             return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
-        else
+        } else {
             return $req->fetchAll();
+        }
     }
 
     /**
@@ -185,7 +191,7 @@ class Model
      */
     public function getFirst(array $conditions = null, array $joins = null, $table = null)
     {
-        return current($this->get($conditions, $joins, $table));
+        return @current($this->get($conditions, $joins, $table));
     }
 
     /**
@@ -197,7 +203,7 @@ class Model
      */
     public function getLast(array $conditions = null, array $joins = null, $table = null)
     {
-        return end($this->get($conditions, $joins, $table));
+        return @end($this->get($conditions, $joins, $table));
     }
 
     /**
@@ -209,8 +215,9 @@ class Model
     public function create(\stdClass $data, $table = null)
     {
 
-        if (method_exists($this, "beforeSave"))
+        if (method_exists($this, "beforeSave")) {
             $this->beforeSave($this->data);
+        }
 
         $fields = $values = $tmp = [];
 
@@ -223,11 +230,12 @@ class Model
         $fields = "(" . implode(',', $fields) . ")";
         $tmp = "(" . implode(',', $tmp) . ")";
 
-        if ($table == null)
+        if ($table == null) {
             $table = $this->table;
+        }
 
         $sql = 'INSERT INTO ' . $table . ' ' . $fields . ' VALUES ' . $tmp;
-        
+
         $pdost = $this->bdd->prepare($sql);
         try {
             $pdost->execute($values);
@@ -315,7 +323,7 @@ class Model
     {
         $req = $this->bdd->query("SELECT id,password,role FROM users WHERE login='$login';");
         if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
-            $req->setFetchMode(\PDO::FETCH_CLASS,'App\\Models\\Entities\\' . $this->name . 'Entity');
+            $req->setFetchMode(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         }
         return $req->fetch();
     }
@@ -326,7 +334,8 @@ class Model
      * @param $nbPerPage
      * @return mixed
      */
-    public function paginate(array $conditions = null, $nbPerPage){
+    public function paginate(array $conditions = null, $nbPerPage)
+    {
         if (!isset($_GET['page']) || $_GET['page'] < 1 || !is_numeric($_GET['page'])) {
             $_GET['page'] = 1;
         }
