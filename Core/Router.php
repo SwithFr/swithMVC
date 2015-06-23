@@ -32,7 +32,6 @@ class Router
     /**
      * Permet de parser l'url (définir quel est le controller, quelle est l'action)
      * @param objet|Request $request objet Request
-     * @internal param $url 'url apellée par l'utilisateur
      */
     public static function parse(Request $request)
     {
