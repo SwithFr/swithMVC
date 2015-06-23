@@ -22,9 +22,6 @@ class Dispatcher
      */
     private $isVerified = false;
 
-    /**
-     *
-     */
     public function __construct()
     {
         // On initialise l'objet Request
@@ -63,10 +60,11 @@ class Dispatcher
         }
 
         // On appelle la fonction
-        if ($this->request->prefixe)
+        if ($this->request->prefixe) {
             $action = $this->request->prefixe . "_" . $this->request->action;
-        else
+        } else {
             $action = $this->request->action;
+        }
 
         $availablesActions = array_diff(get_class_methods($controller),get_class_methods(get_parent_class($controller)));
         if (in_array($action, $availablesActions)) {
@@ -96,6 +94,9 @@ class Dispatcher
         return new $controllerName($this->request, $this->request->controller);
     }
 
+    /**
+     * Fonction qui vérifie au début la configuration
+     */
     private function verify()
     {
         echo "<div class='container'>";
