@@ -13,6 +13,10 @@ class Router
      */
     static $prefixes = [];
 
+    /**
+     * Les routes à utiliser
+     * @var array
+     */
     static $routes = [];
 
     /**
@@ -28,7 +32,7 @@ class Router
     /**
      * Permet de parser l'url (définir quel est le controller, quelle est l'action)
      * @param objet|Request $request objet Request
-     * @internal param L $url 'url apellée par l'utilisateur
+     * @internal param $url 'url apellée par l'utilisateur
      */
     public static function parse(Request $request)
     {
@@ -118,16 +122,16 @@ class Router
                     $params[$k] = preg_replace('/}\/?/', '', $params[$k]);
                 }
             }
-            
+
             // On regarde si la route courrante ($routedUrl['url']) est présente dans l'url de l'utilisateur
             preg_match('/(' . addcslashes($routedUrl['url'], '/') . ')/', $r_url, $matches);
 
             // Si oui
             if ($matches) {
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
-                if($params) {
+                if ($params) {
                     $combinedParams = [];
-                    if(count($params) != count($params_url)) {
+                    if (count($params) != count($params_url)) {
                         die('Url invalide !');
                     }
                     for ($i = 0; $i < count($params); $i++) {
@@ -136,7 +140,7 @@ class Router
                     // On vérifie qu'ils correspondent bien au forma souhaité
                     foreach ($routedUrl['params']['params'] as $pp => $r) {
                         foreach ($combinedParams as $k => $v) {
-                            if(($k == $pp) && !preg_match($r,$v)){
+                            if (($k == $pp) && !preg_match($r, $v)) {
                                 $errors++;
                             }
                         }
