@@ -99,7 +99,7 @@ class Model
      * @param  array $conditions les conditions que l'on veut
      * @param  string $table le nom de la table
      * @internal param array|null $joins Si l'on veut des joins
-     * @return array [type] un object contenant les données demandées
+     * @return array un object contenant les données demandées
      */
     public function get(array $conditions = null, $table = null)
     {
@@ -187,7 +187,7 @@ class Model
      * @param  array $conditions les conditions que l'on veut
      * @param  array|null $joins Si l'on veut des joins
      * @param  string $table le nom de la table
-     * @return mixed [type] un object contenant les données demandées
+     * @return mixed un object contenant les données demandées
      */
     public function getFirst(array $conditions = null, array $joins = null, $table = null)
     {
@@ -199,7 +199,7 @@ class Model
      * @param  array $conditions les conditions que l'on veut
      * @param  array|null $joins Si l'on veut des joins
      * @param  string $table le nom de la table
-     * @return mixed [type] un object contenant les données demandées
+     * @return mixed un object contenant les données demandées
      */
     public function getLast(array $conditions = null, array $joins = null, $table = null)
     {
@@ -247,9 +247,9 @@ class Model
 
     /**
      * Met à jour les données
-     * @param  int $id l'id de l'entrée que l'on veut update
+     * @param int $id l'id de l'entrée que l'on veut update
      * @param array|\stdClass $data les données
-     * @param  string $table le nom de la table si besoin
+     * @param string $table le nom de la table si besoin
      * @return bool
      */
     public function update($id, \stdClass $data, $table = null)
@@ -283,8 +283,8 @@ class Model
 
     /**
      * Supprime une antrée
-     * @param  int $id l'id de l'entrée à supprimer
-     * @param  string $table la table si besoin
+     * @param int $id l'id de l'entrée à supprimer
+     * @param string $table la table si besoin
      */
     public function delete($id, $table = null)
     {
@@ -304,9 +304,9 @@ class Model
 
     /**
      * Permet de faire une pagination
-     * @param array|null $joins [description]
+     * @param array|null $joins
      * @param null $table
-     * @return mixed [type]                 [description]
+     * @return mixed
      */
     public function count(array $joins = null, $table = null)
     {
@@ -316,8 +316,8 @@ class Model
 
     /**
      * Permet de récuperer les infos en bdd pour vérifier si l'utilisateur à bien entré un bon login/mdp
-     * @param  string $login Le login entré par l'utilisateur
-     * @return stdClass      un objet content les indos trouvées.
+     * @param string $login Le login entré par l'utilisateur
+     * @return stdClass un objet content les indos trouvées.
      */
     public function getLogged($login)
     {
