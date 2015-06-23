@@ -118,7 +118,7 @@ class Model
         }
 
         if (is_null($table)) {
-            $query .= " FROM " . $this->prefixe . $this->table;
+            $query .= " FROM " . $this->table;
         } else {
             $query .= " FROM " . $table;
         }
@@ -130,7 +130,7 @@ class Model
                 if (!isset($this->joins) || !isset($this->joins[$j])) {
                     debug("Le model " . $this->name . " n'a pas d'association avec la table $j ! Veuillez créer un tableau public \$joins dans votre model " . $this->name, false);
                 } else {
-                    $joins[] = " JOIN $j ON $j.{$this->primaryKey} = " . $this->prefixe . $this->table . $this->joins[$j];
+                    $joins[] = " JOIN $j ON $j.{$this->primaryKey} = {$this->table}." . $this->joins[$j];
                 }
             }
             $query .= implode(" AND ", $joins);
