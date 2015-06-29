@@ -4,7 +4,7 @@
 namespace Core\Lib;
 
 
-class Debug 
+class Debug
 {
     /**
      * Créer un petit débug
@@ -15,10 +15,12 @@ class Debug
     {
         if ($_ENV['DEBUG']) {
             $debug = debug_backtrace();
-            echo "<p><strong>" . $debug[0]['file'] . " ligne : " . $debug[0]['line'] . "</strong></p>";
-            echo "<pre>";
+            echo "<div style='background-color: #dbcfbe;'>";
+            echo "<p style='background-color: #2b303b; color: #ffffff; padding: .5em; margin: 1em 0 0;'><strong>" . $debug[0]['file'] . " <span style='color:red;'>ligne : " . $debug[0]['line'] . "</span></strong></p>";
+            echo "<pre style='padding: .5em; margin: 0;'>";
             var_dump($var);
             echo "</pre>";
+            echo "</div>";
         }
 
         if ($die) {
