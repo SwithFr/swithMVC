@@ -173,8 +173,9 @@ class Controller
         $modelName = "App\\Models\\" . $name;
         if (!class_exists($modelName)) {
             $modelName = "Core\\Models\\" . $name;
-            if (!class_exists($modelName))
+            if (!class_exists($modelName)) {
                 return false;
+            }
         }
         if (!isset($this->$name)) {
             $this->$name = new $modelName($this->Request->data);
