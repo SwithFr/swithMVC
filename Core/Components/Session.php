@@ -74,4 +74,13 @@ class Session
         $_SESSION[$key] = $value;
     }
 
+    /**
+     * Stocke le langage dans la session.
+     * @param $lang
+     */
+    public function setLanguage($lang)
+    {
+        $_SESSION['LANG'] = $lang;
+    }
+
 }
