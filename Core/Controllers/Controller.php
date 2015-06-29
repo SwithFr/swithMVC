@@ -180,7 +180,8 @@ class Controller
         if (!class_exists($modelName)) {
             $modelName = "Core\\Models\\" . $name;
             if (!class_exists($modelName)) {
-                $this->$name = new Model($this->Request->data);
+                $this->$name = "Le model " . $name . "n'existe pas !";
+                return false;
             }
         }
         if (!isset($this->$name)) {
