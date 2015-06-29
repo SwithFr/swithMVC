@@ -57,5 +57,4 @@ class App
         return $this->app_settings[$key];
     }
 
-
 } 
