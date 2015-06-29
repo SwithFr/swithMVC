@@ -17,9 +17,8 @@ class Request
            $data = false,    // Les données postées
            $page = 1;        // Pour la pagination
 
-    public function __construct()
+    public function __construct(App $app)
     {
-        $app = App::getInstance();
         $default_controller = ucfirst($app->getAppSettings("default_controller"));
 
         if (isset($_SERVER['PATH_INFO'])) {
