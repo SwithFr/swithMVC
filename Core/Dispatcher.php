@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Config\App;
+use Core\Lib\Debug;
 use Core\Lib\SwithException;
 
 /**
@@ -24,24 +26,22 @@ class Dispatcher
 
     public function __construct()
     {
+
+        $app = App::getInstance();
+
         // On initialise l'objet Request
-        $this->request = new Request();
+        if($_ENV['USE_ROUTES']) {
+            require('../Config/routes.php');
+            $this->request = Router::run($this->request);
+        } else {
+            $this->request = new Request($app);
+        }
 
         // On parse l'url (définition du controller, action,...)
         Router::parse($this->request);
 
-        if($_ENV['USE_ROUTES']) {
-            require('../Config/routes.php');
-            $this->request = Router::run($this->request);
-        }
-
         // On affiche les erreurs ?
-        if ($_ENV['DEBUG']) {
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
-        } else {
-            ini_set('display_errors', 0);
-        }
+        Debug::set();
 
         if (!$this->isVerified) {
             $this->verify();
