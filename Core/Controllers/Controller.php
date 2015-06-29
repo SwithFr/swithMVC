@@ -183,12 +183,17 @@ class Controller
 
     /**
      * Regirige vers le chemin spécifié
-     * @param $path chemin
+     * @param chemin|string $url chemin
+     * @param bool $complete
      */
-    public function redirect($path = null)
-    {
-        header("Location:" . ROOT . $path);
-        exit();
+    public function redirect($url = '', $complete = false){
+        if($complete){
+            header('Location: ' . $url);
+            exit();
+        }else {
+            header('Location: ' . ROOT . $url);
+            exit();
+        }
     }
 
     /**
