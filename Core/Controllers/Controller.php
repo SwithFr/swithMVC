@@ -3,6 +3,7 @@
 namespace Core\Controllers;
 
 use Core\Components\Session;
+use Core\Models\Model;
 use Core\Request;
 
 /**
@@ -163,18 +164,23 @@ class Controller
 
     /**
      * Permet de charger une instance du model lié au controlleur dans $this->nomDuModel
-     * @param  string $name le nom du model que l'on veut charger [null]
+     * @param  string $name le nom du model que l'on veut charger
      */
     public function loadModel($name = null)
     {
         if (is_null($name)) {
-            $name = ucfirst(substr($this->name, 0, -1));
+            if (substr($this->name, -1) != "s") {
+                $name = $this->name;
+            } else {
+                $name = ucfirst(substr($this->name, 0, -1));
+            }
         }
+
         $modelName = "App\\Models\\" . $name;
         if (!class_exists($modelName)) {
             $modelName = "Core\\Models\\" . $name;
             if (!class_exists($modelName)) {
-                return false;
+                $this->$name = new Model($this->Request->data);
             }
         }
         if (!isset($this->$name)) {
