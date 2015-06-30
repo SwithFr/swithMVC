@@ -5,9 +5,6 @@ namespace Core\Components;
 
 class Auth
 {
-    private $id = false;
-    private $role = false;
-
     /**
      * Permet de connecter un utilisateur
      * @param  stdClass $data Les données postées
@@ -57,7 +54,7 @@ class Auth
      */
     public function id()
     {
-        return $this->id;
+        return $_SESSION['id'];
     }
 
     /**
@@ -66,7 +63,7 @@ class Auth
      */
     public function role()
     {
-        return $this->role;
+        return $_SESSION['role'];
     }
 
 
