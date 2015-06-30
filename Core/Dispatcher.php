@@ -60,11 +60,7 @@ class Dispatcher
         }
 
         // On appelle la fonction
-        if ($this->request->prefixe) {
-            $action = $this->request->prefixe . "_" . $this->request->action;
-        } else {
-            $action = $this->request->action;
-        }
+        $action = $this->request->getAction();
 
         $availablesActions = array_diff(get_class_methods($controller),get_class_methods(get_parent_class($controller)));
         if (in_array($action, $availablesActions)) {
