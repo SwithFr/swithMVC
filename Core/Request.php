@@ -27,12 +27,30 @@ class Request
             $this->url = (!is_null($default_controller) ? $default_controller : "Controller") . "/" . $app->getAppSettings("default_action");
         }
 
+        $this->setReferrer();
+
+        $this->setData();
+
+        $this->setPageParametter();
+    }
+
+    /**
+     * Permet de définir un referer si possible
+     */
+    private function setReferrer()
+    {
         if (isset($_SERVER['HTTP_REFERER'])) {
             $root = addcslashes(ROOT, '/');
             $parts = preg_split('/' . $root . '/', $_SERVER['HTTP_REFERER']);
             $this->referer = isset($parts[1]) ? $parts[1] : $parts[0];
         }
+    }
 
+    /**
+     * Défini les donnée postée
+     */
+    private function setData()
+    {
         if (!empty($_POST)) {
             $this->isPost = true;
             $this->data = new \stdClass();
@@ -41,7 +59,13 @@ class Request
             }
             unset($_POST);
         }
+    }
 
+    /**
+     * Défini le nurméo de page si besoin.
+     */
+    private function setPageParametter()
+    {
         if (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0) {
             $this->page = round($_GET['page']);
         }
