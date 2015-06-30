@@ -3,14 +3,18 @@
 namespace Core\Components;
 
 
+use Core\Lib\Cookie;
+
 class Auth
 {
     /**
      * Permet de connecter un utilisateur
+     * @param $userModel
      * @param  stdClass $data Les données postées
+     * @param $remember
      * @return bool true si loggé, false sinon
      */
-    public function login($userModel, $data)
+    public function login($userModel, $data, $remember = false)
     {
         $user = $userModel->getLogged(addslashes($data->login));
         if ($user) {
@@ -20,12 +24,15 @@ class Auth
             } else {
                 $_SESSION['id'] = $user->id;
                 $_SESSION['role'] = $user->role;
+                if ($remember) {
+                    Cookie::set("id", $user->id);
+                    Cookie::set("role", $user->role);
+                }
                 return true;
             }
         } else {
             return false;
         }
-
     }
 
     /**
@@ -72,9 +79,17 @@ class Auth
      */
     public function logout()
     {
-        $this->id = $this->role = false;
         unset($_SESSION['id']);
         unset($_SESSION['role']);
+    }
+
+    /**
+     * Supprime les cookies
+     */
+    public function remove()
+    {
+        Cookie::remove("id");
+        Cookie::remove("role");
     }
 
 }
