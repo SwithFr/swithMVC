@@ -74,7 +74,6 @@ class Router
             $request->action = App::getInstance()->getAppSettings("default_action");
         }
         $request->params = array_slice($params, 2);
-
     }
 
     /**

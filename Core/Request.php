@@ -71,5 +71,16 @@ class Request
         }
     }
 
-
+    /**
+     * Récupère l'action de la requete
+     * @return string
+     */
+    public function getAction()
+    {
+        if ($this->prefixe) {
+            return $this->prefixe . "_" . $this->action;
+        } else {
+            return $this->action;
+        }
+    }
 }
