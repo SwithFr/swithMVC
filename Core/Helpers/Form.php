@@ -23,8 +23,11 @@ class Form
             }
         }
 
-        if (!is_null($action))
+        if (!is_null($action)) {
             $action = "action=" . ROOT . $action;
+        } else {
+            $action = "#";
+        }
 
         echo "<form $action method='$method' $option>";
     }
@@ -35,7 +38,7 @@ class Form
      * @param array $options
      * @return string
      */
-    public static function end($value, array $options = null)
+    public static function end($value = "Envoyer", array $options = null)
     {
         $option = "";
         if ($options != null) {
@@ -52,6 +55,7 @@ class Form
      * @param $field
      * @param bool $label
      * @param array $options
+     * @param null $value
      * @param null $placeholder
      * @return string
      */
