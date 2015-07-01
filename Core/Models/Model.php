@@ -205,7 +205,7 @@ class Model
     public function getLast(array $conditions = null, array $joins = null, $table = null)
     {
         $result = $this->get($conditions, $joins, $table);
-        return @end($result);
+        return end($result);
     }
 
     /**
