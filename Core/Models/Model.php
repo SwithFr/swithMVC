@@ -44,12 +44,6 @@ class Model
      */
     protected $bdd;
 
-    /**
-     * L'entité correspondant au model
-     * @var null
-     */
-    public $Entity = null;
-
     /*
         METHODES
      */
@@ -61,14 +55,6 @@ class Model
 
         // Initialisation des variables
         $this->setNameTableAndModel();
-
-        // On instancie l'entity si besoin
-        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
-            $entityName = '\App\Models\Entities\\' . $this->name . 'Entity';
-            if (class_exists($entityName) && !is_null($this->Entity)) {
-                $this->Entity = new $entityName();
-            }
-        }
 
         if (is_null($this->bdd)) {
             $this->bdd = DbProvider::getDb();
