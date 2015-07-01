@@ -191,7 +191,8 @@ class Model
      */
     public function getFirst(array $conditions = null, array $joins = null, $table = null)
     {
-        return @current($this->get($conditions, $joins, $table));
+        $result = $this->get($conditions, $joins, $table);
+        return current($result);
     }
 
     /**
@@ -203,7 +204,8 @@ class Model
      */
     public function getLast(array $conditions = null, array $joins = null, $table = null)
     {
-        return @end($this->get($conditions, $joins, $table));
+        $result = $this->get($conditions, $joins, $table);
+        return @end($result);
     }
 
     /**
