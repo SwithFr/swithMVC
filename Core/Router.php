@@ -100,7 +100,6 @@ class Router
         foreach (self::$routes as $routedUrl) {
             // On initialise les erreurs à 0;
             $errors = 0;
-
             // On regarde si on a des paramettres définis par {param}
             preg_match_all('/(\/?{[0-9a-zA-Z\-]+}\/?)/', $routedUrl['url'], $params);
             // Si c'est le cas
@@ -126,6 +125,7 @@ class Router
 
             // Si oui
             if ($matches) {
+                
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
                 if ($params) {
                     $combinedParams = [];
@@ -135,7 +135,8 @@ class Router
                     for ($i = 0; $i < count($params); $i++) {
                         $combinedParams[$params[$i]] = $params_url[$i];
                     }
-                    // On vérifie qu'ils correspondent bien au forma souhaité
+
+                    // On vérifie qu'ils correspondent bien au format souhaité
                     foreach ($routedUrl['params']['params'] as $pp => $r) {
                         foreach ($combinedParams as $k => $v) {
                             if (($k == $pp) && !preg_match($r, $v)) {
