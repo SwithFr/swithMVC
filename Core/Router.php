@@ -35,7 +35,6 @@ class Router
      */
     public static function parse(Request $request)
     {
-
         // On définit les prefixes s'il y en a
         Router::setPrefixes();
 
@@ -83,7 +82,7 @@ class Router
      */
     public static function join($url, array $params = null)
     {
-        self::$routes[] = ['url' => $url, 'params' => $params];
+        self::$routes[] = new Route($url, $params);
     }
 
     /**
@@ -97,47 +96,42 @@ class Router
         $r_url = $request->url;
 
         // On parcoure les routes enregistrées via la fonction join
-        foreach (self::$routes as $routedUrl) {
+        foreach (self::$routes as $route) {
             // On initialise les erreurs à 0;
             $errors = 0;
-            // On regarde si on a des paramettres définis par {param}
-            preg_match_all('/(\/?{[0-9a-zA-Z\-]+}\/?)/', $routedUrl['url'], $params);
-            // Si c'est le cas
-            if ($params) {
-                // On prend le premier resultat (truc chelou du preg_match qui retourne 2 resultats...)
-                $params = $params[0];
 
+            // On regarde si on a des paramettres définis par {param}
+            // Si c'est le cas
+            if ($route->hasParams()) {
                 // On prend le bout de route qui nous interesse (donc sans les paramettres)
-                $routedUrl['url'] = str_replace($params, '', $routedUrl['url']);
+                $route->url = str_replace($route->paramsRouted, '', $route->url);
 
                 // On récupère les paramettres de l'url de l'utilisateur
-                $params_url = trim(str_replace($routedUrl['url'], '', $r_url), '/');
+                $params_url = trim(str_replace($route->url, '', $r_url), '/');
                 $params_url = explode('/', $params_url);
                 // Et on leur enlève les /, { et }
-                foreach ($params as $k => $v) {
-                    $params[$k] = preg_replace('/(\/?\{)/', '', $v);
-                    $params[$k] = preg_replace('/}\/?/', '', $params[$k]);
-                }
+                $route->cleanParams();
             }
 
-            // On regarde si la route courrante ($routedUrl['url']) est présente dans l'url de l'utilisateur
-            preg_match('/(' . addcslashes($routedUrl['url'], '/') . ')/', $r_url, $matches);
+            // On regarde si la route courrante ($route->url) est présente dans l'url de l'utilisateur
+            preg_match('/(' . addcslashes($route->url, '/') . ')/', $r_url, $matches);
 
             // Si oui
             if ($matches) {
-                
+
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
-                if ($params) {
+                if ($route->paramsRouted) {
                     $combinedParams = [];
-                    if (count($params) != count($params_url)) {
+                    
+                    if (count($route->paramsRouted) != count($params_url)) {
                         die('Url invalide !');
                     }
-                    for ($i = 0; $i < count($params); $i++) {
-                        $combinedParams[$params[$i]] = $params_url[$i];
+                    for ($i = 0; $i < count($route->paramsRouted); $i++) {
+                        $combinedParams[$route->paramsRouted[$i]] = $params_url[$i];
                     }
 
                     // On vérifie qu'ils correspondent bien au format souhaité
-                    foreach ($routedUrl['params']['params'] as $pp => $r) {
+                    foreach ($route->params['params'] as $pp => $r) {
                         foreach ($combinedParams as $k => $v) {
                             if (($k == $pp) && !preg_match($r, $v)) {
                                 $errors++;
@@ -145,15 +139,13 @@ class Router
                         }
                     }
                 }
-                if ($errors == 0) {
-                    $request->controller = $routedUrl['params']['controller'];
-                    $request->action = $routedUrl['params']['action'];
-                    $request->params = $params_url;
-                }
             }
         }
         // Si on a pas d'erreur on modifie la requete
         if ($errors == 0) {
+            $request->controller = $route->params['controller'];
+            $request->action = $route->params['action'];
+            $request->params = $params_url;
             return $request;
         } else {
             die('Url invalide');
