@@ -43,4 +43,15 @@ class Route
             $this->paramsRouted[$k] = preg_replace('/}\/?/', '', $this->paramsRouted[$k]);
         }
     }
+
+    /**
+     * Récupère les parametres de l'url utilisateur
+     * @param $r_url
+     * @return array
+     */
+    public function getUserParams($r_url)
+    {
+        $params_url = trim(str_replace($this->url, '', $r_url), '/');
+        return explode('/', $params_url);
+    }
 }
