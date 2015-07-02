@@ -35,9 +35,10 @@ class Dispatcher
             $this->request = Router::run(new Request($app));
         } else {
             $this->request = new Request($app);
-            // On parse l'url (définition du controller, action,...)
-            Router::parse($this->request);
         }
+
+        // On parse l'url (définition du controller, action,...)
+        Router::parse($this->request);
 
         // On affiche les erreurs ?
         Debug::set();

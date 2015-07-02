@@ -14,6 +14,7 @@ class Request
            $params,          // Les paramettres requis
            $prefixe = false, // Le prefixe requis si besoin
            $isPost = false,  // La methode est de type post ?
+           $isRooted = false,// Si la requete est passé par une route personnalisée
            $data = false,    // Les données postées
            $page = 1;        // Pour la pagination
 

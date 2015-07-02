@@ -35,44 +35,46 @@ class Router
      */
     public static function parse(Request $request)
     {
-        // On définit les prefixes s'il y en a
-        Router::setPrefixes();
+        if(!$request->isRooted) {
+            // On définit les prefixes s'il y en a
+            Router::setPrefixes();
 
-        // On enlève les / en début et fin d'url
-        $url = trim($request->url, '/');
+            // On enlève les / en début et fin d'url
+            $url = trim($request->url, '/');
 
-        // On créer un tableau à partir de l'URL
-        $params = explode('/', $url);
+            // On créer un tableau à partir de l'URL
+            $params = explode('/', $url);
 
-        // On vérifie si on a un prefixe ou pas
-        if (in_array($params[0], self::$prefixes)) {
-            // Si oui on le stock dans la request
-            $request->prefixe = $params[0];
+            // On vérifie si on a un prefixe ou pas
+            if (in_array($params[0], self::$prefixes)) {
+                // Si oui on le stock dans la request
+                $request->prefixe = $params[0];
 
-            // et on l'enlève du tableau URL
-            array_shift($params);
-        }
-
-        // On déinit ensuite le controlleur
-        $request->controller = $params[0];
-
-        // On vérifie si y a pas une tentative de hack avec "l'ancien system" en vérifiant qu'on appelle pas controller/prefixe_action
-        if (isset($params[1])) {
-            $action = $params[1];
-
-            // On check si l'action n'est pas au format prefixe_action
-            foreach (Self::$prefixes as $k) {
-                if (strpos($action, $k . '_') === 0) {
-                    // Si c'est le cas on définit le prefixe et on reformat l'action
-                    $request->prefixe = $k;
-                    $action = str_replace($k . '_', '', $action);
-                }
+                // et on l'enlève du tableau URL
+                array_shift($params);
             }
-            $request->action = $action;
-        } else {
-            $request->action = App::getInstance()->getAppSettings("default_action");
+
+            // On déinit ensuite le controlleur
+            $request->controller = $params[0];
+
+            // On vérifie si y a pas une tentative de hack avec "l'ancien system" en vérifiant qu'on appelle pas controller/prefixe_action
+            if (isset($params[1])) {
+                $action = $params[1];
+
+                // On check si l'action n'est pas au format prefixe_action
+                foreach (Self::$prefixes as $k) {
+                    if (strpos($action, $k . '_') === 0) {
+                        // Si c'est le cas on définit le prefixe et on reformat l'action
+                        $request->prefixe = $k;
+                        $action = str_replace($k . '_', '', $action);
+                    }
+                }
+                $request->action = $action;
+            } else {
+                $request->action = App::getInstance()->getAppSettings("default_action");
+            }
+            $request->params = array_slice($params, 2);
         }
-        $request->params = array_slice($params, 2);
     }
 
     /**
@@ -107,22 +109,21 @@ class Router
                 $route->url = str_replace($route->paramsRouted, '', $route->url);
 
                 // On récupère les paramettres de l'url de l'utilisateur
-                $params_url = trim(str_replace($route->url, '', $r_url), '/');
-                $params_url = explode('/', $params_url);
+                $params_url = $route->getUserParams($r_url);
+
                 // Et on leur enlève les /, { et }
                 $route->cleanParams();
             }
 
             // On regarde si la route courrante ($route->url) est présente dans l'url de l'utilisateur
-            preg_match('/(' . addcslashes($route->url, '/') . ')/', $r_url, $matches);
+            $request->isRooted = !!preg_match('/(' . addcslashes($route->url, '/') . ')/', $r_url, $matches);
 
             // Si oui
-            if ($matches) {
-
+            if (!empty($matches)) {
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
                 if ($route->paramsRouted) {
                     $combinedParams = [];
-                    
+
                     if (count($route->paramsRouted) != count($params_url)) {
                         die('Url invalide !');
                     }
@@ -138,14 +139,17 @@ class Router
                             }
                         }
                     }
+
+                    if ($errors == 0) {
+                        $request->controller = $route->params['controller'];
+                        $request->action = $route->params['action'];
+                        $request->params = $params_url;
+                    }
                 }
             }
         }
         // Si on a pas d'erreur on modifie la requete
         if ($errors == 0) {
-            $request->controller = $route->params['controller'];
-            $request->action = $route->params['action'];
-            $request->params = $params_url;
             return $request;
         } else {
             die('Url invalide');
