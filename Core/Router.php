@@ -31,7 +31,7 @@ class Router
 
     /**
      * Permet de parser l'url (définir quel est le controller, quelle est l'action)
-     * @param objet|Request $request objet Request
+     * @param Request $request objet Request
      */
     public static function parse(Request $request)
     {
@@ -46,7 +46,7 @@ class Router
             $params = explode('/', $url);
 
             // On vérifie si on a un prefixe ou pas
-            if (in_array($params[0], self::$prefixes)) {
+            if (isset($params[0]) && in_array($params[0], self::$prefixes)) {
                 // Si oui on le stock dans la request
                 $request->prefixe = $params[0];
 
@@ -55,7 +55,7 @@ class Router
             }
 
             // On déinit ensuite le controlleur
-            $request->controller = $params[0];
+            $request->controller = !empty($params[0]) ? $params[0] : App::getInstance()->getAppSettings("default_controller");
 
             // On vérifie si y a pas une tentative de hack avec "l'ancien system" en vérifiant qu'on appelle pas controller/prefixe_action
             if (isset($params[1])) {
