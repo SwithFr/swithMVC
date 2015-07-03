@@ -44,6 +44,13 @@ class Model
      */
     protected $bdd;
 
+    /**
+     * Si on utilise fetch class
+     * mais il se peut que pour un model on en est pas besoin
+     * @var bool
+     */
+    protected $needEntity = false;
+
     /*
         METHODES
      */
@@ -60,6 +67,7 @@ class Model
             $this->bdd = DbProvider::getDb();
         }
 
+        $this->neddEntity = $_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS';
     }
 
     /**
@@ -161,7 +169,7 @@ class Model
         // debug($query);
         $req = $this->bdd->query($query);
 
-        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
+        if ($this->needEntity = true) {
             return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         } else {
             return $req->fetchAll();
@@ -310,7 +318,7 @@ class Model
     public function getLogged($login)
     {
         $req = $this->bdd->query("SELECT id,password,role FROM users WHERE login='$login';");
-        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
+        if ($this->neddEntity) {
             $req->setFetchMode(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         }
         return $req->fetch();
