@@ -52,7 +52,7 @@ class Auth
      */
     public function isLogged()
     {
-        return isset($_SESSION['id']);
+        return isset($_SESSION['id']) || isset($_COOKIE['id']);
     }
 
     /**
