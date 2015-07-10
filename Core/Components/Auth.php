@@ -76,11 +76,15 @@ class Auth
 
     /**
      * Permet de déconnecter l'utilisateur
+     * @param bool $remove
      */
-    public function logout()
+    public function logout($remove = false)
     {
         unset($_SESSION['id']);
         unset($_SESSION['role']);
+        if ($remove) {
+            $this->remove();
+        }
     }
 
     /**
