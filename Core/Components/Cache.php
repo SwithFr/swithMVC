@@ -4,8 +4,6 @@
 namespace Core\Components;
 
 
-use App\Config\App;
-
 class Cache
 {
     /**
