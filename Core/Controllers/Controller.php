@@ -57,9 +57,9 @@ class Controller
 
     /**
      * Le model Lié au controller
-     * @var Object Model
+     * @var String Model
      */
-    public $model;
+    public $model = false;
 
     /**
      * Tableau des composants à charger
@@ -169,7 +169,9 @@ class Controller
     public function loadModel($name = null)
     {
         if (is_null($name)) {
-            if (substr($this->name, -1) != "s") {
+            if (is_string($this->model)) {
+                $name = $this->model;
+            } else if (substr($this->name, -1) != "s") {
                 $name = $this->name;
             } else {
                 $name = ucfirst(substr($this->name, 0, -1));
