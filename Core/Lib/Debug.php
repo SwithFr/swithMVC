@@ -42,7 +42,7 @@ class Debug
     }
 
     /**
-     * Debug une variable
+     * Affiche le debug une variable
      * @param mixed $var
      */
     private static function display($var)
