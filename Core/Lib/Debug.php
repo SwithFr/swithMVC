@@ -14,13 +14,13 @@ class Debug
     public static function debug($var, $die = true)
     {
         if ($_ENV['DEBUG']) {
-            $debug = debug_backtrace();
-            echo "<div style='background-color: #dbcfbe;'>";
-            echo "<p style='background-color: #2b303b; color: #ffffff; padding: .5em; margin: 1em 0 0;'><strong>" . $debug[0]['file'] . " <span style='color:red;'>ligne : " . $debug[0]['line'] . "</span></strong></p>";
-            echo "<pre style='padding: .5em; margin: 0;'>";
-            var_dump($var);
-            echo "</pre>";
-            echo "</div>";
+            if(is_array($var)) {
+                foreach($var as $v) {
+                    self::display($v);
+                }
+            } else {
+                self::display($var);
+            }
         }
 
         if ($die) {
@@ -39,5 +39,20 @@ class Debug
         } else {
             ini_set('display_errors', 0);
         }
+    }
+
+    /**
+     * Debug une variable
+     * @param mixed $var
+     */
+    private static function display($var)
+    {
+        $debug = debug_backtrace();
+        echo "<div style='background-color: #dbcfbe;'>";
+        echo "<p style='background-color: #2b303b; color: #ffffff; padding: .5em; margin: 1em 0 0;'><strong>" . $debug[0]['file'] . " <span style='color:red;'>ligne : " . $debug[0]['line'] . "</span></strong></p>";
+        echo "<pre style='padding: .5em; margin: 0;'>";
+        var_dump($var);
+        echo "</pre>";
+        echo "</div>";
     }
 } 
