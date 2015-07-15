@@ -24,7 +24,7 @@ class Paginator
             } else {
                 $activeClass = "";
             }
-            $html .= "<li $active ><a href='?page=$i'>$i</a></li>";
+            $html .= "<li $activeClass ><a href='?page=$i'>$i</a></li>";
         }
 
         $html .= self::end($previousAndNext, $nbPages);
