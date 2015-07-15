@@ -28,7 +28,6 @@
 
 .gitignore
 
-composer.lock
 App/Views/Tests
 config.codekit
 vendor/josegonzalez/dotenv/
