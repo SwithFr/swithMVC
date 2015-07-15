@@ -20,9 +20,9 @@ class Paginator
 
         for ($i = 1; $i <= $nbPages; $i++) {
             if ($active) {
-                $active = $_GET['page'] == $i ? 'class="active"' : '';
+                $activeClass = $_GET['page'] == $i ? 'class="active"' : '';
             } else {
-                $active = "";
+                $activeClass = "";
             }
             $html .= "<li $active ><a href='?page=$i'>$i</a></li>";
         }
