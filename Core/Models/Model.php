@@ -169,7 +169,7 @@ class Model
         // debug($query);
         $req = $this->bdd->query($query);
 
-        if ($this->needEntity = true) {
+        if ($this->needEntity == true) {
             return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         } else {
             return $req->fetchAll();
