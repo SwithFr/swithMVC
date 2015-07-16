@@ -18,8 +18,8 @@ website: http://swith.fr
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
+a, abbr, acronym, address, big, cite,
+del, dfn, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
@@ -69,18 +69,22 @@ body {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    color: #879999;
-    background-color: #2b303b;
+    color: #65737e;
+    background-color: #f0f5ff;
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #afa376;
     font-weight: 300;
 }
 
 h1 {
     font-size: 2em;
-    margin: 1em 0;
+    margin: 0;
+    padding: 4.5em 0 0;
+    text-transform: uppercase;
 }
 
 /* ===============
@@ -105,6 +109,7 @@ h1 {
     width: 100%;
     margin: 1em auto;
     padding: 1em;
+    text-align: center;
 
     border-radius: .2em;
 }
@@ -116,6 +121,13 @@ h1 {
     background-color: #f39c12;
 }
 
+.alert-success {
+    color: #ffffff;
+
+    border: 1px solid #05e997;
+    background-color: #6de98d;
+}
+
 /* ===============
    TYPOGRAPHY
    =============== */
@@ -124,5 +136,17 @@ h1 {
 }
 
 .doc-link, .doc-link:visited {
-    color: #afa376;
+    color: #05e997;
+}
+
+/* ===============
+   HOME PAGE
+   =============== */
+header {
+    background: url(../img/home_bkg.jpg) no-repeat 50% 0px fixed;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+    width: 100%;
+    height: 400px;
+    color: #fff;
 }
