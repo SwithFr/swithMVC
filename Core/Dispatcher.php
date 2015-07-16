@@ -5,6 +5,7 @@ namespace Core;
 use App\Config\App;
 use Core\Lib\Debug;
 use Core\Lib\SwithException;
+use SwithError\SwithError;
 
 /**
  * Se charge de charger le bon controller et la bonne action
@@ -47,8 +48,7 @@ class Dispatcher
         try {
             $controller = $this->loadController();
         } catch (SwithException $e) {
-            $controller = new Controllers\Errors($this->request, "ErrorsController");
-            $controller->error('controllerNotFound', $this->request->controller);
+            (new SwithError(['message' => "Le controller {$this->request->controller} est introuvable", "title"=>"Controlleur introuvable"]))->display();
         }
 
         if (method_exists($controller, "beforeRender")) {
@@ -62,7 +62,7 @@ class Dispatcher
         if (in_array($action, $availablesActions)) {
             call_user_func_array([$controller, $action], $this->request->params);
         } else {
-            $controller->error('methodeNotFound', $this->request->controller, $action);
+            (new SwithError(['message' => "Le controller {$this->request->controller} n'a pas de methode $action", "title"=>"Methode introuvable"]))->display();
         }
 
         $controller->render($controller->view);
