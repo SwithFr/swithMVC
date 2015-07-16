@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9b71d7edb0765dc8af7fd8802135ec6c",
+    "hash": "211d42eb56b24f1be94be1fcba75315b",
     "packages": [
         {
             "name": "josegonzalez/dotenv",
@@ -54,17 +54,17 @@
             "time": "2015-03-02 01:55:01"
         },
         {
-            "name": "swith/errormanager",
+            "name": "swith/error",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SwithFr/SwithError.git",
-                "reference": "83deff63a5b96f52ab1a45b9eb35d2673282a775"
+                "reference": "cde6ef56b8c540349d4308657ff0c1114b29a7e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/83deff63a5b96f52ab1a45b9eb35d2673282a775",
-                "reference": "83deff63a5b96f52ab1a45b9eb35d2673282a775",
+                "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/cde6ef56b8c540349d4308657ff0c1114b29a7e2",
+                "reference": "cde6ef56b8c540349d4308657ff0c1114b29a7e2",
                 "shasum": ""
             },
             "type": "library",
@@ -81,14 +81,14 @@
                 }
             ],
             "description": "Permet de gerer des erreurs (liees au framewirk swith/framework)",
-            "time": "2015-07-16 19:58:50"
+            "time": "2015-07-16 20:09:40"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "swith/errormanager": 20
+        "swith/error": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

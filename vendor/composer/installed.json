@@ -49,21 +49,21 @@
         ]
     },
     {
-        "name": "swith/errormanager",
+        "name": "swith/error",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/SwithFr/SwithError.git",
-            "reference": "83deff63a5b96f52ab1a45b9eb35d2673282a775"
+            "reference": "cde6ef56b8c540349d4308657ff0c1114b29a7e2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/83deff63a5b96f52ab1a45b9eb35d2673282a775",
-            "reference": "83deff63a5b96f52ab1a45b9eb35d2673282a775",
+            "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/cde6ef56b8c540349d4308657ff0c1114b29a7e2",
+            "reference": "cde6ef56b8c540349d4308657ff0c1114b29a7e2",
             "shasum": ""
         },
-        "time": "2015-07-16 19:58:50",
+        "time": "2015-07-16 20:09:40",
         "type": "library",
         "installation-source": "source",
         "autoload": {
