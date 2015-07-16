@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c8e588d437df24716c3ed770acbfca2e",
+    "hash": "9b71d7edb0765dc8af7fd8802135ec6c",
     "packages": [
         {
             "name": "josegonzalez/dotenv",
@@ -52,12 +52,44 @@
                 "php"
             ],
             "time": "2015-03-02 01:55:01"
+        },
+        {
+            "name": "swith/errormanager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SwithFr/SwithError.git",
+                "reference": "2db9526d0a063a624ae91561915166e47d929436"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/2db9526d0a063a624ae91561915166e47d929436",
+                "reference": "2db9526d0a063a624ae91561915166e47d929436",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SwithError\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "SwithFr",
+                    "email": "contact@swith.fr"
+                }
+            ],
+            "description": "Permet de gerer des erreurs (liees au framewirk swith/framework)",
+            "time": "2015-07-16 16:47:32"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "swith/errormanager": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
