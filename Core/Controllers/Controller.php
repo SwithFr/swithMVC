@@ -114,7 +114,7 @@ class Controller
         if (!file_exists($view)) {
             $view = BASE . DS . 'Core' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $this->Request->action . '.php';
             if (!file_exists($view)) {
-                $this->error("viewNotFound", $this->Request->controller, $this->view);
+                (new SwithError(['message' => "La vue {$this->view} est introuvable", "title"=>"Vue introuvable"]))->display();
             }
         }
         ob_start();
@@ -124,7 +124,7 @@ class Controller
         if (!file_exists($layout)) {
             $layout = BASE . DS . 'Core' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
             if (!file_exists($layout)) {
-                $this->error("layoutNotFound", $this->layout);
+                (new SwithError(['message' => "Le layout {$this->layout} est introuvable", "title"=>"Layout introuvable"]))->display();
             }
         }
         require($layout);
@@ -145,21 +145,6 @@ class Controller
             $this->vars[$key] = $value;
         }
 
-    }
-
-    /**
-     * Permet de renvoyer vers une page d'erreur
-     * @param $type
-     */
-    public function error($type, $ctrlName = null, $methodeName = null, $layout = null)
-    {
-        if ($type == 'controllerNotFound') {
-            $this->redirect('errors/' . $type . '/' . $ctrlName);
-        } elseif ($type == 'methodeNotFound' || $type == 'viewNotFound') {
-            $this->redirect('errors/' . $type . '/' . $ctrlName . '/' . $methodeName);
-        } elseif ($type == 'layoutNotFound') {
-            $this->redirect('errors/' . $type . '/' . $layout);
-        }
     }
 
     /**
