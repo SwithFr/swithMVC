@@ -43,10 +43,6 @@ class Dispatcher
         // On affiche les erreurs ?
         Debug::set();
 
-        if (!$this->isVerified) {
-            $this->verify();
-        }
-
         // On charge le bon controller
         try {
             $controller = $this->loadController();
@@ -89,22 +85,4 @@ class Dispatcher
         }
         return new $controllerName($this->request, $this->request->controller);
     }
-
-    /**
-     * Fonction qui vérifie au début la configuration
-     */
-    private function verify()
-    {
-        echo "<div class='container'>";
-        if ($_ENV['SALT_KEY'] == '2129762b19c044ab7f49ea8995f7795e886ea4be') {
-            echo "<div class='alert alert-warning'>Pensez à bien modifier la clé de sécurité dans le fichier <code>App/Config/*.env</code> correspondant à votre environnment actuel</div>";
-        }
-        if ($_ENV['DB_HOST'] == 'host_name' || $_ENV['DB_LOGIN'] == 'database_login') {
-            echo "<div class='alert alert-warning'>Configurez votre fichier <code>App/Config/app_config.php</code> avant tout !</div>";
-        }
-        echo "</div>";
-
-        $this->isVerified = true;
-    }
-
 }
