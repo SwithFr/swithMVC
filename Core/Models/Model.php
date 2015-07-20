@@ -3,6 +3,7 @@
 namespace Core\Models;
 
 use Core\Components\DbProvider;
+use SwithError\SwithError;
 
 /**
  * Model principal (dont tous les autres héritent)
@@ -122,7 +123,10 @@ class Model
             $joins = [];
             foreach ($conditions['joins'] as $j) {
                 if (!isset($this->joins) || !isset($this->joins[$j])) {
-                    debug("Le model " . $this->name . " n'a pas d'association avec la table $j ! Veuillez créer un tableau public \$joins dans votre model " . $this->name, false);
+                    (new SwithError([
+                        "title" => "Liaison manquante",
+                        "message" => "Le model " . $this->name . " n'a pas d'association avec la table $j ! Veuillez créer un tableau public \$joins dans votre model " . $this->name
+                    ]))->display;
                 } else {
                     $joins[] = " JOIN $j ON $j.{$this->primaryKey} = {$this->table}." . $this->joins[$j];
                 }
