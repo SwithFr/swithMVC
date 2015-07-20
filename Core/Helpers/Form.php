@@ -97,9 +97,10 @@ class Form
      * @param $field
      * @param array $options
      * @param null $content
+     * @param bool $label
      * @return string
      */
-    public static function textarea($field, array $options = null, $content = null)
+    public static function textarea($field, array $options = null, $content = null, $label = false)
     {
         $option = "";
         if ($options != null) {
@@ -108,6 +109,9 @@ class Form
                     $option .= "$k='$v' ";
                 }
             }
+        }
+        if ($label) {
+            echo "<label for='$field'>$label</label>";
         }
         echo "<textarea id='$field' name='$field' $option>$content</textarea>";
     }
