@@ -23,5 +23,5 @@ Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans 
 - Optimiser les requêtes **(secondaire)**
 - Ajout de commandes shell **(minoritaire)** **WIP**
 - ~~Refaire le composant Auth~~ **(DONE)**
-- S'occuper des exceptions et erreurs **WIP**
-- Gérer le cache !
+- ~~S'occuper des erreurs~~ **(DONE)**
+- ~~Gérer le cache~~ **(DONE)**
