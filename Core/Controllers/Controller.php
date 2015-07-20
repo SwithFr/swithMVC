@@ -113,20 +113,14 @@ class Controller
         extract($this->vars);
         $view = BASE . DS . 'App' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $view . '.php';
         if (!file_exists($view)) {
-            $view = BASE . DS . 'Core' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $this->Request->action . '.php';
-            if (!file_exists($view)) {
-                (new SwithError(['message' => "La vue {$this->view} est introuvable", "title"=>"Vue introuvable"]))->display();
-            }
+            (new SwithError(['message' => "La vue {$this->view} est introuvable", "title"=>"Vue introuvable"]))->display();
         }
         ob_start();
         require($view);
         $content_for_layout = ob_get_clean();
         $layout = BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
         if (!file_exists($layout)) {
-            $layout = BASE . DS . 'Core' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
-            if (!file_exists($layout)) {
-                (new SwithError(['message' => "Le layout {$this->layout} est introuvable", "title"=>"Layout introuvable"]))->display();
-            }
+            (new SwithError(['message' => "Le layout {$this->layout} est introuvable", "title"=>"Layout introuvable"]))->display();
         }
         require($layout);
         $this->rendered = true;
