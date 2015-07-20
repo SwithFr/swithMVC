@@ -5,6 +5,7 @@ namespace Core\Controllers;
 use Core\Components\Session;
 use Core\Models\Model;
 use Core\Request;
+use SwithError\SwithError;
 
 /**
  * Controller principal (dont tous les autres héritent)
