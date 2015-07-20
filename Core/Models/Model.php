@@ -224,7 +224,7 @@ class Model
         foreach ($data as $k => $v) {
             $fields[] = $k;
             $tmp[] = ':' . $k;
-            $values[':' . $k] = $v;
+            $values[':' . $k] = htmlentities($v,ENT_QUOTES, "UTF-8");
         }
 
         $fields = "(" . implode(',', $fields) . ")";
@@ -261,7 +261,7 @@ class Model
         $values = $tmp = [];
 
         foreach ($data as $d => $v) {
-            $values[':' . $d] = $v;
+            $values[':' . $d] = htmlentities($v,ENT_QUOTES, "UTF-8");
             $tmp[] = $d . "=:" . $d;
         }
 
