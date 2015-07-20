@@ -67,7 +67,7 @@ class Model
             $this->bdd = DbProvider::getDb();
         }
 
-        $this->neddEntity = $_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS';
+        $this->needEntity = $_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS';
     }
 
     /**
@@ -318,7 +318,7 @@ class Model
     public function getLogged($login)
     {
         $req = $this->bdd->query("SELECT id,password,role FROM users WHERE login='$login';");
-        if ($this->neddEntity) {
+        if ($this->needEntity) {
             $req->setFetchMode(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         }
         return $req->fetch();
