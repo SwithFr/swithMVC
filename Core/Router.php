@@ -143,12 +143,14 @@ class Router
                             }
                         }
                     }
+                }
+                if ($errors == 0) {
+                    $request->controller = $route->params['controller'];
+                    $request->action = $route->params['action'];
+                    $request->params = $params_url;
+                    $request->prefixe = isset($route->params['prefixe']) ? $route->params['prefixe'] : null;
 
-                    if ($errors == 0) {
-                        $request->controller = $route->params['controller'];
-                        $request->action = $route->params['action'];
-                        $request->params = $params_url;
-                    }
+                    return $request;
                 }
             }
         }
