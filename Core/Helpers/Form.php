@@ -96,6 +96,7 @@ class Form
      * Créer un textarea
      * @param $field
      * @param array $options
+     * @param null $content
      * @return string
      */
     public static function textarea($field, array $options = null, $content = null)
