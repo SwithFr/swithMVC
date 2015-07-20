@@ -3,6 +3,7 @@
 namespace Core;
 
 use App\Config\App;
+use SwithError\SwithError;
 
 class Router
 {
@@ -125,7 +126,10 @@ class Router
                     $combinedParams = [];
 
                     if (count($route->paramsRouted) != count($params_url)) {
-                        die('Url invalide !');
+                        (new SwithError([
+                            "title" => "Route invalide",
+                            "message" => "La page demandé n'existe pas !"
+                        ]))->display();
                     }
                     for ($i = 0; $i < count($route->paramsRouted); $i++) {
                         $combinedParams[$route->paramsRouted[$i]] = $params_url[$i];
@@ -152,7 +156,10 @@ class Router
         if ($errors == 0) {
             return $request;
         } else {
-            die('Url invalide');
+            (new SwithError([
+                "title" => "Route invalide",
+                "message" => "La page demandé n'existe pas !"
+            ]))->display();
         }
     }
 
