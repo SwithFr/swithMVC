@@ -4,6 +4,7 @@
 namespace Core\Components;
 
 use PDO;
+use SwithError\SwithError;
 
 class DbProvider
 {
@@ -35,8 +36,12 @@ class DbProvider
             $this->db->query('SET CHARACTER SET ' . $_ENV['DB_ENCODE']);
             $this->db->query('SET NAMES ' . $_ENV['DB_ENCODE']);
         } catch (PDOException $e) {
-            if ($_ENV['DEBUG'])
-                die($e->getMessage());
+            if ($_ENV['DEBUG']) {
+                (new SwithError([
+                    "title" => "Echec de connexion à la base de donnée",
+                    "message" => "La connexion à la base de donnée à échouée."
+                ]))->display();
+            }
         }
     }
 
