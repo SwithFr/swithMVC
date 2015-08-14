@@ -1,0 +1,20 @@
+#!/usr/bin/php
+<?php
+
+// Définition des variables
+$name = $argv[1];
+$controllerName = ucfirst($name) . 'sController';
+$fileName = './App/Controllers/' . $controllerName . '.php';
+
+if (file_exists($fileName)) {
+    require("./vendor/autoload.php");
+    $className = "App\\Controllers\\" . $controllerName;
+    $availablesActions = array_diff(get_class_methods($className), get_class_methods(get_parent_class($className)));
+
+    foreach ($availablesActions as $a) {
+        fopen('./App/Views/' . ucfirst($name) . 's/' . $a . '.php', 'w+');
+    }
+
+} else {
+    die("∆ Ce controller n'existe pas. \n");
+}
