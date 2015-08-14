@@ -146,7 +146,7 @@ class Model
                     (new SwithError([
                         "title" => "Liaison manquante",
                         "message" => "Le model " . $this->name . " n'a pas d'association avec la table $j ! Veuillez créer un tableau public \$joins dans votre model " . $this->name
-                    ]))->display;
+                    ]))->display();
                 } else {
                     $joins[] = " JOIN $j ON $j.{$this->primaryKey} = {$this->table}." . $this->joins[$j];
                 }
