@@ -162,13 +162,28 @@ class Controller
         if (!class_exists($modelName)) {
             $modelName = "Core\\Models\\" . $name;
             if (!class_exists($modelName)) {
-                $this->$name = "Le model " . $name . "n'existe pas !";
+                (new SwithError(['message' => "Le model $name est introuvable", "title"=>"Model introuvable"]))->display();
                 return false;
             }
         }
         if (!isset($this->$name)) {
             $this->$name = new $modelName($this->Request->data);
         }
+    }
+
+    /**
+     * Charge un composant
+     * @param $name
+     */
+    public function loadComponent($name)
+    {
+        $name = ucfirst($name);
+        $className = 'Core\\Components\\' . $name;
+        if (!class_exists($className)) {
+            (new SwithError(['message' => "Le composant $name est introuvable", "title"=>"Composant introuvable"]))->display();
+        }
+        $this->$name = new $className();
+        $this->loadedComponents[] = $name;
     }
 
     /**
