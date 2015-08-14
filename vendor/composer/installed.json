@@ -55,15 +55,15 @@
         "source": {
             "type": "git",
             "url": "https://github.com/SwithFr/SwithError.git",
-            "reference": "cde6ef56b8c540349d4308657ff0c1114b29a7e2"
+            "reference": "a25ebae2bc8af94af7e8a5dcaa1a6f18fbcc49cc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/cde6ef56b8c540349d4308657ff0c1114b29a7e2",
-            "reference": "cde6ef56b8c540349d4308657ff0c1114b29a7e2",
+            "url": "https://api.github.com/repos/SwithFr/SwithError/zipball/a25ebae2bc8af94af7e8a5dcaa1a6f18fbcc49cc",
+            "reference": "a25ebae2bc8af94af7e8a5dcaa1a6f18fbcc49cc",
             "shasum": ""
         },
-        "time": "2015-07-16 20:09:40",
+        "time": "2015-08-14 12:51:16",
         "type": "library",
         "installation-source": "source",
         "autoload": {
