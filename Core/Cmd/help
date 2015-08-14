@@ -17,3 +17,6 @@ Liste des commandes :
 
     - help, -h, -help, h :
         Affiche l'aide
+
+    - views : nom
+        Génère toutes les vues du controller passé en parametre.
