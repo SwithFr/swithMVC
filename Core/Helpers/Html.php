@@ -6,19 +6,20 @@ class Html
 {
     /**
      * Créer un lien
-     * @param array $url
+     * @param array | string $url
      * @param string $name
      * @param array $params
      * @param array $options
      * @return string
      */
-    public static function link($url = [], $name, $params = [], $options = []){
+    public static function link($url, $name, $params = [], $options = []){
 
-        $controller = $url[0];
-        $action = $url[1];
-        $prefix = isset($url[2]) ? $url[2] : false;
-
-        $url = $prefix ? $prefix . "/" . $controller . "/" . $action : $controller . "/" . $action;
+        if(is_array($url)) {
+            $controller = $url[0];
+            $action = $url[1];
+            $prefix = isset($url[2]) ? $url[2] : false;
+            $url = $prefix ? $prefix . "/" . $controller . "/" . $action : $controller . "/" . $action;
+        }
 
         $return = "<a href='" . ROOT . $url;
         $param = $option = "";
@@ -105,6 +106,17 @@ class Html
     public static function fa($faIconName)
     {
         return "<i class='fa fa-$faIconName'></i>";
+    }
+
+    /**
+     * Génère une balise meta
+     * @param $name
+     * @param $value
+     * @return string
+     */
+    public static function meta($name, $value)
+    {
+        return "<meta name='$name' content='$value' />";
     }
 
 }
