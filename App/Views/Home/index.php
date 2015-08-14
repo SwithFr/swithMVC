@@ -12,5 +12,5 @@
 ?>
 
 <p class="info">
-    Page d'accueil par defaut du framework. Vous pouvez la supprimer ou la modifier. Elle appelée par le controller <code>Home</code> et l'action <code>index</code>.
+    Page d'accueil par defaut du framework. Vous pouvez la supprimer ou la modifier. Elle est appelée par le controller <code>Home</code> et l'action <code>index</code>.
 </p>
