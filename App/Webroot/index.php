@@ -1,7 +1,7 @@
 <?php
 
     /**
-     * Définition des contantes de base
+     * Définition des contanstes de base
      */
     define('DS', DIRECTORY_SEPARATOR);
     define('BASE', dirname(dirname(__DIR__)));
