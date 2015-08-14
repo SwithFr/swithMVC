@@ -10,7 +10,7 @@
 $cmdName = '';
 $options = '';
 $fileName = '';
-$knowedCmd = ['create', 'h', '-h', 'help', '-help'];
+$knowedCmd = ['create', 'h', '-h', 'help', '-help', 'views'];
 
 require('./Core/Cmd/lib.php');
 
@@ -48,4 +48,18 @@ if ($cmdName == 'create') {
 if ($cmdName == 'h' || $cmdName == '-h' || $cmdName == 'help' || $cmdName == '-help') {
     system('clear');
     system('Core/Cmd/help');
+}
+
+// Si on fait un views
+if ($cmdName == "views") {
+    if (!isset($argv[2])) {
+        die("∆ Veuillez précisez le nom du controller. \n");
+    } else {
+        system('clear');
+        $command = 'Core/Cmd/views ' . $argv[2];
+        if (substr(php_uname(), 0, 7) == "Windows") {
+            $command = 'php ' . $command;
+        }
+        system($command);
+    }
 }
