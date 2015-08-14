@@ -2,6 +2,8 @@
 
 namespace Core\Models\Behaviors;
 
+use Core\Helpers\Date;
+
 trait Validator
 {
 
@@ -18,6 +20,18 @@ trait Validator
     private $areRequired = [];
 
     /**
+     * Contient les données à valider
+     * @var null
+     */
+    private $dataToValidate = null;
+
+    /**
+     * Tableau contenant les données sensées êtres égales
+     * @var array
+     */
+    private $mustBeEquals = [];
+
+    /**
      * Fonction principale du validateur. Renvoie vers les fonctions correpondantes aux règles de validation demandées
      * @param  array $data Les donnée à valider
      * @return bool   true ou false selon si tous les champs sont valides ou non
@@ -25,7 +39,8 @@ trait Validator
     public function validate($data)
     {
         $rules = $this->validationRules;
-        foreach ($data as $field => $value) {
+        $this->dataToValidate = $data;
+        foreach ($this->dataToValidate as $field => $value) {
 
             // Pour chaque données on vérifie si il existe une règle
             if (isset($rules[$field])) {
@@ -34,6 +49,10 @@ trait Validator
                 foreach ($rules[$field] as $k => $v) {
                     if ($v['ruleName'] == 'required') {
                         $this->areRequired[] = $field;
+                    }
+
+                    if ($v['ruleName'] === "equalsTo") {
+                        $this->mustBeEquals[$field] = $v['to'];
                     }
                     //$v['ruleName'] correspond au nom d'une fonction de validation
                     $this->$v['ruleName']($field, trim($value), isset($v['message']) ? $v['message'] : null);
@@ -84,6 +103,37 @@ trait Validator
     }
 
     /**
+     * Vérifie qu'une donnée est bien égale à une autre
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
+     */
+    public function equalsTo($field, $value, $message = null)
+    {
+        $isRequired = array_key_exists($field, $this->areRequired);
+        $to = $this->mustBeEquals[$field];
+
+        if (!$isRequired && empty($value)) {
+            return true;
+        } elseif (
+            ($isRequired && $value === $this->dataToValidate->$to) ||
+            (!$isRequired && $value === $this->dataToValidate->$to && !empty($value))
+        ) {
+
+            return true;
+
+        } else {
+
+            if ($message == null)
+                $message = "le champ $field doit être égale à $to";
+
+            $this->errors[$field] = $message;
+            return false;
+        }
+    }
+
+    /**
      * Vérifie si les données sont une chaine de caractères
      * @param $field
      * @param $value
@@ -108,6 +158,39 @@ trait Validator
 
             if ($message == null)
                 $message = "le champ $field est obligatoire";
+
+            $this->errors[$field] = $message;
+            return false;
+        }
+
+    }
+
+    /**
+     * Vérifie si les données sont unique
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
+     */
+    public function isUnique($field, $value, $message = null)
+    {
+
+        $isRequired = array_key_exists($field, $this->areRequired);
+        $results = $this->get(['where' => [$field => $value]]);
+
+        if (!$isRequired && empty($value)) {
+            return true;
+        } elseif (
+            ($isRequired && empty($results)) ||
+            (!$isRequired && empty($results) && !empty($value))
+        ) {
+
+            return true;
+
+        } else {
+
+            if ($message == null)
+                $message = "le champ $field est déjà utilisé";
 
             $this->errors[$field] = $message;
             return false;
@@ -171,6 +254,40 @@ trait Validator
 
             if ($message == null) {
                 $message = "le champ $field n'est pas un nombre";
+            }
+
+            $this->errors[$field] = $message;
+            return false;
+
+        }
+
+    }
+
+    /**
+     * Vérifie si une date est valide (format jj-mm-yyyy)
+     * @param $field
+     * @param $value
+     * @param null $message
+     * @return bool
+     */
+    public function isDate($field, $value, $message = null)
+    {
+        $isRequired = array_key_exists($field, $this->areRequired);
+        $isValid = Date::isValid($value);
+
+        if (!$isRequired && empty($value)) {
+            return true;
+        } elseif (
+            ($isRequired && $isValid) ||
+            (!$isRequired && $isValid && !empty($value))
+        ) {
+
+            return true;
+
+        } else {
+
+            if ($message == null) {
+                $message = "le champ $field n'est pas une date";
             }
 
             $this->errors[$field] = $message;
