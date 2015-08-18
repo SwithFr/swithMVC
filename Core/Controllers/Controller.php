@@ -3,7 +3,6 @@
 namespace Core\Controllers;
 
 use Core\Components\Session;
-use Core\Models\Model;
 use Core\Request;
 use SwithError\SwithError;
 
@@ -57,6 +56,12 @@ class Controller
     private $rendered = false;
 
     /**
+     * Le controller est lié ou non à un model
+     * @var bool
+     */
+    protected $hasModel = true;
+
+    /**
      * Le model Lié au controller
      * @var String Model
      */
@@ -86,7 +91,13 @@ class Controller
         $this->Request = $Request;
         $this->view = $this->Request->prefixe ? $this->Request->prefixe . '_' . $this->Request->action : $this->Request->action;
         $this->name = $name;
-        $this->loadModel();
+
+        # On instancie automatiquement le model lié
+        if ($this->hasModel) {
+            $this->loadModel();
+        }
+
+        # On charge la Session
         if (!$this->Session) {
             $this->Session = new Session();
         }
@@ -113,14 +124,14 @@ class Controller
         extract($this->vars);
         $view = BASE . DS . 'App' . DS . 'Views' . DS . ucfirst($this->Request->controller) . DS . $view . '.php';
         if (!file_exists($view)) {
-            (new SwithError(['message' => "La vue {$this->view} est introuvable", "title"=>"Vue introuvable"]))->display();
+            (new SwithError(['message' => "La vue {$this->view} est introuvable", "title" => "Vue introuvable"]))->display();
         }
         ob_start();
         require($view);
         $content_for_layout = ob_get_clean();
         $layout = BASE . DS . 'App' . DS . 'Views' . DS . 'Layouts' . DS . $this->layout . '.php';
         if (!file_exists($layout)) {
-            (new SwithError(['message' => "Le layout {$this->layout} est introuvable", "title"=>"Layout introuvable"]))->display();
+            (new SwithError(['message' => "Le layout {$this->layout} est introuvable", "title" => "Layout introuvable"]))->display();
         }
         require($layout);
         $this->rendered = true;
@@ -139,7 +150,6 @@ class Controller
         } else {
             $this->vars[$key] = $value;
         }
-
     }
 
     /**
@@ -162,7 +172,7 @@ class Controller
         if (!class_exists($modelName)) {
             $modelName = "Core\\Models\\" . $name;
             if (!class_exists($modelName)) {
-                (new SwithError(['message' => "Le model $name est introuvable", "title"=>"Model introuvable"]))->display();
+                (new SwithError(['message' => "Le model $name est introuvable", "title" => "Model introuvable"]))->display();
                 return false;
             }
         }
@@ -180,7 +190,7 @@ class Controller
         $name = ucfirst($name);
         $className = 'Core\\Components\\' . $name;
         if (!class_exists($className)) {
-            (new SwithError(['message' => "Le composant $name est introuvable", "title"=>"Composant introuvable"]))->display();
+            (new SwithError(['message' => "Le composant $name est introuvable", "title" => "Composant introuvable"]))->display();
         }
         $this->$name = new $className();
         $this->loadedComponents[] = $name;
@@ -191,11 +201,12 @@ class Controller
      * @param chemin|string $url chemin
      * @param bool $complete
      */
-    public function redirect($url = '', $complete = false){
-        if($complete){
+    public function redirect($url = '', $complete = false)
+    {
+        if ($complete) {
             header('Location: ' . $url);
             exit();
-        }else {
+        } else {
             header('Location: ' . ROOT . $url);
             exit();
         }
