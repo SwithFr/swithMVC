@@ -70,7 +70,6 @@ class Form
             }
         }
 
-
         if (is_null($value)) {
             $value = "";
         } elseif ($type != "password") {
