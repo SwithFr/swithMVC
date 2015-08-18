@@ -14,13 +14,11 @@ class Form
      * @param array $options
      * @return string
      */
-    public static function start($action = null, $method = "POST", array $options = null)
+    public static function start($action = null, $method = "POST", $options = [])
     {
         $option = "";
         if ($options != null) {
-            foreach ($options as $k => $v) {
-                $option .= "$k='$v' ";
-            }
+            $option = self::setOptions($options);
         }
 
         if (!is_null($action)) {
@@ -29,7 +27,7 @@ class Form
             $action = "#";
         }
 
-        echo "<form $action method='$method' $option>";
+        return "<form $action method='$method' $option>";
     }
 
     /**
@@ -42,11 +40,9 @@ class Form
     {
         $option = "";
         if ($options != null) {
-            foreach ($options as $k => $v) {
-                $option .= "$k='$v' ";
-            }
+            $option = self::setOptions($options);
         }
-        echo "<input type='submit' value='$value' $option></form>";
+        return "<input type='submit' value='$value' $option></form>";
     }
 
     /**
@@ -88,7 +84,7 @@ class Form
             $label = "<label for='$field'>$label : </label>";
         }
 
-        echo "$label<input type='$type' name='$field' id='$field' $value $placeholder $option>";
+        return "$label<input type='$type' name='$field' id='$field' $value $placeholder $option>";
     }
 
     /**
@@ -110,9 +106,9 @@ class Form
             }
         }
         if ($label) {
-            echo "<label for='$field'>$label</label>";
+            $label = "<label for='$field'>$label</label>";
         }
-        echo "<textarea id='$field' name='$field' $option>$content</textarea>";
+        return "$label<textarea id='$field' name='$field' $option>$content</textarea>";
     }
 
     /**
@@ -135,7 +131,21 @@ class Form
             $return .= "<option $slctd value='$k'>$v</option>";
         }
 
-        echo $return . "</select>";
+        return $return . "</select>";
+    }
+
+    /**
+     * Définit les options
+     * @param array $options
+     * @return string
+     */
+    private static function setOptions($options = [])
+    {
+        $option = "";
+        foreach ($options as $k => $v) {
+            $option .= "$k='$v' ";
+        }
+        return $option;
     }
 
 } 
