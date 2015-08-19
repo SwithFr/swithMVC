@@ -171,15 +171,6 @@ class Model
             }
         }
 
-        // Si on a une limite
-        if (isset($conditions['limit'])) {
-            if (isset($conditions['offset'])) {
-                $query .= " LIMIT " . $conditions['offset'] . "," . $conditions['limit'];
-            } else {
-                $query .= " LIMIT " . $conditions['limit'];
-            }
-        }
-
         // Si on a un group by
         if (isset($conditions['groupBy'])) {
             $query .= " GROUP BY " . $conditions['groupBy'];
@@ -188,6 +179,15 @@ class Model
         // Si on a un order
         if (isset($conditions['order'])) {
             $query .= " ORDER BY " . $conditions['order'];
+        }
+
+        // Si on a une limite
+        if (isset($conditions['limit'])) {
+            if (isset($conditions['offset'])) {
+                $query .= " LIMIT " . $conditions['offset'] . "," . $conditions['limit'];
+            } else {
+                $query .= " LIMIT " . $conditions['limit'];
+            }
         }
 
         $req = $this->bdd->query($query);
