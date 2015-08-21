@@ -1,4 +1,4 @@
-# chagelog à la va vite
+# changelog à la va vite
 ##AUTH
 virer les espace dans Auth
 if isset role dans Auth pour login
