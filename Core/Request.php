@@ -52,13 +52,15 @@ class Request
      */
     private function setData()
     {
-        if (!empty($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             $this->isPost = true;
             $this->data = new \stdClass();
             foreach ($_POST as $k => $v) {
                 $this->data->$k = $v;
             }
             unset($_POST);
+
+            $_POST['token'] = CSRFTool::getAuthToken();
         }
     }
 
