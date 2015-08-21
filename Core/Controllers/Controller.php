@@ -97,11 +97,6 @@ class Controller
             $this->loadModel();
         }
 
-        # On charge la Session
-        if (!$this->Session) {
-            $this->Session = new Session();
-        }
-
         # On charge les composants qu l'on veut
         foreach ($this->components as $c) {
             if (!array_key_exists($c, $this->loadedComponents)) {
