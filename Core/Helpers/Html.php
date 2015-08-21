@@ -21,6 +21,13 @@ class Html
             $url = $prefix ? $prefix . "/" . $controller . "/" . $action : $controller . "/" . $action;
         }
 
+        if(isset($params['token'])){
+            $query = "?token=" . $params['token'];
+            unset($params['token']);
+        } else {
+            $query = "";
+        }
+
         $return = "<a href='" . ROOT . $url;
         $param = $option = "";
 
@@ -30,7 +37,7 @@ class Html
                 $param .= "/$v";
             }
         }
-        $return .= $param . "' ";
+        $return .= $param . $query . "' ";
 
         if ($options) {
             foreach ($options as $k => $v) {
