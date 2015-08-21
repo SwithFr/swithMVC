@@ -13,8 +13,7 @@ class CSRFTool
      */
     public static function generateToken()
     {
-        $token = md5(isset($_SESSION['id']) ? $_SESSION['id'] . time() : rand(1,10000) . time());
-        return $_SESSION['token'] = $token;
+        return $_SESSION['token'] = md5(isset($_SESSION['id']) ? $_SESSION['id'] . time() : rand(1,10000) . time());
     }
 
     /**
@@ -41,7 +40,7 @@ class CSRFTool
      */
     public static function getPassedToken()
     {
-        return isset($_GET['token']) ? $_GET['token'] : false;
+        return isset($_GET['token']) ? $_GET['token'] : isset($_POST['token']) ? $_POST['token'] : false;
     }
 
     /**
