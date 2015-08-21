@@ -20,13 +20,16 @@ class Dispatcher
     public $request;
 
     /**
-     * Vérifie que les information de base on bien été configurées
-     * @var bool
+     * La session
+     * @var Session
      */
-    private $isVerified = false;
+    private $Session;
 
     public function __construct()
     {
+        if(is_null($this->Session)) {
+            $this->Session = new Session();
+        }
 
         $app = App::getInstance();
 
@@ -47,6 +50,7 @@ class Dispatcher
         // On charge le bon controller
         try {
             $controller = $this->loadController();
+            $controller->Session = $this->Session;
         } catch (SwithException $e) {
             (new SwithError(['message' => "Le controller {$this->request->controller} est introuvable", "title"=>"Controlleur introuvable"]))->display();
         }
