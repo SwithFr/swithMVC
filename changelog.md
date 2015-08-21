@@ -1,4 +1,11 @@
 # changelog à la va vite
+
+#12/08/15 : 
+ - création de la session dès le début et non plus dans le constructeur du controller
+ - Ajout du token automatiquement après soumission du formulaire
+ - CSRFTool : check aussi si le token est en POST
+
+## /!\ AVANT /!\
 ##AUTH
 virer les espace dans Auth
 if isset role dans Auth pour login
