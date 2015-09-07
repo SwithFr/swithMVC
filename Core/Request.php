@@ -41,9 +41,10 @@ class Request
     private function setReferrer()
     {
         if (isset($_SERVER['HTTP_REFERER'])) {
-            $root = addcslashes(ROOT, '/');
-            $parts = preg_split('/' . $root . '/', $_SERVER['HTTP_REFERER']);
-            $this->referer = isset($parts[1]) ? $parts[1] : $parts[0];
+            $root = (ROOT === '/') ? $_SERVER['HTTP_HOST'] : ROOT;
+            $root = addcslashes($root, DS);
+            $parts = preg_split('/' . $root . '/', $_SERVER['HTTP_REFERER'], 2);
+            $this->referer = trim(end($parts), DS);
         }
     }
 
