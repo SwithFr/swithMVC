@@ -103,9 +103,8 @@ class Model
         if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS') {
             if(is_null($this->needEntity)) {
                 $this->needEntity = true;
-            } else {
-                $this->fetchObjByDefaultIfDontNeedEntity = \PDO::FETCH_OBJ;
             }
+            $this->fetchObjByDefaultIfDontNeedEntity = \PDO::FETCH_OBJ;
         }
     }
 
@@ -151,7 +150,7 @@ class Model
                     $joins[] = " JOIN $j ON $j.{$this->primaryKey} = {$this->table}." . $this->joins[$j];
                 }
             }
-            $query .= implode(" AND ", $joins);
+            $query .= implode(" ", $joins);
         }
 
         // Si on a un Where
@@ -193,10 +192,24 @@ class Model
         $req = $this->bdd->query($query);
 
         if ($this->needEntity == true) {
-            return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
+            $results = $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
         } else {
-            return $req->fetchAll($this->fetchObjByDefaultIfDontNeedEntity);
+            $results = $req->fetchAll($this->fetchObjByDefaultIfDontNeedEntity);
         }
+
+        if(isset($conditions['hasMany'])) {
+            foreach ($conditions['hasMany'] as $hm => $v) {
+                foreach ($results as $r) {
+                    $fields = isset($v['fields']) ? $v['fields']: '*';
+                    $groupby = isset($v['groupBy']) ? ' GROUP BY ' . $v['groupBy'] : '';
+                    $q = "SELECT $fields FROM $hm WHERE " . strtolower($this->name) . "_id = " . $r->id . $groupby;
+                    $pdost = $this->bdd->query($q);
+                    $r->$hm = $pdost->fetchAll($this->fetchObjByDefaultIfDontNeedEntity);
+                }
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -209,7 +222,7 @@ class Model
     public function getFirst(array $conditions = null, array $joins = null, $table = null)
     {
         $result = $this->get($conditions, $joins, $table);
-        return current($result);
+        return $result[0];
     }
 
     /**
@@ -260,7 +273,7 @@ class Model
             $pdost->execute($values);
             return true;
         } catch (\PDOException $e) {
-            return false;
+            die($e->getMessage());
         }
     }
 
@@ -296,7 +309,7 @@ class Model
             $pdost->execute($values);
             return true;
         } catch (\PDOException $e) {
-            return false;
+            die($e->getMessage());
         }
     }
 
