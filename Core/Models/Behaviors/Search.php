@@ -67,10 +67,11 @@ trait Search
 
         $req = $this->bdd->query($query . $params);
 
-        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS')
-            return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $table . 'Entity');
-        else
+        if ($_ENV['DB_OPTION_FETCH_MODE'] == 'PDO::FETCH_CLASS'){
+            return $req->fetchAll(\PDO::FETCH_CLASS, 'App\\Models\\Entities\\' . $this->name . 'Entity');
+        } else {
             return $req->fetchAll();
+        }
     }
 
     /**
