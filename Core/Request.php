@@ -3,6 +3,7 @@
 namespace Core;
 
 use App\Config\App;
+use Core\Helpers\CSRFTool;
 
 class Request
 {
