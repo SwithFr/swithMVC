@@ -6,6 +6,7 @@ use App\Config\App;
 use Core\Lib\Debug;
 use Core\Lib\SwithException;
 use SwithError\SwithError;
+use Core\Components\Session;
 
 /**
  * Se charge de charger le bon controller et la bonne action
