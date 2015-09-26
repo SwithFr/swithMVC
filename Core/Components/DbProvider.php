@@ -25,7 +25,7 @@ class DbProvider
     {
         try {
             $this->db = new PDO(
-                'mysql:dbname=' . $_ENV['DB_NAME'] . ';host:' . $_ENV['DB_HOST'],
+                'mysql:dbname=' . $_ENV['DB_NAME'] . ';host=' . $_ENV['DB_HOST'],
                 $_ENV['DB_LOGIN'],
                 $_ENV['DB_PASSWORD'],
                 [
