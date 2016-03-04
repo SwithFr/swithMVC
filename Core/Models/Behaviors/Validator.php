@@ -55,8 +55,8 @@ trait Validator
                         $this->mustBeEquals[$field] = $v['to'];
                     }
                     //$v['ruleName'] correspond au nom d'une fonction de validation
-                    $this->$v['ruleName']($field, trim($value), isset($v['message']) ? $v['message'] : null);
-
+                    //$this->$v['ruleName']($field, trim($value), isset($v['message']) ? $v['message'] : null);
+                    call_user_func($v['ruleName'], $field, $value, isset($v['message']) ? $v['message'] : null); //Php7
                 }
 
             }
