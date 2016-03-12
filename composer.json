@@ -18,6 +18,7 @@
     "require": {
         "php": "~5.6.0",
         "josegonzalez/dotenv": "0.6.0",
-        "swith/error": "dev-master"
+        "swith/error": "dev-master",
+        "phpunit/phpunit": "^5.2"
     }
 }
