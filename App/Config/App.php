@@ -45,7 +45,7 @@ class App
     }
 
     /**
-     * Récupéré une configuration de l'App
+     * Récupérer une configuration de l'App
      * @param $key
      * @return null
      */
