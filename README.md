@@ -16,6 +16,7 @@ La documentation est en cours de rédaction [ici](https://mvc.swith.fr). Vous po
 Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans d'expériences, ce n'est pas le cas ! Tout mes remerciements vont à [Grafikart](http://www.grafikart.fr), ses nombreux tutoriels m'ont beaucoup aidés à en arriver là où j'en suis aujourd'hui. Donc voilà un immense merci à lui !
 
 ##TODO
+- Un big refacto du code s'impose
 - Les emails **(minoritaire)**
 - ~~Les fonctions de recherche~~ **(DONE)**
 - Optimiser le système d'envrionnement **(minoritaire)**
