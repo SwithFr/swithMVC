@@ -17,6 +17,7 @@ Je mentirais si je disais que j'ai tout fait tout seul comme un pro avec 10 ans 
 
 ##TODO
 - Un big refacto du code s'impose
+- PhpUnit
 - Les emails **(minoritaire)**
 - ~~Les fonctions de recherche~~ **(DONE)**
 - Optimiser le système d'envrionnement **(minoritaire)**
