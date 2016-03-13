@@ -32,14 +32,12 @@ class Dispatcher
             $this->Session = new Session();
         }
 
-        $app = App::getInstance();
-
         // On initialise l'objet Request
         if($_ENV['USE_ROUTES']) {
             require('../Config/routes.php');
-            $this->request = Router::run(new Request($app));
+            $this->request = Router::run(new Request());
         } else {
-            $this->request = new Request($app);
+            $this->request = new Request();
         }
 
         // On parse l'url (définition du controller, action,...)
