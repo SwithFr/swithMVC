@@ -2,7 +2,6 @@
 
 namespace Core\Controllers;
 
-use Core\Components\Session;
 use Core\Request;
 use SwithError\SwithError;
 
@@ -97,7 +96,7 @@ class Controller
             $this->loadModel();
         }
 
-        # On charge les composants qu l'on veut
+        # On charge les composants que l'on veut
         foreach ($this->components as $c) {
             if (!array_key_exists($c, $this->loadedComponents)) {
                 $className = 'Core\\Components\\' . $c;
