@@ -2,7 +2,7 @@
 <?php
 /**
  * Fichier "point d'entrée" pour les commandes
- * A ne pas toucher !!
+ * À ne pas toucher !!
  * Pour utiliser une commande c'est simple :
  * php Swith nom-de-commande [options]
  */
