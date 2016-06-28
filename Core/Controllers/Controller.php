@@ -212,6 +212,7 @@ class Controller
      */
     function element($name)
     {
+        extract($this->vars);
         include_once BASE . DS . "App" . DS . "Views" . DS . "Elements" . DS . $name . ".php";
     }
 
