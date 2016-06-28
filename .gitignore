@@ -1,1 +1,4 @@
+/vendor
+/Tests
+/phpunit.xml
 .idea
