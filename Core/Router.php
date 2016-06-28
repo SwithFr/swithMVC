@@ -80,12 +80,31 @@ class Router
 
     /**
      * créer une connexion d'url
+     * @param string $method
      * @param $url
      * @param array $params
      */
-    public static function join($url, array $params = null)
+    private static function join($method = 'GET', $url, array $params = null)
     {
-        self::$routes[] = new Route($url, $params);
+        self::$routes[$method][] = new Route($url, $params);
+    }
+
+    /**
+     * @param $url
+     * @param array|null $params
+     */
+    public static function post($url, array $params = null)
+    {
+        self::join('POST', $url, $params);
+    }
+
+    /**
+     * @param $url
+     * @param array|null $params
+     */
+    public static function get($url, array $params = null)
+    {
+        self::join('GET', $url, $params);
     }
 
     /**
@@ -98,10 +117,11 @@ class Router
         // url de l'utilisateur
         $r_url = $request->url;
 
+        // On initialise les erreurs à 0;
+        $errors = 0;
+
         // On parcoure les routes enregistrées via la fonction join
-        foreach (self::$routes as $route) {
-            // On initialise les erreurs à 0;
-            $errors = 0;
+        foreach (self::$routes[$_SERVER['REQUEST_METHOD']] as $route) {
 
             // On regarde si on a des paramettres définis par {param}
             // Si c'est le cas
@@ -131,6 +151,7 @@ class Router
                             "message" => "La page demandé n'existe pas !"
                         ]))->display();
                     }
+
                     for ($i = 0; $i < count($route->paramsRouted); $i++) {
                         $combinedParams[$route->paramsRouted[$i]] = $params_url[$i];
                     }
@@ -139,11 +160,13 @@ class Router
                     foreach ($route->params['params'] as $pp => $r) {
                         foreach ($combinedParams as $k => $v) {
                             if (($k == $pp) && !preg_match($r, $v)) {
-                                $errors++;
+                                ++$errors;
                             }
                         }
                     }
                 }
+
+                // Si on a pas d'erreur on modifie la requete
                 if ($errors == 0) {
                     $request->controller = $route->params['controller'];
                     $request->action = $route->params['action'];
@@ -154,7 +177,7 @@ class Router
                 }
             }
         }
-        // Si on a pas d'erreur on modifie la requete
+
         if ($errors == 0) {
             return $request;
         } else {
