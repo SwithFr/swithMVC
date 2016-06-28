@@ -57,13 +57,12 @@ class Html
 
     /**
      * Génère une url
-     * @param $controller
-     * @param $action
+     * @param $route
      * @return string
      */
-    public static function url($controller, $action)
+    public static function url($route)
     {
-        return ROOT . $controller . "/" . $action;
+        return ROOT . $route;
     }
 
     /**
