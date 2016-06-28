@@ -108,6 +108,16 @@ class Router
     }
 
     /**
+     * @param $url
+     * @param array|null $params
+     */
+    public static function any($url, array $params = null)
+    {
+        self::join('GET', $url, $params);
+        self::join('POST', $url, $params);
+    }
+
+    /**
      * Check la requete et redirige si besoin
      * @param Request $request
      * @return Request
