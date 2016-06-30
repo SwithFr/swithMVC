@@ -4,19 +4,19 @@
 | Manuel d'utilisation des lignes de commandes de Swith |
 | Les commandes sont simple d'utilisation :             |
 |        php Swith nom-de-la-commande [options]         |
-| Les options sont souvent optionnelles !               |
 --------------------------------------------------------
 
 Liste des commandes :
 
-    - create : nom [mvce]
-        Si aucune options rensignées, créer les fichiers suivant :
-        NomsController.php, Nom.php (model), NomEntity.php et le dossier pour les vue Nom
-        Vous pouvez rensigner les lettres pour préciser les fichiers à générer
-        c pour controller, m pour model, v pour le dossier des vues, e pour l'entité
+- create : nom [mvce]
+Si aucune options rensignées, créer les fichiers suivant :
+NomsController.php, Nom.php (model), NomEntity.php et le dossier pour les vue Nom
+Vous pouvez rensigner les lettres pour préciser les fichiers à générer
+c pour controller, m pour model, v pour le dossier des vues, e pour l'entité
 
-    - help, -h, -help, h :
-        Affiche l'aide
+- help, -h, -help, h :
+Affiche l'aide
 
-    - views : nom
-        Génère toutes les vues du controller passé en parametre.
+- views : controller [action]
+Génère toutes les vues du controller passé en parametre si aucune action précisées
+Si une action est précisée seule la vue pour celle-ci sera générée
