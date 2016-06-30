@@ -59,11 +59,7 @@ class Form
     {
         $option = "";
         if ($options != null) {
-            foreach ($options as $k => $v) {
-                if ($k != 'id') {
-                    $option .= "$k='$v' ";
-                }
-            }
+            $option = self::setOptions($options, ['id']);
         }
 
         if (is_null($value)) {
@@ -99,11 +95,7 @@ class Form
     {
         $option = "";
         if ($options != null) {
-            foreach ($options as $k => $v) {
-                if ($k != 'id') {
-                    $option .= "$k='$v' ";
-                }
-            }
+            $option = self::setOptions($options, ['id']);
         }
         if ($label) {
             $label = "<label for='$field'>$label</label>";
@@ -137,13 +129,22 @@ class Form
     /**
      * Définit les options
      * @param array $options
+     * @param null $skip
      * @return string
      */
-    private static function setOptions($options = [])
+    private static function setOptions($options = [], $skip = null)
     {
         $option = "";
         foreach ($options as $k => $v) {
-            $option .= "$k='$v' ";
+            if ($skip) {
+                foreach ($skip as $s) {
+                    if ($s != $k) {
+                        $option .= "$k='$v' ";
+                    }
+                }
+            } else {
+                $option .= "$k='$v' ";
+            }
         }
         return $option;
     }
