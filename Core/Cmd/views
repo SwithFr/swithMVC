@@ -2,19 +2,28 @@
 <?php
 
 // Définition des variables
-$name = $argv[1];
-$controllerName = ucfirst($name) . 'sController';
+$name = ucfirst($argv[1]);
+$controllerName = $name . 'sController';
 $fileName = './App/Controllers/' . $controllerName . '.php';
 
-if (file_exists($fileName)) {
+if (file_exists($fileName) && !isset($argv[2])) {
+    $alreadyCreatedViews = glob('./App/Views/' . $name . 's/*.php');
+    $createdViews = [];
+    foreach ($alreadyCreatedViews as $alreadyCreatedView) {
+        $createdViews[] = explode('.', end(explode('/', $alreadyCreatedView)))[0];
+    }
     require("./vendor/autoload.php");
     $className = "App\\Controllers\\" . $controllerName;
     $availablesActions = array_diff(get_class_methods($className), get_class_methods(get_parent_class($className)));
-
-    foreach ($availablesActions as $a) {
-        fopen('./App/Views/' . ucfirst($name) . 's/' . $a . '.php', 'w+');
+    $viewsToCreate = array_diff($availablesActions, $createdViews);
+    foreach ($viewsToCreate as $view) {
+        fopen('./App/Views/' . $name . 's/' . $view . '.php', 'w+');
+        echo("\n" . 'Création de la vue ' . $view . '.php' . "\n");
     }
 
+} elseif (isset($argv[2])) {
+    fopen('./App/Views/' . $name . 's/' . $argv[2] . '.php', 'w+');
+    echo("\n" . 'Création de la vue ' . $argv[2] . '.php' . "\n");
 } else {
     die("∆ Ce controller n'existe pas. \n");
 }
