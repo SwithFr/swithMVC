@@ -12,8 +12,6 @@ $options = '';
 $fileName = '';
 $knowedCmd = ['create', 'h', '-h', 'help', '-help', 'views'];
 
-require('./Core/Cmd/lib.php');
-
 // On vérifie que la commande est valide
 if (!isset($argv[1]) || !in_array($argv[1], $knowedCmd)) {
     die("\n\n∆ Erreur ! Commande inconnue ou mal utilisée \nutilisez php Swith -h pour afficher l'aide\n");
