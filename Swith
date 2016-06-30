@@ -2,7 +2,7 @@
 <?php
 /**
  * Fichier "point d'entrée" pour les commandes
- * À ne pas toucher !!
+ * A ne pas toucher !!
  * Pour utiliser une commande c'est simple :
  * php Swith nom-de-commande [options]
  */
@@ -54,7 +54,8 @@ if ($cmdName == "views") {
         die("∆ Veuillez précisez le nom du controller. \n");
     } else {
         system('clear');
-        $command = 'Core/Cmd/views ' . $argv[2];
+        $viewName =  isset($argv[3]) ? ' ' . $argv[3] : '';
+        $command = 'Core/Cmd/views ' . $argv[2] . $viewName;
         if (substr(php_uname(), 0, 7) == "Windows") {
             $command = 'php ' . $command;
         }
