@@ -18,7 +18,8 @@
     "require": {
         "php": "~5.6.0",
         "josegonzalez/dotenv": "0.6.0",
-        "swith/error": "dev-master"
+        "swith/error": "dev-master",
+        "swith/form": "dev-master"
     },
     "scripts": {
       "post-create-project-cmd": [
