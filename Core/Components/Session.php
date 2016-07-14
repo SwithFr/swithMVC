@@ -55,11 +55,17 @@ class Session
 
     /**
      * Supprimer l'index $key de la session
-     * @param $key
+     * @param string|array $key
      */
     public function delete($key)
     {
-        if(isset($_SESSION[$key])){
+        if (is_array($key)) {
+            foreach ($key as $k) {
+                if (isset($_SESSION[$k])) {
+                    unset($_SESSION[$k]);
+                }
+            }
+        } elseif (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
         }
     }
