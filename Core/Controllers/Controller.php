@@ -104,11 +104,18 @@ class Controller
                 $this->loadedComponents[] = $c;
             }
         }
+
+        # Si des variables sont passées lors d'une redirection
+        if ($this->Session->read('passedVars')) {
+            $this->vars = unserialize($this->Session->read('passedVars'));
+            $this->Session->delete('passedVars');
+        }
     }
 
     /**
      * Permet de charger la vue qui correspond à l'action
      * @param  string $view le nom de la vue à charger
+     * @return bool
      */
     public function render($view)
     {
@@ -149,6 +156,7 @@ class Controller
     /**
      * Permet de charger une instance du model lié au controlleur dans $this->nomDuModel
      * @param  string $name le nom du model que l'on veut charger
+     * @return bool
      */
     public function loadModel($name = null)
     {
@@ -194,9 +202,13 @@ class Controller
      * Regirige vers le chemin spécifié
      * @param chemin|string $url chemin
      * @param bool $complete
+     * @param null $passedVars
      */
-    public function redirect($url = '', $complete = false)
+    public function redirect($url = '', $complete = false, $passedVars = null)
     {
+        if ($passedVars) {
+            $this->Session->write('passedVars', serialize($passedVars));
+        }
         if ($complete) {
             header('Location: ' . $url);
             exit();
