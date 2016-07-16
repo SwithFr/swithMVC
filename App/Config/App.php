@@ -56,8 +56,8 @@ class App
 
         $aliases = array_merge($appAliases, $coreAliases);
 
-        foreach ($aliases as $alias => $originalClass) {
-            class_alias($originalClass, $aliases);
+        foreach ($aliases as $originalClass => $alias) {
+            class_alias($originalClass, $alias);
         }
     }
 
