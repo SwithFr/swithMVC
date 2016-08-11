@@ -36,7 +36,7 @@ class Dispatcher
 
         // On initialise l'objet Request
         if($_ENV['USE_ROUTES']) {
-            require('../Config/routes.php');
+            require_once('../Config/routes.php');
             $this->request = Router::run(new Request($app));
         } else {
             $this->request = new Request($app);
