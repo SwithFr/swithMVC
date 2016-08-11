@@ -9,12 +9,14 @@ class Route
 
     public $url;
     public $params;
+    public $middlewares;
     public $paramsRouted;
 
     function __construct($url, $params)
     {
         $this->url = $url;
         $this->params = $params;
+        $this->middlewares = $this->getMiddleWares();
     }
 
     /**
@@ -53,5 +55,17 @@ class Route
     {
         $params_url = trim(str_replace($this->url, '', $r_url), '/');
         return explode('/', $params_url);
+    }
+
+    /**
+     * Vérifie si la route utilise des middlewares
+     * et les définis au besoin.
+     */
+    private function getMiddleWares()
+    {
+        if (isset($this->params['middlewares'])) {
+        	$this->middlewares = $this->params['middlewares'];
+            unset($this->params['middlewares']);
+        }
     }
 }
