@@ -4,6 +4,9 @@
 namespace Core;
 
 
+use App\Controllers\Middlewares\TestMiddleware;
+use Core\Middlewares\Middleware;
+
 class Route
 {
 
@@ -12,11 +15,13 @@ class Route
     public $middlewares;
     public $paramsRouted;
 
+    protected $currentMiddleware;
+
     function __construct($url, $params)
     {
         $this->url = $url;
         $this->params = $params;
-        $this->middlewares = $this->getMiddleWares();
+        $this->getMiddleWares();
     }
 
     /**
@@ -65,7 +70,37 @@ class Route
     {
         if (isset($this->params['middlewares'])) {
         	$this->middlewares = $this->params['middlewares'];
+            $this->currentMiddleware = 0;
             unset($this->params['middlewares']);
+        }
+    }
+
+    /**
+     * Vérifie si la route utilise des middlewares
+     * @return bool
+     */
+    public function hasMiddlewares()
+    {
+        return !empty($this->middlewares);
+    }
+
+
+    /**
+     * Invoque les middlewares de la route
+     * @param $request
+     */
+    public function runMiddlewares($request)
+    {
+        /**
+         * @var Middleware $middleware
+         */
+        $request->route = $this;
+        if (isset($this->middlewares[$this->currentMiddleware])) {
+            $middleware = '\\' . $this->middlewares[$this->currentMiddleware];
+            $middleware::invoke($request, function() use ($request) {
+                $this->currentMiddleware++;
+                $this->runMiddlewares($request);
+            });
         }
     }
 }
