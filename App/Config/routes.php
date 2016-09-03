@@ -16,3 +16,17 @@ Router::any('votre/url/{param1}/{param2}',[
         "param2"  => '/[a-zA-Z\-]/'
     ]
 ]);
+
+Router::get('avec', [
+    "controller" => 'home',
+    "action"     => 'avec',
+    "middlewares" => [
+        \App\Controllers\Middlewares\TestMiddleware::class,
+        \App\Controllers\Middlewares\Test2Middleware::class,
+    ]
+]);
+
+Router::get('sans', [
+    "controller" => 'home',
+    "action"     => 'sans',
+]);

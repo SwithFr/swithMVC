@@ -38,6 +38,7 @@ return [
      */
     'environments_ip' => [
         '127.0.0.1' => 'dev',
+        '::1' => 'dev',
         'ip_test' => 'test',
         'ip_prod' => 'prod'
     ]

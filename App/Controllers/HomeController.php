@@ -14,7 +14,17 @@ class HomeController extends AppController
      */
     public function index()
     {
-        // Votre code ici.
+
+    }
+
+    public function avec()
+    {
+        var_dump("avec");die();
+    }
+
+    public function sans()
+    {
+        var_dump("sans");die();
     }
 
 }
