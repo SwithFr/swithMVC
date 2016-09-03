@@ -106,7 +106,7 @@ class Controller
         }
 
         # Si des variables sont passées lors d'une redirection
-        if ($this->Session->read('passedVars')) {
+        if ($this->Session && $this->Session->read('passedVars')) {
             $this->vars = unserialize($this->Session->read('passedVars'));
             $this->Session->delete('passedVars');
         }
