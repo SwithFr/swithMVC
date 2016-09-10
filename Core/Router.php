@@ -151,6 +151,11 @@ class Router
 
             // Si oui
             if (!empty($matches)) {
+
+                if ($route->hasMiddlewares()) {
+                    $route->runMiddlewares($request);
+                }
+
                 // Si on a des parametres on créer un nouveau tableau sous la forme nom param => valeur
                 if ($route->paramsRouted) {
                     $combinedParams = [];

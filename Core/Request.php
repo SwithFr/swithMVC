@@ -19,7 +19,7 @@ class Request
            $data = false,    // Les données postées
            $page = 1;        // Pour la pagination
 
-    public function __construct($app)
+    public function __construct(App $app)
     {
         $default_controller = ucfirst($app->getAppSettings("default_controller"));
 
